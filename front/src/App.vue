@@ -2,9 +2,9 @@
   <div id="app">
     <NavBar />
     <!-- 슬라이드 트랜지션 -->
-    <transition  mode="out-in">
-      <router-view/>
-    </transition>
+    <!-- <transition  mode="out-in"> -->
+      <router-view class="m-5"/>
+    <!-- </transition> -->
   </div>
 </template>
 
