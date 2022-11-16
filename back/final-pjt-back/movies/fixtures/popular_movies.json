@@ -2195,25 +2195,6 @@
     {
         "model": "movies.movie",
         "fields": {
-            "title": "Terrifier 3",
-            "tmdb_id": 1034541,
-            "release_date": "",
-            "popularity": 258.044,
-            "vote_count": 0,
-            "vote_average": 0,
-            "overview": "",
-            "poster_path": "/A2ouWngHdomaAyFAPMI7VOpOLvS.jpg",
-            "genres": [
-                27,
-                14,
-                53
-            ],
-            "like_users": []
-        }
-    },
-    {
-        "model": "movies.movie",
-        "fields": {
             "title": "와이어 룸",
             "tmdb_id": 921360,
             "release_date": "2022-09-02",
