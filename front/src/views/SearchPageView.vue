@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-        <div class="row row-cols-3">
+        <div class="row">
             <MyCard 
             v-for="movie in searchMovieList"
             :key = movie.id

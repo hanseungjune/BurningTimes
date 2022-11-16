@@ -1,8 +1,8 @@
 <template>
-<div class="col">
-  <b-card class="m-1">
-    <b-card-img :src="'https://image.tmdb.org/t/p/original/' + movie?.poster_path" :alt="movie.title"></b-card-img>
-  </b-card>
+<div class="col-3">
+  <div class="m-1 card">
+    <img class="card-img" :src="'https://image.tmdb.org/t/p/original/' + movie?.poster_path" :alt="movie.title">
+  </div>
 </div>
 </template>
 
