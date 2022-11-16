@@ -2,19 +2,37 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainPageView from '@/views/MainPageView'
 import SearchPageView from '@/views/SearchPageView'
+import LoginPageView from '@/views/LoginPageView'
+import SignupPageView from '@/views/SignupPageView'
+import UserInfoPageView from '@/views/UserInfoPageView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'mainpage',
+    name: 'main',
     component: MainPageView
   },
   {
     path: '/search/:keyword',
-    name: 'SearchPageView',
+    name: 'search',
     component: SearchPageView
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignupPageView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPageView
+  },
+  {
+    path: '/userinfo/:userPk',
+    name: 'userinfo',
+    component: UserInfoPageView
   },
 ]
 

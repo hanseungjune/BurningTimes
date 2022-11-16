@@ -2,12 +2,15 @@
   <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="nav">
-        <router-link class="navbar-brand" :to="{ name: 'mainpage'}">Ssafy Movie</router-link>
+        <router-link class="navbar-brand" :to="{ name: 'main'}">Ssafy Movie</router-link>
         <NavBarSearch />
       </div>
       <div class="nav">
-        <router-link class="nav-link" :to="{ name: 'mainpage'}">Home</router-link>
-        <router-link class="nav-link" :to="{ name: 'mainpage'}">Home</router-link>
+        <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
+        <router-link class="nav-link" :to="{ name: 'login'}" v-if="!isLogin">Login</router-link>
+        <a class="nav-link" v-if="isLogin" @click="userLogout">Logout</a>
+        <router-link class="nav-link" v-if="!isLogin" :to="{ name: 'signup'}">Signup</router-link>
+        <router-link class="nav-link" v-if="isLogin" :to="{ name: 'userinfo', params: { userPk: isLogin } }">UserInfo</router-link>
       </div>
     </div>
   </nav>
@@ -20,6 +23,17 @@ export default {
     name: 'NavBar',
     components: {
       NavBarSearch
+    },
+    computed: {
+      isLogin() {
+        return this.$store.state.userPk
+      }
+    },
+    methods: {
+      userLogout() {
+        this.$store.dispatch('userLogout')
+        this.$router.push({name: 'main'})
+      }
     }
 }
 </script>
