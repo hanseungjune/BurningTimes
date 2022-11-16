@@ -1,15 +1,15 @@
 <template>
-  <b-nav-form @submit.prevent="searchPush">
-    <b-form-input 
-        class="nav-search" 
+  <form class="d-flex" @submit.prevent="searchPush">
+    <input 
+        class="form-control nav-search me-2" 
         placeholder="search" 
         :class="{ searchClicked : searchClick }" 
         @click="sClick"
         v-model.trim="searchKeyword"
         >
-    </b-form-input >
+    <button class="btn btn-dark nav-search-btn" :class="{ 'btn-light' : searchClick }">검색</button>
     <div class="overlay" @click="sClick" v-show="searchClick"></div>
-  </b-nav-form>
+  </form>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
     data() {
         return {
             searchClick: false,
-            searchKeyword: null
+            searchKeyword: ''
         }
     },
     methods: {
@@ -26,9 +26,14 @@ export default {
             this.searchClick = !this.searchClick
         },
         searchPush() {
-            this.searchClick = false
-            this.$router.push({name: 'SearchPageView', params: { keyword : this.searchKeyword }})
-            this.searchKeyword = null
+            if (this.searchKeyword) {
+                this.searchClick = false
+                this.$router.push({name: 'SearchPageView', params: { keyword : this.searchKeyword }})
+                this.searchKeyword = null
+            } else {
+                alert('검색어를 입력해주세요!')
+            }
+            
         }
     },
 }
@@ -36,13 +41,15 @@ export default {
 
 <style>
     .nav-search{
-        position: relative;
         width: 20rem !important;
         background-color: #323232 !important;
         z-index: 10;
         -webkit-transition: background-color 150ms linear !important;
         -ms-transition: background-color 150ms linear !important;
         transition: background-color 150ms linear !important;
+    }
+    .nav-search-btn{
+        z-index: 10;
     }
     .searchClicked {
         background-color: rgb(255, 255, 255) !important;
