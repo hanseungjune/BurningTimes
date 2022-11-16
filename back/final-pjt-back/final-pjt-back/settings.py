@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # App
     'accounts',
     'movies',
+    'community',
     
     # 장고 rest
     'rest_framework',
