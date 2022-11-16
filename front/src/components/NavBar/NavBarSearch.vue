@@ -28,7 +28,7 @@ export default {
         searchPush() {
             if (this.searchKeyword) {
                 this.searchClick = false
-                this.$router.push({name: 'SearchPageView', params: { keyword : this.searchKeyword }})
+                this.$router.push({name: 'search', params: { keyword : this.searchKeyword }})
                 this.searchKeyword = null
             } else {
                 alert('검색어를 입력해주세요!')

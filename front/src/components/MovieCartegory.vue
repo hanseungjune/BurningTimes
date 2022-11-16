@@ -1,5 +1,6 @@
 <template>
-  <div class="container d-flex overflow-hidden viewport" ref="viewport">
+<div class="d-flex justify-content-center">
+  <div class="d-flex overflow-hidden viewport w-75 align-item-center" ref="viewport">
     <div class="row d-flex flex-nowrap" id="horizontalScroll" ref="content">
         <MyCard 
             v-for="movie in allMovieList"
@@ -7,9 +8,10 @@
             :movie = movie
             />
     </div>
-    <i class="bi bi-chevron-left" @click="clickLeft"></i>
-    <i class="bi bi-chevron-right" @click="clickRight"></i>
+    <i class="bi bi-chevron-left fs-1" @click="clickLeft"></i>
+    <i class="bi bi-chevron-right fs-1" @click="clickRight"></i>
   </div>
+</div>
 </template>
 
 <script>
@@ -89,17 +91,15 @@ export default {
     opacity: 0.5;
     border-radius: 10%;
     position: absolute;
-    top: 30%;
+    top: 43%;
     left: 10px;
-    font-size: 6vw;
 }
 .bi-chevron-right {
     background-color: white;
     opacity: 0.5;
     border-radius: 10%;
     position: absolute;
-    top: 30%;
+    top: 43%;
     right: 10px;
-    font-size: 6vw;
 }
 </style>
