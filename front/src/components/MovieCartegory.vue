@@ -1,40 +1,85 @@
 <template>
-<div class="d-flex justify-content-center">
-  <div class=" overflow-hidden viewport w-75" ref="viewport">
-    <div class="row flex-nowrap" id="horizontalScroll" ref="content">
-        <MyCard 
-            v-for="movie in allMovieList"
-            :key = movie.id
-            :movie = movie
-            />
+<div class="d-flex container-fluid">
+  <div class="d-flex viewport overflow-hidden w-100 py-5" ref="viewport">
+    <div class="d-flex  row flex-nowrap " id="horizontalScroll" ref="content">
+        <MovieCartegoryCard 
+            v-for="genre in cartegory"
+            :key="genre.id"
+            :genre="genre"
+        />
     </div>
-    <i class="bi bi-chevron-left fs-1" @click="clickLeft"></i>
-    <i class="bi bi-chevron-right fs-1" @click="clickRight"></i>
+    <i class="bi bi-chevron-left fs-1" @click.stop="clickLeft"></i>
+    <i class="bi bi-chevron-right fs-1" @click.stop="clickRight"></i>
   </div>
 </div>
 </template>
 
 <script>
 import ScrollBooster from 'scrollbooster'
-import MyCard from '@/components/MyCard'
-
+import MovieCartegoryCard from '@/components/MovieCartegoryCard'
 
 
 export default {
     name: 'MovieCartegory',
     components: {
-        MyCard,
+        MovieCartegoryCard,
     },
     data() {
         return {
-            cartegory: this.$store.state.cartegory,
+            cartegory: [
+                {
+                    "id": 28,
+                    "name": "액션"
+                },
+                {
+                    "id": 16,
+                    "name": "애니메이션"
+                },
+                {
+                    "id": 35,
+                    "name": "코미디"
+                },
+                {
+                    "id": 80,
+                    "name": "범죄"
+                },
+                {
+                    "id": 18,
+                    "name": "드라마"
+                },
+                {
+                    "id": 14,
+                    "name": "판타지"
+                },
+                {
+                    "id": 36,
+                    "name": "역사"
+                },
+                {
+                    "id": 27,
+                    "name": "공포"
+                },
+                {
+                    "id": 10749,
+                    "name": "로맨스"
+                },
+                {
+                    "id": 878,
+                    "name": "SF"
+                },
+                {
+                    "id": 53,
+                    "name": "스릴러"
+                },
+                {
+                    "id": 10752,
+                    "name": "전쟁"
+                }
+            ],
             scrollB: null,
         }
     },
     computed: {
-        allMovieList() {
-            return this.$store.state.movieList
-        }
     },
     methods: {
         // 스크롤 부스터
@@ -55,7 +100,7 @@ export default {
             // 현재 포지션을 받아옴
             const xPosition = this.scrollB.getState().position.x
             // xPosition+this.scrollB.edgeX.from: 스크롤 할 컨텐츠의 전체 넓이
-            if (xPosition>-10) {this.scrollB.scrollTo({ x: xPosition+this.scrollB.edgeX.from/12 , y: 0})
+            if (xPosition>-10) {this.scrollB.scrollTo({ x: xPosition+this.scrollB.edgeX.from/5 , y: 0})
                 setTimeout(()=>{
                 if (this.scrollB.getState().position.x < 0) {
                     this.scrollB.scrollTo({ x: 0 , y: 0})
@@ -66,7 +111,7 @@ export default {
             console.log(this.scrollWidth)
             const xPosition = this.scrollB.getState().position.x
             if (xPosition< -this.scrollB.edgeX.from + 10) {
-                this.scrollB.scrollTo({ x: xPosition-this.scrollB.edgeX.from/12 , y: 0})
+                this.scrollB.scrollTo({ x: xPosition-this.scrollB.edgeX.from/5 , y: 0})
                 setTimeout(()=>{
                 if (this.scrollB.getState().position.x > -this.scrollB.edgeX.from) {
                     this.scrollB.scrollTo({ x: -this.scrollB.edgeX.from , y: 0})
@@ -84,7 +129,7 @@ export default {
 
 <style>
 .viewport {
-    position: absolute;
+    position: relative;
 }
 .bi-chevron-left {
     background-color: white;
