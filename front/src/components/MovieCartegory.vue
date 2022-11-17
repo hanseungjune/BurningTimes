@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex justify-content-center">
-  <div class="d-flex overflow-hidden viewport w-75 align-item-center" ref="viewport">
-    <div class="row d-flex flex-nowrap" id="horizontalScroll" ref="content">
+  <div class=" overflow-hidden viewport w-75" ref="viewport">
+    <div class="row flex-nowrap" id="horizontalScroll" ref="content">
         <MyCard 
             v-for="movie in allMovieList"
             :key = movie.id
