@@ -5,6 +5,7 @@ import SearchPageView from '@/views/SearchPageView'
 import LoginPageView from '@/views/LoginPageView'
 import SignupPageView from '@/views/SignupPageView'
 import UserInfoPageView from '@/views/UserInfoPageView'
+import MyTest from '@/views/MyTest'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/userinfo/:userPk',
     name: 'userinfo',
     component: UserInfoPageView
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: MyTest
   },
 ]
 

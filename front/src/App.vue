@@ -3,7 +3,7 @@
     <NavBar />
     <!-- 슬라이드 트랜지션 -->
     <transition  mode="out-in">
-      <router-view class="m-5"/>
+      <router-view style="margin-top: 56px;"/>
     </transition>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
     },
     created() {
         this.$store.dispatch('getMovieList')
-    }
+    },
+    
 }
 </script>
 
@@ -30,7 +31,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 
 /* 슬라이드 페이드 */
 .v-enter-active {

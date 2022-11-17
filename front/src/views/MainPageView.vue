@@ -1,16 +1,18 @@
 <template>
-  <div>
-    <!-- <img src="@/assets/movie.png" alt="main" class="main-page-scale-img"> -->
-    <div class="container">
-        <div class="row">
-            <MyCard 
-            v-for="movie in allMovieList"
-            :key = movie.id
-            :movie = movie
-            />
-        </div>
+  <div style="d-flex" >
+    <div id="background-genre" :style="{ backgroundImage: 'url(' + require(`@/assets/genre/${backgroundImages}.png`)+')'}"></div>
         <MovieCartegory />
-    </div>
+        <div class="container">
+            <div class="row">
+                <transition-group name="flip" mode="flip" class="row">
+                <MyCard 
+                v-for="movie in allMovieList"
+                :key = movie.id
+                :movie = movie
+                />
+                </transition-group>
+            </div>
+        </div>
   </div>
 </template>
 
@@ -26,19 +28,39 @@ export default {
     },
     computed: {
         allMovieList() {
-            return this.$store.state.movieList
+            return this.$store.getters.movieListCutting
+        },
+        backgroundImages() {
+            return this.$store.getters.backgroundGetters
         }
     },
 }
 </script>
 
 <style>
-.main-page-scale-img {
+#background-genre{
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 7;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: background-image 0.5s;
+    background-position: 0% 0%;
+    background-size: 100vw 1920px ;
+    filter: blur(4px);
+}
+/* 슬라이드 페이드 */
+.flip-enter-active {
+  transition: all 1s ease;
+}
+.flip-leave-active {
+  transition: all .4s ease;
+}
+.flip-enter{
+  transform: translateY(100rem);
+  opacity: 0;
+} 
+.flip-leave-to {
+  transform: translateY(100rem);
+  opacity: 1;
 }
 </style>
