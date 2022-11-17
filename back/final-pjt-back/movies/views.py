@@ -4,11 +4,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
+
 # permission Decorators
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Movie
+from django.contrib.auth import get_user_model
 from .serializers import MovieListSerializer, MovieSerializer
 
 @api_view(['GET'])
@@ -33,19 +35,24 @@ def movie_detail(request, movie_pk):
         return Response(serializer.data)
 
 # 영화 좋아요
-@require_POST
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def movie_like(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    user = request.user
-    if movie.like_users.filter(pk=user.pk).exists():
-        movie.like_users.remove(user)
-    else:
-        movie.like_users.add(user)
-    return Response(status=status.HTTP_202_ACCEPTED)
+    user_pk = request.POST.get('userPk')
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.POST.get('userPk'):
+        if movie.like_users.filter(pk=user.pk).exists():
+            movie.like_users.remove(user)
+            # movie["like_users"].remove(user)
+        else:
+            movie.like_users.add(user)
+            # movie["like_users"].append(user)
+        return Response(status=status.HTTP_202_ACCEPTED)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 # 영화 추천 알고리즘
-@require_safe
+@api_view(['GET'])
 def recommended(request):
     # 사용자가 좋아요를 누른 영화와 같은 장르의 영화 10개를 추천
     # 평점(2)과 좋아요(1) 기준으로 10개 추천
@@ -90,3 +97,4 @@ def recommended(request):
             'new_lst' : new_lst
         }
         return render (request, 'movies/recommended.html', context)
+        return Response(context)
