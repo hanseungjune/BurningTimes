@@ -5,36 +5,62 @@ import pprint
 page_num = 1
 movie_lst = []
 
-while page_num <= 500:
+while page_num <= 499:
   URL = f'https://api.themoviedb.org/3/movie/popular?api_key=0802a25be8939d20e57e4d6621c62927&language=ko-KR&page={page_num}'
   response = requests.get(URL).json()
-  movie_lst.append(response['results'])
+  results = response['results']
+  for result in results:
+    if result['popularity'] < 100:
+      continue
+    else:
+      movie_lst.append(result)
   page_num += 1
 
+# pprint.pprint(movie_lst)
+# print(len(movie_lst[0]))
+
 popular_movies = []
+popular_movies_actors = []
 
-for i in range(44):
-  for movie in movie_lst[i]:
-    movies_dict = dict()
-    movies_dict["model"] = 'movies.movie'
+for movie in movie_lst:
+    try:
+        print(movie)
+        ACTORS_URL = f'https://api.themoviedb.org/3/movie/{int(movie["id"])}/credits?api_key=0802a25be8939d20e57e4d6621c62927&language=ko-KR'
+        response1 = requests.get(ACTORS_URL).json()
+        # popular_movies_actors.append(response1["cast"])
 
-    # print(movie)
-    fields_dict = dict()
-    fields_dict['title'] = movie["title"]
-    fields_dict['tmdb_id'] = movie["id"]
-    fields_dict['release_date'] = movie["release_date"]
-    fields_dict['popularity'] = movie["popularity"]
-    fields_dict['vote_count'] = movie["vote_count"]
-    fields_dict['vote_average'] = movie["vote_average"]
-    fields_dict['overview'] = movie["overview"]
-    fields_dict['poster_path'] = movie["poster_path"]
-    fields_dict['genres'] = movie["genre_ids"]
-    fields_dict['like_users'] = []
+        cnt = 0
+        for cast in response1["cast"]:
+            if cnt == 5:
+              break
 
-    movies_dict['fields'] = fields_dict
-    popular_movies.append(movies_dict)
+            if cast["known_for_department"] != "Acting":
+              continue
+            else:
+                actor_dict = dict()
+                actor_dict["model"] = "movies.actor"
+                actor_dict["pk"] = cast["id"]
 
-with open("./popular_movies.json", 'w') as f:
-  json.dump(popular_movies, f, indent=4, ensure_ascii=False)
+                fields_dict = dict()
+                fields_dict["name"] = cast["name"]
+                actor_dict['fields'] = fields_dict
+                cnt += 1
+            popular_movies_actors.append(actor_dict)
+        print(len(actor_dict))
+    except KeyError:
+        movies_dict = dict()
+        continue
+    except UnicodeEncodeError:
+        movies_dict = dict()
+        continue
+    except FileNotFoundError:
+        movies_dict = dict()
+        continue
+    except KeyboardInterrupt:
+        movies_dict = dict()
+        continue
 
-pprint.pprint(popular_movies)
+with open("./popular_movies_actors.json", 'w', encoding='UTF-8') as f:
+  json.dump(popular_movies_actors, f, indent=4, ensure_ascii=False)
+
+pprint.pprint(popular_movies_actors)
