@@ -2,7 +2,9 @@
 <div>
   <h1>UserInfo</h1>
   <h2>{{ userInformation?.username }}</h2>
-  <button class="btn btn-danger" v-if="$route.params.userPk === $store.state.userPk" @click="removeUser">회원탈퇴</button>
+  <button class="btn btn-danger" v-if="$route.params.userPk === $store.getters.userPkGetters" @click="removeUser">회원탈퇴</button>
+  <br>
+  <button class="btn btn-success" @click="followUser">팔로우</button>
 </div>
 </template>
 
@@ -49,6 +51,24 @@ export default {
                 this.$cookies.remove('token')
                 this.$store.state.userPk = null
                 this.$router.push({name: 'main'})
+            })
+            .catch(err => {
+                console.log(err.response)
+                console.log(err.request)
+                console.log(err.message)
+            })
+        },
+        followUser() {
+            const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            axios({
+                method: 'post',
+                url: `${DJANGO_API_URL}/api/accounts/user/follow/2/3/`,
+                headers: {
+                    Authorization: `Token ${this.$cookies.get('token')}`
+                }
+            })
+            .then(res => {
+                console.log(res.data)
             })
             .catch(err => {
                 console.log(err.response)

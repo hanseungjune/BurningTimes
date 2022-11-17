@@ -10,7 +10,7 @@
             <input type="password" class="form-control" id="userpassword1" placeholder="비밀번호를 입력하세요" v-model="password">
             <label for="userpassword1">비밀번호</label>
         </div>
-        <input class="btn btn-primary" type="submit" value="회원가입">
+        <input class="btn btn-primary" type="submit" value="로그인">
     </form>
 </div>
 </template>
