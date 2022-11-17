@@ -2,6 +2,7 @@
   <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="nav">
+        <router-link class="nav-link" :to="{ name: 'test'}">Test</router-link>
         <router-link class="navbar-brand" :to="{ name: 'main'}">Ssafy Movie</router-link>
         <NavBarSearch />
       </div>
