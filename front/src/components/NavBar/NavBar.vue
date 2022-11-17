@@ -26,7 +26,7 @@ export default {
     },
     computed: {
       isLogin() {
-        return this.$store.state.userPk
+        return this.$store.getters.userPkGetters
       }
     },
     methods: {
