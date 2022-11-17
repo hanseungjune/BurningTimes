@@ -3,7 +3,7 @@ from django.views.decorators.http import require_safe, require_POST, require_htt
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-
+import random
 
 # permission Decorators
 from rest_framework.decorators import permission_classes
@@ -51,50 +51,206 @@ def movie_like(request, movie_pk):
         return Response(status=status.HTTP_202_ACCEPTED)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-# 영화 추천 알고리즘
-@api_view(['GET'])
-def recommended(request):
-    # 사용자가 좋아요를 누른 영화와 같은 장르의 영화 10개를 추천
-    # 평점(2)과 좋아요(1) 기준으로 10개 추천
+# (좋아요 누른 영화만)(회원만)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_movies(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    # 특정 userPk를 가지고있는 유저가 좋아요 누른 영화 가져오고
+    like_movies = user.like_movies.all()
+    serializer = MovieListSerializer(like_movies, many=True)
+    return Response(serializer.data)
+
+# 좋아요 누른 영화는 제외
+# (좋아요 누른 장르 중에서) 평점 기준 영화 추천 알고리즘
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def recommended_vote_average(request, user_pk):
     movies = get_list_or_404(Movie)
-    if request.user.is_authenticated:
-    # 내가(사용자) 좋아요 누른 영화 가져오고
-        me = request.user
-        like_movies = me.like_movies.all()
+    # userPk = request.POST.get('userPk')
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    # if user.is_authenticated:
+    # 특정 userPk를 가지고있는 유저가 좋아요 누른 영화 가져오고
+    like_movies = user.like_movies.all()
     # 해당 영화와 같은 장르만
-        like_dict = dict()
-        for like_movie in like_movies:
-            for genre in like_movie.genres.all():
-                if genre.name not in like_dict:
-                    like_dict[genre.name] = 1
-                else:
-                    like_dict[genre.name] += 1
+    like_dict = dict()
+    for like_movie in like_movies:
+        for genre in like_movie.genres.all():
+            if genre.pk not in like_dict:
+                like_dict[genre.pk] = 1
+            else:
+                like_dict[genre.pk] += 1
     # 사용자가 누른 좋아요 영화의 장르 카운팅해서 가장 많이 본 장르 정하고
-                max_movie_like = max(like_dict,key=like_dict.get)
+    max_movie_like = max(like_dict,key=like_dict.get)
+    print(max_movie_like)
     # 그 장르에 해당하는 영화 다 가져오고
-        movie_lst = []
-        for movie in movies:
-            for genre in movie.genres.all():
-                if genre.name == max_movie_like:
-                    movie_lst.append(movie)
-                    # print(movie_lst)
+    recommend_movie_lst = []
+    for movie in movies:
+        for genre in movie.genres.all():
+            if genre.pk == max_movie_like:
+                recommend_movie_lst.append(movie)
 
-        # print('+++++++++++++++++++++++++')
+    recommend_movie_sorted_lst = []
+    for recommend_movie in recommend_movie_lst:
+      # 추천영화가 좋아요 누른 영화에 속한다면, 제외
+        if recommend_movie in like_movies:
+          continue
+        recommend_lst = []
 
-        new_lst = []
-        for like2_movie in movie_lst:
-            new_lst.append((
-                like2_movie.like_users.count(),
-                like2_movie.vote_average,
-                like2_movie.title,
-                like2_movie.poster_path,
-                like2_movie.genres.all()))
-        
-    # 그 영화들 중에서 좋아요(1), 평점(2) => 최상단 10개를 뽑아오기
-        new_lst.sort(key=lambda x : (-x[0], -x[1]))
-        new_lst = new_lst[:10]
-        context = {
-            'new_lst' : new_lst
-        }
-        return render (request, 'movies/recommended.html', context)
-        return Response(context)
+        recommend_lst.append(recommend_movie.id),
+        recommend_lst.append(recommend_movie.title),
+        recommend_lst.append(recommend_movie.release_date),
+        recommend_lst.append(recommend_movie.popularity),
+        recommend_lst.append(recommend_movie.vote_count),
+        recommend_lst.append(recommend_movie.vote_average),
+        recommend_lst.append(recommend_movie.overview),
+        recommend_lst.append(recommend_movie.poster_path),
+        recommend_lst.append(recommend_movie.tmdb_id),
+        recommend_lst.append(recommend_movie.genres.all()),
+        recommend_lst.append(recommend_movie.like_users.all())
+
+        # 다 넣으면 배열에 넣기
+        recommend_movie_sorted_lst.append(recommend_lst)
+        recommend_movie_sorted_lst.sort(key=lambda x : (-x[5], -x[4]))
+
+    recommend_movie_sorted_final_lst = []
+    for recommend_movie in recommend_movie_sorted_lst:
+        # 딕셔너리 초기화 
+        recommend_dict = dict()
+
+        recommend_dict["id"]=recommend_movie[0]
+        recommend_dict["title"]=recommend_movie[1]
+        recommend_dict["release_date"]=recommend_movie[2]
+        recommend_dict["popularity"]=recommend_movie[3]
+        recommend_dict["vote_count"]=recommend_movie[4]
+        recommend_dict["vote_average"]=recommend_movie[5]
+        recommend_dict["overview"]=recommend_movie[6]
+        recommend_dict["poster_path"]=recommend_movie[7]
+        recommend_dict["tmdb_id"]=recommend_movie[8]
+        recommend_dict["genres"]=recommend_movie[9]
+        recommend_dict["like_users"]=recommend_movie[10]
+
+        recommend_movie_sorted_final_lst.append(recommend_dict)
+
+    serializer = MovieListSerializer(recommend_movie_sorted_final_lst[0:12], many=True)
+    return Response(serializer.data)
+
+# 좋아요 누른 영화는 제외
+# (좋아요 누른 장르 중에서) 관객수 기준 영화 추천 알고리즘
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def recommended_vote_count(request, user_pk):
+    movies = get_list_or_404(Movie)
+    # userPk = request.POST.get('userPk')
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    # if user.is_authenticated:
+    # 특정 userPk를 가지고있는 유저가 좋아요 누른 영화 가져오고
+    like_movies = user.like_movies.all()
+    # 해당 영화와 같은 장르만
+    like_dict = dict()
+    for like_movie in like_movies:
+        for genre in like_movie.genres.all():
+            if genre.pk not in like_dict:
+                like_dict[genre.pk] = 1
+            else:
+                like_dict[genre.pk] += 1
+    # 사용자가 누른 좋아요 영화의 장르 카운팅해서 가장 많이 본 장르 정하고
+    max_movie_like = max(like_dict,key=like_dict.get)
+    print(max_movie_like)
+    # 그 장르에 해당하는 영화 다 가져오고
+    recommend_movie_lst = []
+    for movie in movies:
+        for genre in movie.genres.all():
+            if genre.pk == max_movie_like:
+                recommend_movie_lst.append(movie)
+
+    # print('+++++++++++++++++++++++++')
+
+    recommend_movie_sorted_lst = []
+    for recommend_movie in recommend_movie_lst:
+      # 추천영화가 좋아요 누른 영화에 속한다면, 제외
+        if recommend_movie in like_movies:
+          continue
+        recommend_lst = []
+
+        recommend_lst.append(recommend_movie.id),
+        recommend_lst.append(recommend_movie.title),
+        recommend_lst.append(recommend_movie.release_date),
+        recommend_lst.append(recommend_movie.popularity),
+        recommend_lst.append(recommend_movie.vote_count),
+        recommend_lst.append(recommend_movie.vote_average),
+        recommend_lst.append(recommend_movie.overview),
+        recommend_lst.append(recommend_movie.poster_path),
+        recommend_lst.append(recommend_movie.tmdb_id),
+        recommend_lst.append(recommend_movie.genres.all()),
+        recommend_lst.append(recommend_movie.like_users.all())
+
+        # 다 넣으면 배열에 넣기
+        recommend_movie_sorted_lst.append(recommend_lst)
+        recommend_movie_sorted_lst.sort(key=lambda x : (-x[3], -x[4]))
+
+    recommend_movie_sorted_final_lst = []
+    for recommend_movie in recommend_movie_sorted_lst:
+        # 딕셔너리 초기화 
+        recommend_dict = dict()
+
+        recommend_dict["id"]=recommend_movie[0]
+        recommend_dict["title"]=recommend_movie[1]
+        recommend_dict["release_date"]=recommend_movie[2]
+        recommend_dict["popularity"]=recommend_movie[3]
+        recommend_dict["vote_count"]=recommend_movie[4]
+        recommend_dict["vote_average"]=recommend_movie[5]
+        recommend_dict["overview"]=recommend_movie[6]
+        recommend_dict["poster_path"]=recommend_movie[7]
+        recommend_dict["tmdb_id"]=recommend_movie[8]
+        recommend_dict["genres"]=recommend_movie[9]
+        recommend_dict["like_users"]=recommend_movie[10]
+
+        recommend_movie_sorted_final_lst.append(recommend_dict)
+
+    for row in recommend_movie_sorted_final_lst:
+      print(row)
+    print()
+
+    # return render (request, 'movies/recommended.html', context)
+    serializer = MovieListSerializer(recommend_movie_sorted_final_lst[0:12], many=True)
+    return Response(serializer.data)
+
+# (좋아요 누른 장르 중에서) 랜덤으로 추출(회원만)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def recommended_random(request, user_pk):
+    movies = get_list_or_404(Movie)
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    # 특정 userPk를 가지고있는 유저가 좋아요 누른 영화 가져오고
+    like_movies = user.like_movies.all()
+    # 해당 영화와 같은 장르만
+    like_dict = dict()
+    for like_movie in like_movies:
+        for genre in like_movie.genres.all():
+            if genre.pk not in like_dict:
+                like_dict[genre.pk] = 1
+            else:
+                like_dict[genre.pk] += 1
+    # 사용자가 누른 좋아요 영화의 장르 카운팅해서 가장 많이 본 장르 정하고
+    max_movie_like = max(like_dict,key=like_dict.get)
+
+    print(max_movie_like)
+
+    # 그 장르에 해당하는 영화 다 가져오고
+    recommend_movie_lst = []
+    for movie in movies:
+        for genre in movie.genres.all():
+            if genre.pk == max_movie_like:
+                recommend_movie_lst.append(movie)
+
+    random_movie_lst = []
+    for recommend_movie in recommend_movie_lst:
+    # 추천영화가 좋아요 누른 영화에 속한다면, 제외
+        if recommend_movie in like_movies:
+            continue
+        random_movie_lst.append(recommend_movie)
+
+    random_lst = random.sample(recommend_movie_lst, 12)
+    serializer = MovieListSerializer(random_lst[0:12], many=True)
+    return Response(serializer.data)
