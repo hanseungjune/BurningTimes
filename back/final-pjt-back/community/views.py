@@ -79,7 +79,8 @@ def comment_create(request, review_pk):
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
       if request.POST.get('parent'):
-          parent_comment = get_object_or_404(Comment,pk = request.POST.get('parent'))
+        # userPk
+          parent_comment = get_object_or_404(Comment, pk = request.POST.get('parent'))
           serializer.save(review=review, parent_comment = parent_comment)
       else:
         serializer.save(review=review)
