@@ -32,7 +32,7 @@ const userAccount = {
     // 로그아웃
     REMOVE_USER(state) {
       state.userPk = null
-    }
+    },
   },
   actions: {
     // 회원가입만
