@@ -2,7 +2,7 @@
 <div class="col-3 my-2">
   <div class="flip-card">
     <div class="flip-card-inner">
-      <div class="card  border-0 h-100 flip-card-front" id="mycard" @click="modal.show()" :style="{ backgroundImage: 'url(' +'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}` + ')'}" >
+      <div class="card  border-0 flip-card-front" id="mycard" @click="modal.show()" :style="{ backgroundImage: 'url(' +'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}` + ')'}" >
       <br>
       <br>
       <br>
@@ -31,7 +31,7 @@
   </div>
   
   <!-- 모달 -->
-  <div class="modal fade" ref="exampleModal" tabindex="-1" aria-hidden="true"  style="overflow: hidden;">
+  <div class="modal fade zoom-in" ref="exampleModal" tabindex="-1" aria-hidden="true"  style="overflow: hidden;">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content" style="height: 100vh;">
         <div class="modal-header">
@@ -76,6 +76,7 @@ export default {
     transition: transform 330ms ease-in-out;
     z-index: 1;
   } */
+
   /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
   .flip-card {
     background-color: transparent;
@@ -121,5 +122,27 @@ export default {
     background-color: black;
     color: white;
     transform: rotateY(180deg);
+  }
+  /* 모달 애니메이션 */
+  .modal.fade .modal-dialog{
+    -webkit-transform: translate(0,0)!important;
+    transform: translate(0,0)!important;
+  }
+
+  .zoom-in {
+    transform: translateY(100vh)!important;
+    opacity: 1!important;
+    -webkit-transition: .5s all ease-in-out!important;
+    -moz-transition: .5s all ease-in-out!important;
+    -ms-transition: .5s all ease-in-out!important;
+    -o-transition: .5s all ease-in-out!important;
+    transition: .5s all ease-in-out!important;
+    display: block !important;
+  }
+
+  .zoom-in.show {
+    opacity: 1!important;
+    transform: translateY(0)!important;
+    transform:none!important;
   }
 </style>
