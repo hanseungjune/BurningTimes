@@ -8,6 +8,7 @@
       </div>
       <div class="nav">
         <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
+        <router-link class="nav-link" :to="{ name: 'genre'}">Genre</router-link>
         <router-link class="nav-link" :to="{ name: 'login'}" v-if="!isLogin">Login</router-link>
         <a class="nav-link" v-if="isLogin" @click="userLogout">Logout</a>
         <router-link class="nav-link" v-if="!isLogin" :to="{ name: 'signup'}">Signup</router-link>
