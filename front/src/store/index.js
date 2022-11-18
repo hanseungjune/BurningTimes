@@ -36,7 +36,6 @@ export default new Vuex.Store({
     },
     BG_GET(state, genreId) {
       state.backgroundImg = genreId
-      console.log(state.backgroundImg)
     }
   },
   actions: {

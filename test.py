@@ -36,6 +36,7 @@ for movie in movie_lst:
 
             if cast["known_for_department"] != "Acting":
               continue
+            
             else:
                 actor_dict = dict()
                 actor_dict["model"] = "movies.actor"
