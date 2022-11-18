@@ -18,6 +18,10 @@ export default {
     },
     created() {
         this.$store.dispatch('getMovieList')
+        if (this.$cookies.get('token')) {
+          console.log(111)
+          this.$store.dispatch('getUserPk')
+        }
     },
     
 }
