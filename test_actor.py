@@ -10,7 +10,7 @@ while page_num1 <= 499:
   response1 = requests.get(URL).json()
   results1 = response1['results']
   for result in results1:
-    if result['popularity'] < 100:
+    if result['vote_count'] < 100:
       continue
     else:
       movie_lst1.append(result)
@@ -115,7 +115,7 @@ print(len(popular_movies))
         #     movies_dict = dict()
         #     continue
 
-with open("./popular_movies.json", 'w', encoding='UTF-8') as f:
+with open("./popular_actors.json", 'w', encoding='UTF-8') as f:
   json.dump(popular_movies, f, indent=4, ensure_ascii=False)
 
 pprint.pprint(popular_movies)

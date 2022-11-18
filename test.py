@@ -10,7 +10,7 @@ while page_num <= 499:
   response = requests.get(URL).json()
   results = response['results']
   for result in results:
-    if result['popularity'] < 100:
+    if result['vote_count'] < 100:
       continue
     else:
       movie_lst.append(result)
@@ -24,16 +24,11 @@ popular_movies_actors = []
 
 for movie in movie_lst:
     try:
-        print(movie)
         ACTORS_URL = f'https://api.themoviedb.org/3/movie/{int(movie["id"])}/credits?api_key=0802a25be8939d20e57e4d6621c62927&language=ko-KR'
         response1 = requests.get(ACTORS_URL).json()
         # popular_movies_actors.append(response1["cast"])
 
-        cnt = 0
         for cast in response1["cast"]:
-            if cnt == 5:
-              break
-
             if cast["known_for_department"] != "Acting":
               continue
             
@@ -45,7 +40,7 @@ for movie in movie_lst:
                 fields_dict = dict()
                 fields_dict["name"] = cast["name"]
                 actor_dict['fields'] = fields_dict
-                cnt += 1
+                
             popular_movies_actors.append(actor_dict)
         print(len(actor_dict))
     except KeyError:
@@ -61,7 +56,7 @@ for movie in movie_lst:
         movies_dict = dict()
         continue
 
-with open("./popular_movies_actors.json", 'w', encoding='UTF-8') as f:
+with open("./popular_actors.json", 'w', encoding='UTF-8') as f:
   json.dump(popular_movies_actors, f, indent=4, ensure_ascii=False)
 
 pprint.pprint(popular_movies_actors)
