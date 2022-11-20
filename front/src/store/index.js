@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import userAccount from './modules/userAccount'
+import _ from 'lodash'
 // import VueCookies from 'vue-cookies'
 
 const DJANGO_API_URL = 'http://127.0.0.1:8000'
@@ -11,12 +12,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     movieList: [],
-    genreSelectList: [],
-    backgroundImg: '14',
+    genreSelectList: null,
+    firstSelectList: null,
+    backgroundImg: '0',
   },
   getters: {
-    movieListCutting(state) {
-      return state.genreSelectList.slice(0, 20)
+    selectMovieCutting(state) {
+      return _.sampleSize(state.firstSelectList, 20)
+    },
+    movieListCutting: (state) => {
+      return _.sampleSize(state.genreSelectList, 20)
     },
     backgroundGetters(state) {
       return state.backgroundImg
@@ -26,16 +31,26 @@ export default new Vuex.Store({
     GET_MOVIE_LIST(state, payload) {
       state.movieList = payload
       state.genreSelectList = payload
+      state.firstSelectList = payload
     },
     SELECT_GENRE(state, genreId) {
-      state.genreSelectList = state.movieList.filter((el) => {
+      if (genreId !== 0) {
+        state.genreSelectList = state.movieList.filter((el) => {
         if (el.genres.includes(genreId)) {
           return el
         }
       })
+      } else {
+        state.genreSelectList = _.sampleSize(state.movieList, 20)
+      }
     },
     BG_GET(state, genreId) {
       state.backgroundImg = genreId
+    },
+    GET_FIRST_SELECT(state, selected) {
+      state.firstSelectList = state.movieList.filter((el) => {
+        return !selected.includes(el.genres)
+      })
     }
   },
   actions: {

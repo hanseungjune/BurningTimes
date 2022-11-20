@@ -25,14 +25,16 @@ export default {
         }
     },
     methods: {
-        logIn() {
+        async logIn() {
             const username = this.username
             const password = this.password
             const userdata = {
                 username, password
             }
-            this.$store.dispatch('LoginPath', userdata)
-            this.$router.push({name: 'main'})
+            await this.$store.dispatch('LoginPath', userdata)
+            if (this.$store.getters.userPkGetters !== null){
+                this.$router.push({name: 'main'})
+            }
         }
     }
 }

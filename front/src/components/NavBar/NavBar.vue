@@ -9,10 +9,10 @@
       <div class="nav">
         <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
         <router-link class="nav-link" :to="{ name: 'genre'}">Genre</router-link>
-        <router-link class="nav-link" :to="{ name: 'login'}" v-if="!isLogin">Login</router-link>
-        <a class="nav-link" v-if="isLogin" @click="userLogout">Logout</a>
-        <router-link class="nav-link" v-if="!isLogin" :to="{ name: 'signup'}">Signup</router-link>
-        <router-link class="nav-link" v-if="isLogin" :to="{ name: 'userinfo', params: { userPk: isLogin } }">UserInfo</router-link>
+        <router-link class="nav-link" :to="{ name: 'login'}" v-show="!isLogin">Login</router-link>
+        <a class="nav-link" v-show="$store.getters.userPkGetters" @click="userLogout">Logout</a>
+        <router-link class="nav-link" v-show="!$store.getters.userPkGetters" :to="{ name: 'signup'}">Signup</router-link>
+        <router-link class="nav-link" v-show="$store.getters.userPkGetters" :to="{ name: 'userinfo', params: { userPk: isLogin } }">UserInfo</router-link>
       </div>
     </div>
   </nav>
