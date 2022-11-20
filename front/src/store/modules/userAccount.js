@@ -72,6 +72,7 @@ const userAccount = {
         context.commit('SET_TOKEN', res.data)
       })
       .catch(err => {
+        alert('유저 정보를 다시 확인해 주세요!')
         console.log(err.response)
         console.log(err.request)
         console.log(err.message)
@@ -128,8 +129,6 @@ const userAccount = {
         console.log(err.message)
       })
     }
-
-    // 유저 탈퇴
     
   },
   modules: {
