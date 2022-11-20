@@ -7,6 +7,7 @@ import SignupPageView from '@/views/SignupPageView'
 import UserInfoPageView from '@/views/UserInfoPageView'
 import GenrePageView from '@/views/GenrePageView'
 import MyTest from '@/views/MyTest'
+import FirstSelectMovieView from '@/views/FirstSelectMovieView'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/test',
     name: 'test',
     component: MyTest
+  },
+  {
+    path: '/firstselect',
+    name: 'firstselect',
+    component: FirstSelectMovieView
   },
 ]
 

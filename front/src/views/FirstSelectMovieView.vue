@@ -23,7 +23,7 @@ import FirstSignCard from '@/components/FirstSign/FirstSignCard.vue'
 import axios from 'axios'
 
 export default {
-    name: 'MyTest',
+    name: 'FirstSelectMovieView',
     components: {
       FirstSignCard
     },
@@ -58,8 +58,8 @@ export default {
                 likemovies
             },
         })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
+          this.$router.push({name: 'main'})
         })
         .catch(err => {
             console.log(err.response)
