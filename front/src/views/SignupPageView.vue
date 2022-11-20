@@ -48,7 +48,7 @@ export default {
                 username, password1, password2
             }
             this.$store.dispatch('SignupPath', userdata)
-            this.$router.push({name: 'main'})
+            this.$router.push({name: 'firstselect'})
         }
     }
 }

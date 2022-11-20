@@ -11,9 +11,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'username')
+        fields = ('first_name', 'last_name', 'email')
         
 class UserDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('is_active')
+        fields = ('is_active', )
+        
