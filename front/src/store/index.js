@@ -18,7 +18,7 @@ export default new Vuex.Store({
   },
   getters: {
     selectMovieCutting(state) {
-      return _.sampleSize(state.firstSelectList, 20)
+      return _.sampleSize(state.firstSelectList, 8)
     },
     movieListCutting: (state) => {
       return _.sampleSize(state.genreSelectList, 20)

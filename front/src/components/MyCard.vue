@@ -2,25 +2,8 @@
 <div class="col-3 my-2">
   <div class="flip-card">
     <div class="flip-card-inner">
-      <div class="card  border-0 flip-card-front" id="mycard" @click="modal.show()" :style="{ backgroundImage: 'url(' +'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}` + ')'}" >
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+      <div class="card h-100 border-0 flip-card-front" id="mycard" @click="modal.show()" >
+      <img class="h-100 rounded-start card-img" :src="'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}`" alt="">
       </div>
       <div class="flip-card-back rounded border-light p-4 overflow-hidden" id="mycard" @click="modal.show()">
         <h1>{{movie.title}}</h1>
