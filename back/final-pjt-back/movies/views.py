@@ -1,5 +1,4 @@
-from django.shortcuts import redirect, render, get_list_or_404, get_object_or_404
-from django.views.decorators.http import require_safe, require_POST, require_http_methods
+from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -108,6 +107,7 @@ def recommended_vote_average(request, user_pk):
         recommend_lst.append(recommend_movie.tmdb_id),
         recommend_lst.append(recommend_movie.genres.all()),
         recommend_lst.append(recommend_movie.like_users.all())
+        recommend_lst.append(recommend_movie.actors.all())
 
         # 다 넣으면 배열에 넣기
         recommend_movie_sorted_lst.append(recommend_lst)
@@ -129,6 +129,7 @@ def recommended_vote_average(request, user_pk):
         recommend_dict["tmdb_id"]=recommend_movie[8]
         recommend_dict["genres"]=recommend_movie[9]
         recommend_dict["like_users"]=recommend_movie[10]
+        recommend_dict["actors"]=recommend_movie[11]
 
         recommend_movie_sorted_final_lst.append(recommend_dict)
 
@@ -184,6 +185,8 @@ def recommended_vote_count(request, user_pk):
         recommend_lst.append(recommend_movie.tmdb_id),
         recommend_lst.append(recommend_movie.genres.all()),
         recommend_lst.append(recommend_movie.like_users.all())
+        recommend_lst.append(recommend_movie.actors.all())
+
 
         # 다 넣으면 배열에 넣기
         recommend_movie_sorted_lst.append(recommend_lst)
@@ -205,12 +208,14 @@ def recommended_vote_count(request, user_pk):
         recommend_dict["tmdb_id"]=recommend_movie[8]
         recommend_dict["genres"]=recommend_movie[9]
         recommend_dict["like_users"]=recommend_movie[10]
+        recommend_dict["actors"]=recommend_movie[11]
+
 
         recommend_movie_sorted_final_lst.append(recommend_dict)
 
-    for row in recommend_movie_sorted_final_lst:
-      print(row)
-    print()
+    # for row in recommend_movie_sorted_final_lst:
+    #   print(row)
+    # print()
 
     # return render (request, 'movies/recommended.html', context)
     serializer = MovieListSerializer(recommend_movie_sorted_final_lst[0:12], many=True)

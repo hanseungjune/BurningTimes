@@ -1,43 +1,70 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from .models import Review, Comment
-from .serializers import ReviewSerializer, ReviewListSerializer, CommentSerializer
+from movies.models import Movie
+from django.contrib.auth import get_user_model
+from .serializers import ReviewSerializer, ReviewListSerializer, CommentSerializer, MovieReviewSerializer
 
-# 쓸일 없는데 일단 살려둠(모든 게시판에서 리뷰 달기)
-@api_view(['GET', 'POST'])
+# 게시판 전체 가져오기, 전체에서 작성하기
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def community_list(request):
     if request.method == 'GET':
         reviews = Review.objects.order_by('-pk')
+        print('GET나왔음!')
         serializer = ReviewListSerializer(reviews, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'DELETE', 'PUT'])
-def community_detail(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.method == 'GET':
-        serializer = ReviewSerializer(review)
         return Response(serializer.data)
 
     # elif request.method == 'POST':
     #     serializer = ReviewSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
+    #     user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+    #     movie = get_object_or_404(Movie, pk=request.POST.get('movie'))
+    #     if serializer.is_valid(raise_exception=True):
+    #         print('POST나왔음!')
+    #         serializer.save(user=user, movie=movie)
     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 특정 영화의 게시판 게시글 가져오기, 작성하기
+@api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+def movie_community_list(request, movie_pk):
+  
+  # movie_id 조건 어떻게 달아야 특정 영화 게시글만 나오게 하는지 모르겠
+    if request.method == 'GET':
+        print(111231241242134)
+        print('GET나왔음!')
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieReviewSerializer(movie)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = ReviewSerializer(data=request.data)
+        user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        # movie = get_object_or_404(Movie, pk=request.POST.get('movie'))
+        if serializer.is_valid(raise_exception=True):
+            print('POST나왔음!')
+            serializer.save(user=user, movie=movie)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'DELETE', 'PUT'])
+# @permission_classes([IsAuthenticated])
+def community_detail(request, review_pk, movie_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+    if request.method == 'GET':
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
     
     elif request.method == 'DELETE':
         review.delete()
@@ -46,82 +73,114 @@ def community_detail(request, review_pk):
     elif request.method == 'PUT':
       serializer = ReviewSerializer(review, data=request.data)
       if serializer.is_valid(raise_exception=True):
-        serializer.save()
+        serializer.save(user=user, movie=movie)
         return Response(serializer.data)
 
+# 게시글 추천수(좋아요 개념)
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def review_recommended(request, review_pk, user_pk, movie_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    # movie = get_object_or_404(Movie, pk=movie_pk)
+    user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+    # user_pk = request.POST.get('userPk')
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+
+    if review.like_users.filter(pk=user.pk).exists():
+        review.like_users.remove(user)
+        is_liked = False
+    else:
+        review.like_users.add(user)
+        is_liked = True
+    context = {
+        'is_liked':is_liked,
+        'review_like_users_count':review.like_users.count()
+    }
+    return JsonResponse(context)
+
 # 여기서부터 댓글 기능
-@api_view(['GET'])
-def comment_list(request):
-  comments = get_list_or_404(Comment)
-  serializer = CommentSerializer(comments, many=True)
-  return Response(serializer.data)
-  
+@api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+def comment_list(request, review_pk):
+    if request.method == 'GET':
+        comments = get_list_or_404(Comment)
+        serializer = CommentSerializer(comments, many=True)
+        print('댓글 GET')
+        return Response(serializer.data)
+    # 댓글 생성
+    elif request.method == 'POST':
+        # movie = get_object_or_404(Movie, pk=movie_pk)
+        review = get_object_or_404(Review, pk=review_pk)
+        user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+        serializer = CommentSerializer(data=request.data)
+        print('왓더퍽')
+        if serializer.is_valid(raise_exception=True):
+            if request.POST.get('parent'):
+                print('대댓글_진입')
+                # userPk
+                parent_comment = get_object_or_404(Comment, pk=request.POST.get('parent'))
+                serializer.save(review=review, parent_comment=parent_comment, user=user)
+            else:
+                print('그냥 댓글 진입')
+                serializer.save(review=review, user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 @api_view(['GET','DELETE','PUT'])
-def comment_detail(request, comment_pk):
+# @permission_classes([IsAuthenticated])
+def comment_detail(request, comment_pk, review_pk):
   comment = get_object_or_404(Comment, pk=comment_pk)
+  review = get_object_or_404(Review, pk=review_pk)
+  user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+
   if request.method == 'GET':
     serializer = CommentSerializer(comment)
     return Response(serializer.data)
 
   elif request.method == 'DELETE':
-    comment.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
+      comment.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
 
   elif request.method == 'PUT':
     serializer = CommentSerializer(comment, data=request.data)
     if serializer.is_valid(raise_exception=True):
-      serializer.save()
-      return Response(serializer.data)
+        if request.POST.get('parent'):
+            parent_comment = get_object_or_404(Comment, pk=request.POST.get('parent'))
+            serializer.save(review=review, parent_comment=parent_comment, user=user)
+        else:
+            serializer.save(review=review, user=user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def comment_create(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    serializer = CommentSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-      if request.POST.get('parent'):
-        # userPk
-          parent_comment = get_object_or_404(Comment, pk = request.POST.get('parent'))
-          serializer.save(review=review, parent_comment = parent_comment)
-      else:
-        serializer.save(review=review)
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def comment_create(request, review_pk, parent_comment):
+#     review = get_object_or_404(Review, pk=review_pk)
+#     serializer = CommentSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#       if request.POST.get('parent'):
+#         print('대댓글_진입')
+#         # userPk
+#         parent_comment = get_object_or_404(Comment, pk=request.POST.get('parent'))
+#         serializer.save(review=review, movie=movie, parent_comment=parent_comment)    
 
-@api_view(['GET','DELETE','PUT'])
-def parent_comment(request, review_pk, parent_comment_pk):
-    # review = get_object_or_404(Review, pk=review_pk)
-    parent_comment = get_object_or_404(Comment, pk=parent_comment_pk)
-    if request.method == 'GET':
-      serializer = CommentSerializer(parent_comment)
-      return Response(serializer.data)
+# @api_view(['GET','DELETE','PUT'])
+# # @permission_classes([IsAuthenticated])
+# def parent_comment(request, review_pk, parent_comment_pk, movie_pk):
+#     # review = get_object_or_404(Review, pk=review_pk)
+#     parent_comment = get_object_or_404(Comment, pk=parent_comment_pk)
+#     if request.method == 'GET':
+#       serializer = CommentSerializer(parent_comment)
+#       return Response(serializer.data)
     
-    elif request.method == 'DELETE':
-      parent_comment.delete()
-      return Response(status=status.HTTP_204_NO_CONTENT)
+#     elif request.method == 'DELETE':
+#       parent_comment.delete()
+#       return Response(status=status.HTTP_204_NO_CONTENT)
 
-    elif request.method == 'PUT':
-      serializer = CommentSerializer(parent_comment, data=request.data)
-      if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(serializer.data)
+#     elif request.method == 'PUT':
+#       serializer = CommentSerializer(parent_comment, data=request.data)
+#       if serializer.is_valid(raise_exception=True):
+#         serializer.save()
+#         return Response(serializer.data)
 
-# 게시글 좋아요...?
-# @require_POST
-# def like(request, review_pk):
-#     if request.user.is_authenticated:
-#         review = get_object_or_404(Review, pk=review_pk)
-#         user = request.user
-
-#         if review.like_users.filter(pk=user.pk).exists():
-#             review.like_users.remove(user)
-#             is_liked = False
-#         else:
-#             review.like_users.add(user)
-#             is_liked = True
-#         context = {
-#             'is_liked':is_liked,
-#             'review_like_users_count':review.like_users.count()
-#         }
-#         return JsonResponse(context)
-#         # return redirect('community:index')
-#     return redirect('accounts:login')
 
