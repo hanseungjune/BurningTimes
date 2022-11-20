@@ -16,7 +16,7 @@
 
 <script>
 import ScrollBooster from 'scrollbooster'
-import MovieCartegoryCard from '@/components/MovieCartegoryCard'
+import MovieCartegoryCard from '@/components/Genre/MovieCartegoryCard'
 
 
 export default {
@@ -27,6 +27,10 @@ export default {
     data() {
         return {
             cartegory: [
+                {
+                    "id": 0,
+                    "name": "all"
+                },
                 {
                     "id": 28,
                     "name": "액션"
