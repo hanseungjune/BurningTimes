@@ -3,10 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.community_list),
-    path('<int:review_pk>/', views.community_detail),
-    path('comments/', views.comment_list),
-    path('comments/<int:comment_pk>/', views.comment_detail),
-    path('<int:review_pk>/comments/', views.comment_create),
-    path('<int:review_pk>/comments/<int:parent_comment_pk>/', views.parent_comment),
-    # path('community/<int:review_pk>/comments/<int:parent_comment>/', views.parent_comment),
+    path('movie/<int:movie_pk>/', views.movie_community_list),
+    path('movie/<int:movie_pk>/review/<int:review_pk>/', views.community_detail),
+    path('movie/<int:movie_pk>/review/<int:review_pk>/review_recommended/<int:user_pk>/', views.review_recommended),
+    path('review/<int:review_pk>/comments/', views.comment_list),
+    path('review/<int:review_pk>/comments/<int:comment_pk>/', views.comment_detail),
 ]
