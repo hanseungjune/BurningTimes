@@ -2,7 +2,8 @@
   <div>
     <h1>좋아하시는 영화를 선택 해주세요!</h1>
     <div class="container">
-      <button @click="updateSelect">더 찾아보기!</button>
+      <button @click="updateSelect(1)">뒤로!</button>
+      <button @click="updateSelect(2)">다음으로!</button>
       <button @click="likeMovieEnd">선택완료!</button>
         <div class="row">
             <transition-group name="flip" mode="flip" class="row">
@@ -29,7 +30,8 @@ export default {
     },
     data() {
       return {
-        selected: []
+        selected: [],
+        nums: 8
       }
     },
     computed: {
@@ -38,8 +40,14 @@ export default {
         },
     },
     methods: {
-      updateSelect() {
-        this.$store.commit('GET_FIRST_SELECT', this.selected)
+      updateSelect(fb) {
+        if (fb === 1 && this.nums !== 8) {
+          this.nums -= 8
+          this.$store.commit('GET_FIRST_SELECT', this.nums)
+        } else if (fb===2) {
+          this.nums += 8
+          this.$store.commit('GET_FIRST_SELECT', this.nums)
+        }
       },
       selectMovie(id) {
         if (this.selected.includes(id)) {
@@ -69,7 +77,7 @@ export default {
       }
     },
     created() {
-      this.$store.commit('GET_FIRST_SELECT', this.selected)
+      this.$store.commit('GET_FIRST_SELECT', this.nums)
     }
 }
 </script>

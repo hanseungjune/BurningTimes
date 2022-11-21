@@ -1,30 +1,9 @@
 <template>
 <div class="col-3 my-2">
-  <div>
-    <div>
-      <div class="card" id="mycard" :style="{ backgroundImage: 'url(' +'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}` + ')'}" :class="{ 'is-clicked' : is_clicked }" @click="clickCard">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      </div>
+    <div class="card h-100" id="FirstSigncard"  :class="{ 'is-clicked' : is_clicked }" @click="clickCard">
+    <img class="h-100 rounded-start card-img" :src="'https://image.tmdb.org/t/p/original/'+ `${movie?.poster_path}`" alt="">
     </div>
-  </div>
-</div>
+ </div>
 </template>
 
 <script>
@@ -50,16 +29,11 @@ export default {
 
 <style>
 .is-clicked{
-  border: 10px blue solid !important;
-  border-radius: 2px !important;
+  opacity: 0.2 !important;
+  transition: all 0.3s ease-in-out
 }
-  .card{
-    background-size: cover;
-    box-shadow: inset 0px 0px 40px 40px #00000065;
-  }
-  /* #mycard:hover {
-    transform: scale(1.1);
-    transition: transform 330ms ease-in-out;
-    z-index: 1;
-  } */
+#FirstSigncard {
+  opacity: 1;
+  transition: all 0.3s ease-in-out
+}
 </style>
