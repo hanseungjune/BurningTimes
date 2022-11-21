@@ -17,6 +17,7 @@ export default {
       NavBar
     },
     created() {
+        this.$store.dispatch('getMovieList')
         if (this.$cookies.get('token')) {
           this.$store.dispatch('getUserPk')
         }

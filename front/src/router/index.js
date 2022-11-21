@@ -9,6 +9,8 @@ import GenrePageView from '@/views/Genre/GenrePageView'
 import MyTest from '@/views/MyTest'
 import FirstSelectMovieView from '@/views/User/FirstSelectMovieView'
 import CommunityView from '@/views/Community/CommunityView'
+import CommunityCreateView from '@/views/Community/CommunityCreateView'
+import CommunityDetailView from '@/views/Community/CommunityDetailView'
 
 Vue.use(VueRouter)
 
@@ -52,6 +54,16 @@ const routes = [
     path: '/community',
     name: 'community',
     component: CommunityView
+  },
+  {
+    path: '/reviewcreate',
+    name: 'communitycreate',
+    component: CommunityCreateView
+  },
+  {
+    path: '/communitydetail/:movieid/:reviewid',
+    name: 'communitydetail',
+    component: CommunityDetailView
   },
   {
     path: '/test',
