@@ -13,6 +13,7 @@
         </button>
         <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
         <router-link class="nav-link" :to="{ name: 'genre'}">Genre</router-link>
+        <router-link class="nav-link" :to="{ name: 'community'}">Reviews</router-link>
         <router-link class="nav-link" :to="{ name: 'login'}" v-show="!isLogin">Login</router-link>
         <a class="nav-link" v-show="$store.getters.userPkGetters" @click="userLogout">Logout</a>
         <router-link class="nav-link" v-show="!$store.getters.userPkGetters" :to="{ name: 'signup'}">Signup</router-link>
@@ -20,7 +21,7 @@
       </div>
     </div>
   </nav>
-  <div class="collapse pt-5" id="navbarToggleExternalContent">
+  <div class="collapse" id="navbarToggleExternalContent">
     <div class="d-flex justify-content-end bg-dark p-3">
       <NavBarSearch class="d-flex" />
     </div>
@@ -54,6 +55,11 @@ export default {
   #navbar{
     background-color: #222222;
     z-index: 8;
+  }
+  #navbarToggleExternalContent {
+    position: fixed;
+    right: 0;
+    width: 100%;
   }
   
 </style>
