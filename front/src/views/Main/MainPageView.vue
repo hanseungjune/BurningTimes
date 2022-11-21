@@ -1,10 +1,10 @@
 <template>
-    <div style="d-flex">
+    <div class="d-flex">
       <div id="background-genre" :style="{ 'backgroundColor':'black' }" ></div>
         <br>
         <br>
         <br>
-        <div class="circ" v-show="!this.$store.state.movieVoteAvgList">
+        <div class="circ" v-show="!this.$store.getters.movieVoteAvgListCutting && !this.$store.getters.movieVoteCntListCutting">
           <div class="load">로 딩 중 . . . </div>
           <div class="hands"></div>
           <div class="body"></div>
@@ -12,9 +12,11 @@
             <div class="eye"></div>
           </div>
         </div>
-        <div class="container">
+        <div class="container pt-5">
             <div class="row">
-                <div></div>
+                <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
+                <br>
+                <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
                 <transition-group name="flip" mode="flip" class="row">
                 <MyCard 
                 v-for="movie in voteAvgList"
@@ -22,9 +24,19 @@
                 :movie = movie
                 />
                 </transition-group>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="row">
+                <div id="vote_avg_title" class="col-3">VOTE_COUNT</div>
+                <br>
                 <transition-group name="flip" mode="flip" class="row">
                 <MyCard 
-                v-for="movie in voteAvgList"
+                v-for="movie in voteCntList"
                 :key = movie.id
                 :movie = movie
                 />
@@ -49,7 +61,10 @@ export default {
     },
     computed: {
       voteAvgList() {
-            return this.$store.getters.movieVoteAvgListCutting
+        return this.$store.getters.movieVoteAvgListCutting
+      },
+      voteCntList() {
+        return this.$store.getters.movieVoteCntListCutting
       },
       backgroundImages() {
         return this.$store.getters.backgroundGetters
@@ -58,8 +73,8 @@ export default {
     async created() {
         await this.$store.dispatch('getUserPk')
         this.userPk = await this.$store.getters.userPkGetters
-        await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
-        await this.$store.dispatch('getVoteCntMovieList', this.userPk)
+        // await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
+        // await this.$store.dispatch('getVoteCntMovieList', this.userPk)
         await this.$store.dispatch('getMovieList')
     }
 }
@@ -165,5 +180,17 @@ export default {
        64%{ width:11ch; }
        80%{ width:12ch; }
      100% { width:13ch;} 
-  }
+}
+
+#vote_avg_title{
+  width: 300px;
+  height: 50px;
+  text-align: center;
+  font-size: 30px;
+  margin-left: 15px;
+  margin-bottom: 50px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}
 </style>
