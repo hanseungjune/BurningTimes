@@ -2,7 +2,7 @@
   <div style="d-flex">
     <div id="background-genre" :style="{ backgroundImage: 'url(' + require(`@/assets/genre/${backgroundImages}.png`)+')'}" ></div>
         <MovieCartegory />
-        <div class="circ" v-show="!this.$store.state.genreSelectList">
+        <div class="circ" v-show="!this.$store.getters.movieListCutting">
           <div class="load">Loading . . . </div>
           <div class="hands"></div>
           <div class="body"></div>
