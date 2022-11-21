@@ -17,8 +17,11 @@ export default new Vuex.Store({
     backgroundImg: '0',
   },
   getters: {
+    getAllMovies(state) {
+      return state.movieList
+    },
     selectMovieCutting(state) {
-      return _.sampleSize(state.firstSelectList, 8)
+      return state.firstSelectList
     },
     movieListCutting: (state) => {
       return _.sampleSize(state.genreSelectList, 20)
@@ -31,7 +34,6 @@ export default new Vuex.Store({
     GET_MOVIE_LIST(state, payload) {
       state.movieList = payload
       state.genreSelectList = payload
-      state.firstSelectList = payload
     },
     SELECT_GENRE(state, genreId) {
       if (genreId !== 0) {
@@ -47,10 +49,8 @@ export default new Vuex.Store({
     BG_GET(state, genreId) {
       state.backgroundImg = genreId
     },
-    GET_FIRST_SELECT(state, selected) {
-      state.firstSelectList = state.movieList.filter((el) => {
-        return !selected.includes(el.genres)
-      })
+    GET_FIRST_SELECT(state, nums) {
+      state.firstSelectList = state.movieList.slice(nums-8, nums)
     }
   },
   actions: {
