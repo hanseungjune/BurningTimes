@@ -5,9 +5,15 @@
       <button @click="updateSelect(1)">뒤로!</button>
       <button @click="updateSelect(2)">다음으로!</button>
       <button @click="likeMovieEnd">선택완료!</button>
+      <h2>선택된 영화</h2>
+        <FirstSelectScroll 
+          :selected=selectedShow
+          @movieId="selectMovie"
+        />
         <div class="row">
             <transition-group name="flip" mode="flip" class="row">
             <FirstSignCard 
+              :class="{ 'is-first-clicked' : isSelcted(movie.id) }"
               v-for="movie in allMovieList"
               :key = movie.id
               :movie = movie
@@ -21,16 +27,19 @@
 
 <script>
 import FirstSignCard from '@/components/FirstSign/FirstSignCard.vue'
+import FirstSelectScroll from '@/components/FirstSign/FirstSelectScroll.vue'
 import axios from 'axios'
 
 export default {
     name: 'FirstSelectMovieView',
     components: {
-      FirstSignCard
+      FirstSignCard,
+      FirstSelectScroll,
     },
     data() {
       return {
         selected: [],
+        selectedShow: [],
         nums: 8
       }
     },
@@ -49,11 +58,21 @@ export default {
           this.$store.commit('GET_FIRST_SELECT', this.nums)
         }
       },
-      selectMovie(id) {
-        if (this.selected.includes(id)) {
-          this.selected = this.selected.filter(el => el !== id)
+      selectMovie(movie) {
+        if (this.selected.includes(movie.id)) {
+          this.selected = this.selected.filter(el => {
+            if (el !== movie.id) {
+              return el
+            }
+          })
+          this.selectedShow = this.selectedShow.filter(el => {
+            if (el.id !== movie.id) {
+              return el
+            }
+          })
         } else {
-          this.selected.push(id)
+          this.selected.push(movie.id)
+          this.selectedShow.push(movie)
         }
       },
       likeMovieEnd() {
@@ -74,14 +93,21 @@ export default {
             console.log(err.request)
             console.log(err.message)
         })
+      },
+      isSelcted(id) {
+        return this.selected.includes(id)
       }
     },
-    created() {
-      this.$store.commit('GET_FIRST_SELECT', this.nums)
-    }
 }
 </script>
 
 <style>
-
+.is-first-clicked{
+  opacity: 0.2 !important;
+  transition: all 0.3s ease-in-out
+}
+#FirstSigncard {
+  opacity: 1;
+  transition: all 0.3s ease-in-out
+}
 </style>
