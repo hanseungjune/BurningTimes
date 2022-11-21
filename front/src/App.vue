@@ -5,16 +5,25 @@
     <transition  mode="out-in">
       <router-view style="margin-top: 56px;"/>
     </transition>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+    <FooterFoot/>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar/NavBar.vue'
+import FooterFoot from '@/components/FooterFoot/FooterFoot.vue'
 
 export default {
     name: 'App',
     components: {
-      NavBar
+      NavBar,
+      FooterFoot,
     },
     created() {
         this.$store.dispatch('getMovieList')
