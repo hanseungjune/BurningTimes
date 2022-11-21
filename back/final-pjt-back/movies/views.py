@@ -15,7 +15,7 @@ from .serializers import MovieListSerializer, MovieSerializer
 @api_view(['GET'])
 def movie_list(request):
     if request.method == 'GET':
-        movies = get_list_or_404(Movie)
+        movies = get_list_or_404(Movie)[:500]
         serializer = MovieListSerializer(movies, many=True)
         return Response(serializer.data)
     # elif request.method == 'POST':
@@ -36,19 +36,17 @@ def movie_detail(request, movie_pk):
 # 영화 좋아요
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def movie_like(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    user_pk = request.POST.get('userPk')
+def movie_like(request, user_pk):
+    print(request.data)
+    movie = get_object_or_404(Movie, pk=request.data['movie'])
     user = get_object_or_404(get_user_model(), pk=user_pk)
-    if request.POST.get('userPk'):
-        if movie.like_users.filter(pk=user.pk).exists():
-            movie.like_users.remove(user)
-            # movie["like_users"].remove(user)
-        else:
-            movie.like_users.add(user)
-            # movie["like_users"].append(user)
-        return Response(status=status.HTTP_202_ACCEPTED)
-    return Response(status=status.HTTP_204_NO_CONTENT)
+    if movie.like_users.filter(pk=user.pk).exists():
+        movie.like_users.remove(user)
+        # movie["like_users"].remove(user)
+    else:
+        movie.like_users.add(user)
+        # movie["like_users"].append(user)
+    return Response(status=status.HTTP_202_ACCEPTED)
 
 # (좋아요 누른 영화만)(회원만)
 @api_view(['POST'])

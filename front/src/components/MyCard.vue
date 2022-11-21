@@ -14,16 +14,45 @@
     </div>
   </div>
   
-  <!-- 모달 -->
+  <!-- Detail -->
   <div class="modal fade zoom-in" ref="exampleModal" tabindex="-1" aria-hidden="true"  style="overflow: hidden;">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content" style="height: 100vh;">
         <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">{{ movie.title }}</h3>
+          <span class="modal-title" id="exampleModalLabel"></span>
           <button type="button" class="btn-close" @click="modal.hide()" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          {{ movie.overview }}
+          <div class="container">
+            <div id="Detail_title_vote" class="row">
+              <div id="detail_title" class="col-3">
+                {{ movie?.title }}
+              </div>
+              <div id="avg_cnt_like_set" class="col-3">
+                <div class="avg_cnt_like">
+                  평점<br>
+                  {{movie?.vote_average}}
+                </div>
+                <div class="avg_cnt_like">
+                  평론수<br>
+                  {{movie?.vote_count}}
+                </div>
+                <div class="avg_cnt_like" @click="ToLiking" :class="{'selected':like_choiced}">
+                  좋아요<br>
+                  <i class="bi bi-hand-thumbs-up-fill"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4">
+                <img id="detail_img" :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + `${movie?.poster_path}`">
+                
+              </div>
+
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -33,6 +62,9 @@
 
 <script>
 import { Modal } from 'bootstrap'
+import axios from 'axios'
+const DJANGO_API_URL = 'http://127.0.0.1:8000'
+// import Vue from 'vue'
 
 export default {
     name: 'MyCard',
@@ -41,13 +73,47 @@ export default {
     },
     data () {
       return {
-        modal: null
+        modal: null,
+        userPk : null,
+        like_choiced : false,
       }
     },
     mounted() {
       this.modal = new Modal(this.$refs.exampleModal)
+    },
+    methods : {
+      ToLiking() {
+        this.$store.dispatch('getUserPk')
+        this.userPk = this.$store.getters.userPkGetters
+        const payload = {
+          'userPk' : this.userPk,
+          'moviePk' : this.movie.id
+        }
+        axios({
+          method: 'post',
+          url: `${DJANGO_API_URL}/api/v1/movies/${payload.userPk}/like/`,
+          headers: {
+            Authorization: `Token ${this.$cookies.get("token")}`
+          },
+          data : {
+            movie: this.movie.id
+          }
+        })
+        .then(res => {
+            console.log(res.data)
+            if (this.like_choiced === false) {
+              this.like_choiced = true
+            }
+            else {
+              this.like_choiced = false
+            }
+            this.$store.commit('TO_LIKING', payload)
+          })
+          .catch(err => console.log(err))
+      }
     }
-}
+  }
+
 </script>
 
 <style>
@@ -124,5 +190,50 @@ export default {
     opacity: 1!important;
     transform: translateY(0)!important;
     transform:none!important;
+  }
+
+  .modal-title {
+    font-weight: 900;
+    font-size: 25px;
+    margin-left: 20px;
+  }
+
+  
+  #avg_cnt_like_set {
+    width: 400px;
+    display: flex;
+  }
+  
+  .avg_cnt_like {
+    width: 250px;
+    height: 80px;
+    border: 1px solid green;
+    background-color: green;
+    color: white;
+    padding-top: 15px;
+    text-align: center;
+    border-radius: 50%;
+    margin: 20px;
+  }
+
+  #Detail_title_vote {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #detail_title {
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 30px;
+    font-weight: 900;
+  }
+
+  #detail_img {
+    width: 300px;
+    height: 450px;
+  }
+
+  .selected {
+    color: black;
   }
 </style>
