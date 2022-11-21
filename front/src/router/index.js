@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainPageView from '@/views/MainPageView'
-import SearchPageView from '@/views/SearchPageView'
-import LoginPageView from '@/views/LoginPageView'
-import SignupPageView from '@/views/SignupPageView'
-import UserInfoPageView from '@/views/UserInfoPageView'
-import GenrePageView from '@/views/GenrePageView'
+import MainPageView from '@/views/Main/MainPageView'
+import SearchPageView from '@/views/Search/SearchPageView'
+import LoginPageView from '@/views/User/LoginPageView'
+import SignupPageView from '@/views/User/SignupPageView'
+import UserInfoPageView from '@/views/User/UserInfoPageView'
+import GenrePageView from '@/views/Genre/GenrePageView'
 import MyTest from '@/views/MyTest'
-import FirstSelectMovieView from '@/views/FirstSelectMovieView'
+import FirstSelectMovieView from '@/views/User/FirstSelectMovieView'
+import CommunityView from '@/views/Community/CommunityView'
 
 Vue.use(VueRouter)
 
@@ -43,14 +44,19 @@ const routes = [
     component: GenrePageView
   },
   {
-    path: '/test',
-    name: 'test',
-    component: MyTest
-  },
-  {
     path: '/firstselect',
     name: 'firstselect',
     component: FirstSelectMovieView
+  },
+  {
+    path: '/community',
+    name: 'community',
+    component: CommunityView
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: MyTest
   },
 ]
 
