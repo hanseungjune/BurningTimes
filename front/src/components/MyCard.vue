@@ -7,6 +7,7 @@
       </div>
       <div class="flip-card-back rounded border-light p-4 overflow-hidden" id="mycard" @click="modal.show()">
         <h1>{{movie.title}}</h1>
+        <h2>{{movie.vote_average}}</h2>
         <br>
         {{movie.overview.slice(0, 190) + "..."}}
       </div>
@@ -50,10 +51,6 @@ export default {
 </script>
 
 <style>
-  .card{
-    background-size: cover;
-    box-shadow: inset 0px 0px 40px 40px #00000065;
-  }
   /* #mycard:hover {
     transform: scale(1.1);
     transition: transform 330ms ease-in-out;

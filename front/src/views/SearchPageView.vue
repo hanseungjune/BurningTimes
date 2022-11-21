@@ -39,16 +39,32 @@ export default {
             this.searchMovieList = res.data.results
           })
           .catch(err => console.log(err))
+      },
+      searchMovieVue(searchMovieKeyword) {
+        const sList = this.$store.getters.getAllMovies.filter(el => {
+          if (el.title.includes(searchMovieKeyword)) {
+            return el
+          }
+        })
+        this.searchMovieList = sList.sort((a, b) => {
+          if (a.vote_average < b.vote_average) {
+            return 1
+          }
+          if (a.vote_average > b.vote_average) {
+            return -1
+          }
+          return 0
+        })
       }
     },
     watch: {
       searchMovieKeyword (value, oldValue) {
         oldValue
-        this.searchMovie(value)
+        this.searchMovieVue(value)
       }
     },
     created() {
-      this.searchMovie(this.searchMovieKeyword)
+      this.searchMovieVue(this.searchMovieKeyword)
     },
     beforeRouteUpdate(to, from, next) {
       console.log(to.params.keyword)
