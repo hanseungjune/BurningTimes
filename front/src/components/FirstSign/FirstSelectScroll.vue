@@ -20,7 +20,7 @@ import ScrollBooster from 'scrollbooster'
 import FirstSelectCard from '@/components/FirstSign/FirstSelectCard'
 
 export default {
-    name: 'MovieCartegory',
+    name: 'FirstSelectScroll',
     components: {
         FirstSelectCard,
     },
