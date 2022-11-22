@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import MainPageView from '@/views/Main/MainPageView'
 import SearchPageView from '@/views/Search/SearchPageView'
 import LoginPageView from '@/views/User/LoginPageView'
@@ -11,7 +12,7 @@ import FirstSelectMovieView from '@/views/User/FirstSelectMovieView'
 import CommunityView from '@/views/Community/CommunityView'
 import CommunityCreateView from '@/views/Community/CommunityCreateView'
 import CommunityDetailView from '@/views/Community/CommunityDetailView'
-import store from '@/store'
+import AllMoviePageView from '@/views/AllMovie/AllMoviePageView'
 
 Vue.use(VueRouter)
 
@@ -97,6 +98,11 @@ const routes = [
     path: '/communitydetail/:movieid/:reviewid',
     name: 'communitydetail',
     component: CommunityDetailView
+  },
+  {
+    path: '/allmovie',
+    name: 'allmovie',
+    component: AllMoviePageView
   },
   {
     path: '*',
