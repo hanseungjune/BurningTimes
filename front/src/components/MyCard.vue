@@ -134,14 +134,15 @@ export default {
       await this.videoLoad()
     },
     methods : {
-      ToLiking() {
-        this.$store.dispatch('getUserPk')
-        this.userPk = this.$store.getters.userPkGetters
+      async ToLiking() {
+        console.log(this.movie)
+        await this.$store.dispatch('getUserPk')
+        this.userPk = await this.$store.getters.userPkGetters
         const payload = {
           'userPk' : this.userPk,
           'moviePk' : this.movie.id
         }
-        axios({
+        return axios({
           method: 'post',
           url: `${DJANGO_API_URL}/api/v1/movies/${payload.userPk}/like/`,
           headers: {

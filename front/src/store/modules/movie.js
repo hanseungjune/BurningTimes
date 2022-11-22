@@ -15,6 +15,7 @@ const movie = {
     movieVoteCntList: null,
     genreSelectList: null,
     firstSelectList: null,
+    likeMovieList: null,
     backgroundImg: '0',
   },
   getters: {
@@ -32,6 +33,9 @@ const movie = {
       },
       movieVoteCntListCutting: (state) => {
         return _.sampleSize(state.movieVoteCntList, 12)
+      },
+      moviesLikeListGetters: (state) => {
+        return state.likeMovieList
       },
       genreSelectListgetters: (state) => {
         return state.genreSelectList
@@ -51,6 +55,9 @@ const movie = {
       },
       GET_VOTE_CNT_MOVIE_LIST(state, payload) {
         state.movieVoteCntList = payload
+      },
+      GET_LIKE_MOVIE_LIST(state, payload) {
+        state.likeMovieList = payload
       },
       SELECT_GENRE(state, genreId) {
         if (genreId !== 0) {
@@ -131,6 +138,20 @@ const movie = {
           })
           .catch(err => console.log(err))
       },
+      getLikeMovieList(context, userPk) {
+        return axios({
+          method: 'post',
+          url: `${DJANGO_API_URL}/api/v1/movies/${userPk}/like_movies/`,
+          headers: {
+            Authorization: `Token ${Vue.$cookies.get("token")}`
+          }
+        })
+          .then(res => {
+            console.log(res.data)
+            context.commit('GET_LIKE_MOVIE_LIST', res.data)
+          })
+          .catch(err => console.log(err))
+      }
   },
   modules: {
   }
