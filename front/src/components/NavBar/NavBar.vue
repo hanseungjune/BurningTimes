@@ -52,14 +52,12 @@ export default {
 </script>
 
 <style>
-  #navbar{
-    background-color: #222222;
-    z-index: 8;
-  }
+
   #navbarToggleExternalContent {
     position: fixed;
     right: 0;
     width: 100%;
+    z-index: 10;
   }
   
 </style>

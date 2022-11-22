@@ -1,10 +1,28 @@
 <template>
   <div>
-    <span @click="recommentOpen = !recommentOpen">{{ commentThis.user.username }} {{ commentThis.content}}</span>
+    <!-- 댓글 -->
+    <span @click="recommentOpen = !recommentOpen">{{ commentThis?.user.username }} {{ commentThis?.content}}</span>
+
+    <button class="btn btn-primary" @click="updateCommentOpen = !updateCommentOpen">댓글수정</button>
     <button class="btn btn-danger" @click="deleteComment(commentThis.review, commentThis.id)">댓글삭제</button>
-    <div v-for="recomment in commentThis.childcomment" :key="recomment.id">
-        ---{{ recomment.user.username }} {{ recomment.content}} 
-        <button class="btn btn-danger" @click="deleteReComment(recomment.review, recomment.id)">댓글삭제</button></div>
+    <!-- 댓글 수정폼 -->
+    <form @submit.prevent="updateComment(commentThis.review, commentThis.id)" v-show="updateCommentOpen">
+        <div class="form-floating m-3">
+            <input type="text" class="form-control" id="updateCommentInput" placeholder="댓글수정" v-model.trim="updateCommentInput">
+            <label for="updateCommentInput">댓글수정</label>
+        </div>
+        <input class="btn btn-success" type="submit" value="댓글수정">
+    </form>
+    
+    <!-- 대댓글 -->
+    <CommunityRecomment 
+        v-for="recomment in recomments" 
+        :key="recomment.id" 
+        :recomment=recomment 
+        @deleteRecomment="deleteReComment"
+        @updateRecomment="updateRecomment"
+    />
+    <!-- 대댓글 작성폼 -->
     <form @submit.prevent="createRecomment" v-show="recommentOpen">
         <div class="form-floating m-3">
             <input type="text" class="form-control" id="recommentInput" placeholder="대댓글" v-model.trim="recommentInput">
@@ -12,25 +30,76 @@
         </div>
         <input class="btn btn-success" type="submit" value="대댓글작성">
     </form>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import CommunityRecomment from '@/components/Community/CommunityRecomment'
 
 export default {
     name: 'CommunityComment',
+    components: {
+        CommunityRecomment
+    },
     data() {
         return {
+            // 댓글
+            commentThis: this.comment,
+            updateCommentOpen: false,
+            updateCommentInput: this.comment.content,
+            // 대댓글
             recommentOpen: false,
             recommentInput: null,
-            commentThis: this.comment
+            updateRecommentOpen: false,
+            updateRecommentInput: null,
         }
+    },
+    computed: {
+        recomments() {
+            return this.commentThis.childcomment
+        },
     },
     props: {
         comment: Object,
     },
     methods: {
+        // 댓글 수정
+        updateComment(reviewId, commentId) {
+            const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            const reviewid = reviewId
+            const commentid = commentId
+            const content = this.updateCommentInput
+            axios({
+                method: 'put',
+                url: `${DJANGO_API_URL}/api/v1/community/review/${reviewid}/comments/${commentid}/`,
+                data: {
+                    content
+                },
+            })
+            .then((res) => {
+                this.commentThis = res.data
+                this.updateCommentOpen = false
+            })
+            .catch(err => alert(err))
+        },
+        // 댓글 삭제
+        deleteComment(reviewId, commentId) {
+            const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            const reviewid = reviewId
+            const commentid = commentId
+            axios({
+                method: 'delete',
+                url: `${DJANGO_API_URL}/api/v1/community/review/${reviewid}/comments/${commentid}/`,
+            })
+            .then(res => {
+                console.log(res.data)
+                this.$emit('deleteComment', commentId)
+            })
+            .catch(err => console.log(err))
+        },
+        // 대댓글 작성
         createRecomment() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
             const reviewid = this.comment.review
@@ -52,20 +121,7 @@ export default {
             })
             .catch(err => console.log(err))
         },
-        deleteComment(reviewId, commentId) {
-            const DJANGO_API_URL = 'http://127.0.0.1:8000'
-            const reviewid = reviewId
-            const commentid = commentId
-            axios({
-                method: 'delete',
-                url: `${DJANGO_API_URL}/api/v1/community/review/${reviewid}/comments/${commentid}/`,
-            })
-            .then(res => {
-                console.log(res.data)
-                this.$emit('deleteComment', commentId)
-            })
-            .catch(err => console.log(err))
-        },
+        // 대댓글 삭제
         deleteReComment(reviewId, commentId) {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
             const reviewid = reviewId
@@ -83,7 +139,31 @@ export default {
                 })
             })
             .catch(err => console.log(err))
-        }
+        },
+        // 대댓글 수정
+        updateRecomment(reviewId, commentId, contentUp) {
+            const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            const reviewid = reviewId
+            const commentid = commentId
+            const content = contentUp
+            axios({
+                method: 'put',
+                url: `${DJANGO_API_URL}/api/v1/community/review/${reviewid}/comments/${commentid}/`,
+                data: {
+                    content
+                },
+            })
+            .then((res) => {
+                this.commentThis.childcomment = this.commentThis.childcomment.filter(el => {
+                    if (el.id === res.data.id) {
+                        return res.data
+                    } else {
+                        return el
+                    }
+                })
+            })
+            .catch(err => alert(err))
+        },
     }
 }
 </script>

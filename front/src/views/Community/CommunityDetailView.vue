@@ -2,8 +2,10 @@
   <div class="container">
     <div v-show="!isUpdateOpen">
         <h1>제목 : {{ reviewDetail?.title }}</h1>
-        <h2>작성자 : {{ reviewDetail?.user.username }}</h2>
-        <h3>영화 : {{ reviewDetail?.movie.title }}</h3>
+        <h2>작성자 : {{ reviewDetail?.user?.username }}</h2>
+        <h3>영화 : {{ reviewDetail?.movie?.title }}</h3>
+        <button @click="likeReview" v-show="!reviewDetail?.like_users.includes($store.getters.userPkGetters)">리뷰 좋아요</button>
+        <button @click="likeReview" v-show="reviewDetail?.like_users.includes($store.getters.userPkGetters)">리뷰 좋아요 취소</button>
         <div>
             <button @click="deleteReview" class="btn btn-danger">리뷰 삭제</button>
             <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary">리뷰 수정</button>
@@ -36,6 +38,7 @@
             <input type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="reviewDetail.title">
             <label for="titleInput">Title</label>
         </div>
+        영화를 하단에서 "꼭" 클릭해주세요!
         <div class="form-floating mb-3">
             <input type="text" class="form-control dropdown-toggle" id="titleInput" placeholder="영화" data-bs-toggle="dropdown" aria-expanded="false" v-model.trim="reviewDetail.movie.title" @input="seachMovie(reviewDetail.movie.title)">
             <label for="titleInput">Movie</label>
@@ -44,7 +47,7 @@
                 v-for="movie in movieSelect"
                 :key="movie.id"
             >
-                <a class="dropdown-item" @click.prevent="titleGo(movie)">{{ movie.title }}</a>
+                <a class="dropdown-item" @click.prevent="titleGo(movie)">{{ movie?.title }}</a>
             </li>
             </ul>
         </div>
@@ -77,6 +80,7 @@ export default {
         }
     },
     methods: {
+        // 리뷰 불러오기
         getReviewDetail() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
             const reviewid = this.$route.params.reviewid
@@ -91,11 +95,35 @@ export default {
             })
             .catch(err => console.log(err))
         },
+        // 리뷰 좋아요
+        likeReview() {
+            const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            const reviewid = this.reviewDetail.id
+            const movieid = this.reviewDetail.movie.id
+            const user = this.$store.getters.userPkGetters
+            return axios({
+                method: 'post',
+                url: `${DJANGO_API_URL}/api/v1/community/movie/${movieid}/review/${reviewid}/review_recommended/${user}/`,
+            })
+            .then(res => {
+                console.log(res.data)
+                if (this.reviewDetail.like_users.includes(user)) {
+                    this.reviewDetail.like_users = this.reviewDetail.like_users.filter(el => {
+                        if (el !== user) {
+                            return el
+                        }
+                    })
+                } else {
+                    this.reviewDetail.like_users.push(user)
+                }
+            })
+            .catch(err => console.log(err))
+        },
         // 리뷰삭제
         deleteReview() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
-            const reviewid = this.$route.params.reviewid
-            const movieid = this.$route.params.movieid
+            const reviewid = this.reviewDetail.id
+            const movieid = this.reviewDetail.movie.id
             console.log(movieid, reviewid)
             return axios({
                 method: 'delete',
@@ -139,6 +167,7 @@ export default {
             })
         },
         // 수정에 쓸 함수
+        // 영화검색 차용
         seachMovie(title) {
             const mlist = this.$store.getters.getAllMovies.filter(el => {
             if (el.title.includes(title)) {
@@ -167,6 +196,7 @@ export default {
             })
             .then(res => {
                 this.reviewDetail = res.data
+                this.isUpdateOpen = false
             })
             .catch(err => console.log(err))
         }

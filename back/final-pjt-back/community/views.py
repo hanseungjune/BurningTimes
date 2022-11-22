@@ -84,21 +84,23 @@ def community_detail(request, movie_pk, review_pk):
 def review_recommended(request, review_pk, user_pk, movie_pk):
     review = get_object_or_404(Review, pk=review_pk)
     # movie = get_object_or_404(Movie, pk=movie_pk)
-    user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+    # user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
     # user_pk = request.POST.get('userPk')
     user = get_object_or_404(get_user_model(), pk=user_pk)
 
-    if review.like_users.filter(pk=user.pk).exists():
-        review.like_users.remove(user)
-        is_liked = False
-    else:
-        review.like_users.add(user)
-        is_liked = True
-    context = {
-        'is_liked':is_liked,
-        'review_like_users_count':review.like_users.count()
-    }
-    return JsonResponse(context)
+    if review.user.id != user_pk:
+        if review.like_users.filter(pk=user.pk).exists():
+            review.like_users.remove(user)
+            is_liked = False
+        else:
+            review.like_users.add(user)
+            is_liked = True
+        context = {
+            'is_liked':is_liked,
+            'review_like_users_count':review.like_users.count()
+        }
+        return JsonResponse(context)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # 여기서부터 댓글 기능
 @api_view(['GET', 'POST'])
@@ -142,15 +144,10 @@ def comment_detail(request, comment_pk, review_pk):
       return Response(status=status.HTTP_204_NO_CONTENT)
 
   elif request.method == 'PUT':
-    review = get_object_or_404(Review, pk=review_pk)
-    user = get_object_or_404(get_user_model(), pk=request.POST.get('user'))
+    print(request.data)
     serializer = CommentSerializer(comment, data=request.data)
     if serializer.is_valid(raise_exception=True):
-        if request.POST.get('parent'):
-            parent_comment = get_object_or_404(Comment, pk=request.POST.get('parent'))
-            serializer.save(review=review, parent_comment=parent_comment, user=user)
-        else:
-            serializer.save(review=review, user=user)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

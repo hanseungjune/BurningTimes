@@ -58,7 +58,9 @@ export default {
         .then(res => {
           console.log(res)
           if (res.status === 201) {
-            this.$router.push({name: 'community'})
+            this.$router.push({name: 'communitydetail', params: {
+              movieid: this.movieId ,reviewid: res.data.id
+            }})
           }
         })
         .catch(err => {
