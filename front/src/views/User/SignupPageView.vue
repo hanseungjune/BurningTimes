@@ -30,7 +30,7 @@ export default {
         }
     },
     methods: {
-        signUp() {
+        async signUp() {
             if (!this.username) {
                 alert('아이디를 입력해주세요!')
                 return
@@ -47,8 +47,8 @@ export default {
             const userdata = {
                 username, password1, password2
             }
-            this.$store.dispatch('SignupPath', userdata)
-            this.$router.push({name: 'firstselect'})
+            await this.$store.dispatch('SignupPath', userdata)
+            await this.$router.push({name: 'firstselect'})
         }
     }
 }

@@ -11,6 +11,8 @@ Vue.use(Vuex)
 const movie = {
   state: {
     movieList: [],
+    orderMovieList: [],
+    orderMovieListPage: null,
     movieVoteAvgList: null,
     movieVoteCntList: null,
     genreSelectList: null,
@@ -39,7 +41,9 @@ const movie = {
       backgroundGetters(state) {
         return state.backgroundImg
       },
-      
+      orderMovieGetters(state) {
+        return state.orderMovieListPage
+      }
   },
   mutations: {
       GET_MOVIE_LIST(state, payload) {
@@ -90,6 +94,86 @@ const movie = {
           }
         })
       },
+      allMovieOrder(state, payload) {
+        const genreOrder = payload.genre
+        const order = payload.order
+        let orderList = []
+        if (genreOrder.length) {
+          orderList = state.movieList.filter((el) => {
+            let isPass = false
+            el.genres.forEach(g => {
+              if (genreOrder.includes(JSON.stringify(g.id))) {
+                isPass = true
+              }
+            })
+            if (isPass) {
+              return el
+            }
+          })
+        } else {
+          orderList = state.movieList
+        }
+        if (order === 'new') {
+          orderList.sort(function(a, b) {
+            const yearA = a.release_date
+            const yearB = b.release_date
+            if(yearA > yearB) return 1;
+            if(yearA < yearB) return -1;
+            if(yearA === yearB) return 0;
+          })
+        } else if (order === "old") {
+          orderList.sort(function(a, b) {
+            const yearA = a.release_date
+            const yearB = b.release_date
+            if(yearA < yearB) return 1;
+            if(yearA > yearB) return -1;
+            if(yearA === yearB) return 0;
+          })
+        } else if (order === "high") {
+          orderList.sort(function(a, b) {
+            const voteA = a.vote_average
+            const voteB = b.vote_average
+            if(voteA > voteB) return 1;
+            if(voteA < voteB) return -1;
+            if(voteA === voteB) return 0;
+          })
+        } else if (order === "low") {
+          orderList.sort(function(a, b) {
+            const voteA = a.vote_average
+            const voteB = b.vote_average
+            if(voteA < voteB) return 1;
+            if(voteA > voteB) return -1;
+            if(voteA === voteB) return 0;
+          })
+        } else if (order === "many") {
+          orderList.sort(function(a, b) {
+            const likeA = a.like_users.length
+            const likeB = b.like_users.length
+            if(likeA > likeB) return 1;
+            if(likeA < likeB) return -1;
+            if(likeA === likeB) return 0;
+          })
+        } else if (order === "few") {
+          orderList.sort(function(a, b) {
+            const likeA = a.like_users.length
+            const likeB = b.like_users.length
+            if(likeA < likeB) return 1;
+            if(likeA > likeB) return -1;
+            if(likeA === likeB) return 0;
+          })
+        } else {
+          orderList.sort(function(a, b) {
+            const likeA = a.popularity
+            const likeB = b.popularity
+            if(likeA < likeB) return 1;
+            if(likeA > likeB) return -1;
+            if(likeA === likeB) return 0;
+          })
+        }
+        state.orderMovieList = orderList
+        state.orderMovieListPage = orderList.slice(0, 8)
+        console.log(state.orderMovieListPage )
+      }
   },
   actions: {
     getMovieList(context) {
@@ -131,6 +215,12 @@ const movie = {
           })
           .catch(err => console.log(err))
       },
+      async startMovieOrder (context, payload) {
+        if (!context.state.movieList.length) {
+          await context.dispatch('getMovieList')
+        }
+        await context.commit('allMovieOrder', payload)
+      }
   },
   modules: {
   }
