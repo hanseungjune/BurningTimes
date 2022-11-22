@@ -222,7 +222,6 @@ const movie = {
           })
           .catch(err => console.log(err))
       },
-<<<<<<< HEAD
       getLikeMovieList(context, userPk) {
         return axios({
           method: 'post',
@@ -236,13 +235,12 @@ const movie = {
             context.commit('GET_LIKE_MOVIE_LIST', res.data)
           })
           .catch(err => console.log(err))
-=======
+      },
       async startMovieOrder (context, payload) {
         if (!context.state.movieList.length) {
           await context.dispatch('getMovieList')
         }
         await context.commit('allMovieOrder', payload)
->>>>>>> 1b1a9fc8e823cfd737907ec04e8932bb0f8df9aa
       }
   },
   modules: {
