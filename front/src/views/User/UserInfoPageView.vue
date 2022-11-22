@@ -103,14 +103,11 @@ export default {
         followUser() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
             axios({
-                method: 'put',
-                url: `${DJANGO_API_URL}/api/accounts/user/${this.$route.params.userPk}/`,
+                method: 'post',
+                url: `${DJANGO_API_URL}/api/accounts/user/follow/${this.userInformation.id}/${this.$store.getters.userPkGetters}/`,
                 headers: {
                     Authorization: `Token ${this.$cookies.get("token")}`
                 },
-                data: {
-
-                }
             })
             .then(res => {
                 console.log(res.data)
