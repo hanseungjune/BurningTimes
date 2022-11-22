@@ -73,8 +73,8 @@ export default {
     async created() {
         await this.$store.dispatch('getUserPk')
         this.userPk = await this.$store.getters.userPkGetters
-        // await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
-        // await this.$store.dispatch('getVoteCntMovieList', this.userPk)
+        await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
+        await this.$store.dispatch('getVoteCntMovieList', this.userPk)
         await this.$store.dispatch('getMovieList')
     }
 }

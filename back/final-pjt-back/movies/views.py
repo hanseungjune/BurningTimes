@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Movie
 from django.contrib.auth import get_user_model
-from .serializers import MovieListSerializer, MovieSerializer
+from .serializers import MovieListSerializer, MovieSerializer, RecommendedMovieSerializer
 
 @api_view(['GET'])
 def movie_list(request):
@@ -63,7 +63,7 @@ def like_movies(request, user_pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def recommended_vote_average(request, user_pk):
-    movies = get_list_or_404(Movie)
+    movies = get_list_or_404(Movie)[:500]
     # userPk = request.POST.get('userPk')
     user = get_object_or_404(get_user_model(), pk=user_pk)
     # if user.is_authenticated:
@@ -131,7 +131,7 @@ def recommended_vote_average(request, user_pk):
 
         recommend_movie_sorted_final_lst.append(recommend_dict)
 
-    serializer = MovieListSerializer(recommend_movie_sorted_final_lst[0:12], many=True)
+    serializer = RecommendedMovieSerializer(recommend_movie_sorted_final_lst[0:30], many=True)
     return Response(serializer.data)
 
 # 좋아요 누른 영화는 제외
@@ -139,7 +139,7 @@ def recommended_vote_average(request, user_pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def recommended_vote_count(request, user_pk):
-    movies = get_list_or_404(Movie)
+    movies = get_list_or_404(Movie)[:500]
     # userPk = request.POST.get('userPk')
     user = get_object_or_404(get_user_model(), pk=user_pk)
     # if user.is_authenticated:
@@ -216,14 +216,14 @@ def recommended_vote_count(request, user_pk):
     # print()
 
     # return render (request, 'movies/recommended.html', context)
-    serializer = MovieListSerializer(recommend_movie_sorted_final_lst[0:12], many=True)
+    serializer = RecommendedMovieSerializer(recommend_movie_sorted_final_lst[0:30], many=True)
     return Response(serializer.data)
 
 # (좋아요 누른 장르 중에서) 랜덤으로 추출(회원만)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def recommended_random(request, user_pk):
-    movies = get_list_or_404(Movie)
+    movies = get_list_or_404(Movie)[:500]
     user = get_object_or_404(get_user_model(), pk=user_pk)
     # 특정 userPk를 가지고있는 유저가 좋아요 누른 영화 가져오고
     like_movies = user.like_movies.all()
@@ -255,5 +255,5 @@ def recommended_random(request, user_pk):
         random_movie_lst.append(recommend_movie)
 
     random_lst = random.sample(recommend_movie_lst, 12)
-    serializer = MovieListSerializer(random_lst[0:12], many=True)
+    serializer = RecommendedMovieSerializer(random_lst[0:30], many=True)
     return Response(serializer.data)

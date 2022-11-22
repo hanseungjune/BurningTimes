@@ -78,7 +78,7 @@ const movie = {
                 return el !== payload.userPk
               })
             }else{
-              console.log(movie)
+              // console.log(movie)
               movie.like_users.push(payload.userPk)
             }
           }

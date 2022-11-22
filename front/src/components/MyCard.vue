@@ -47,11 +47,31 @@
             <div class="row">
               <div class="col-4">
                 <img id="detail_img" :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + `${movie?.poster_path}`">
-                
               </div>
-
+              <div class="col-8">
+                <iframe id="player" type="text/html" width="700" height="360"
+                  :src="videoUrl+videoKey"
+                frameborder="0" v-if="videoKey"></iframe>
+                <img style="width:700px; height:360px" src="https://www.tooli.co.kr/files/attach/images/571601/933/121/001/b3fb122e830eeb9a3a8a916f1c87fd69.gif" alt="안나올 뜨는 이미지" v-if="!videoKey">
+                <Actors
+                  :movie="movie"
+                />
+              </div>
             </div>
 
+            <div class="row">
+              <div id="detail_content" class="col">
+                {{movie.overview}}
+              </div>
+            </div>
+
+            <div style="width:100%;" class="row">
+              <div class="col review_body">
+                <DetailReviews
+                  :movie="movie"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -61,13 +81,21 @@
 </template>
 
 <script>
+import Actors from '@/components/Actors/ActorsSet.vue'
+import DetailReviews from '@/components/DetailReviews/DetailReviews.vue'
+
 import { Modal } from 'bootstrap'
 import axios from 'axios'
 const DJANGO_API_URL = 'http://127.0.0.1:8000'
 // import Vue from 'vue'
+const TMDB_API_KEY = '0802a25be8939d20e57e4d6621c62927'
 
 export default {
     name: 'MyCard',
+    components: {
+      Actors,
+      DetailReviews,
+    },
     props: {
         movie: Object,
     },
@@ -76,10 +104,18 @@ export default {
         modal: null,
         userPk : null,
         like_choiced : false,
+        videoUrl : "http://www.youtube.com/embed/",
+        videoKey : null 
       }
     },
-    mounted() {
-      this.modal = new Modal(this.$refs.exampleModal)
+    computed: {
+        allMovieList() {
+              return this.$store.getters.movieListCutting
+        },
+    },
+    async mounted() {
+      this.modal = await new Modal(this.$refs.exampleModal)
+      await this.videoLoad()
     },
     methods : {
       ToLiking() {
@@ -109,8 +145,21 @@ export default {
             }
             this.$store.commit('TO_LIKING', payload)
           })
-          .catch(err => console.log(err))
-      }
+        .catch(err => console.log(err))
+      },
+      videoLoad() {
+        const TMDB_URL = `https://api.themoviedb.org/3/movie/${this.movie.tmdb_id}/videos?api_key=${TMDB_API_KEY}&language=ko-KR`
+        axios({
+          method: 'get',
+          url: TMDB_URL,
+        })
+        .then(res => {
+            console.log(res.data)
+            console.log(res.data.results[0].key)
+            this.videoKey = res.data.results[0].key
+          })
+        .catch(err => console.log(err))
+      },
     }
   }
 
@@ -233,7 +282,22 @@ export default {
     height: 450px;
   }
 
+  #detail_content {
+    margin-left: 35px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid black;
+  }
+
+  .review_body {
+    background-color: bisque;
+    margin-left: 35px;
+    padding: 10px 25px !important;
+  }
+
   .selected {
-    color: black;
+    border: 1px solid rgb(0, 149, 248);
+    background-color: rgb(0, 149, 248);
   }
 </style>
