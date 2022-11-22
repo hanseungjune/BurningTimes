@@ -1,6 +1,6 @@
 <template>
 <div>
-  <nav class="navbar navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-dark fixed-top">
     <div class="container-fluid">
       <div class="nav">
         <router-link class="nav-link" :to="{ name: 'test'}">Test</router-link>
@@ -59,5 +59,16 @@ export default {
     width: 100%;
     z-index: 10;
   }
-  
+  nav{
+    background-color: rgb(27, 27, 27);
+    animation: navfade 5s;
+  }
+  @keyframes navfade {
+    from {
+      background-color: rgb(143, 38, 38);
+    }
+    to {
+      
+    }
+  }
 </style>

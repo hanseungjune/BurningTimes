@@ -1,5 +1,7 @@
 <template>
     <div class="d-flex">
+      <img id="left" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
+      <img id="right" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
       <div id="background-genre" :style="{ 'backgroundColor':'black' }" ></div>
         <br>
         <br>
@@ -12,7 +14,13 @@
             <div class="eye"></div>
           </div>
         </div>
-        <div class="container pt-5">
+        <!-- <div id="rssBlock" v-show="!$store.getters.userPkGetters">
+          <p class="cnnContents">
+            <span class="marqueeStyle"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
+            <span class="marqueeStyle2"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
+          </p>
+        </div> -->
+        <div class="container pt-5" v-show="$store.getters.userPkGetters">
             <div class="row">
                 <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
                 <br>
@@ -81,6 +89,76 @@ export default {
 </script>
 
 <style>
+#left {
+  position: fixed;
+  width: 50%;
+  height: 100%;
+  animation: left 4s ease-in-out;
+  animation-fill-mode: forwards;
+  z-index: 100;
+}
+#right {
+  position: fixed;
+  width: 50%;
+  height: 100%;
+  right: 0;
+  animation: right 4s ease-in-out;
+  animation-fill-mode: forwards;
+  z-index: 100;
+}
+
+@keyframes left {
+  from {
+  }
+  30%{
+    opacity: 1;
+    transform: translateX(-30%);
+  }
+  40%{
+    opacity: 1;
+    transform: translateX(-30%);
+  }
+  70%{
+    opacity: 1;
+    transform: translateX(-70%);
+  }
+  80%{
+    opacity: 1;
+    transform: translateX(-70%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+}
+
+@keyframes right {
+  from {
+  }
+  30%{
+    opacity: 1;
+    transform: translateX(30%);
+  }
+  40%{
+    opacity: 1;
+    transform: translateX(30%);
+  }
+  70%{
+    opacity: 1;
+    transform: translateX(70%);
+  }
+  80%{
+    opacity: 1;
+    transform: translateX(70%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+  }
+}
+
 /* 로딩 */
 .eye{
   width: 20px; height: 8px;
@@ -193,4 +271,47 @@ export default {
   color: black;
   border-radius: 5px;
 }
+
+  /* #rssBlock{
+    left:0px;
+    height: 80px;
+    background: #FFFFFF;
+    position: absolute;
+    width:100%;
+    overflow: hidden;
+  }
+
+  .cnnContents {
+    width:100%;
+    padding-top: 20px;
+    margin:0 auto;
+    font-size: 30px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-family: 'Museo';
+    font-weight: 300;
+  }
+  .marqueeStyle {
+    display:inline-block;
+    animation: scrolling-left1 10s linear infinite;
+  }
+
+  .marqueeStyle2 {
+    display:inline-block;
+    animation: scrolling-left2 10s linear infinite;
+    animation-delay: 5s;
+  }
+
+  @keyframes scrolling-left1 {
+      0% {transform: translateX(100%);
+          -webkit-transform: translateX(100%);}
+        100% {transform: translateX(-100%);
+            -webkit-transform: translateX(-100%);}
+  }
+  @keyframes scrolling-left2 {
+      0% {transform: translateX(0%);
+          -webkit-transform: translateX(0%);}
+        100% {transform: translateX(-200%);
+            -webkit-transform: translateX(-200%);}
+  } */
 </style>

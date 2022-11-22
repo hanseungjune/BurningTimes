@@ -61,7 +61,7 @@ export default defineComponent({
 #footer { 
   width: 100.7%;
   height: 100px;
-  background-color: green;
+  background-color: gray;
   display: flex;
   align-items: center;
   justify-content: space-evenly;

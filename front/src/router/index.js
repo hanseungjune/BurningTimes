@@ -11,6 +11,7 @@ import FirstSelectMovieView from '@/views/User/FirstSelectMovieView'
 import CommunityView from '@/views/Community/CommunityView'
 import CommunityCreateView from '@/views/Community/CommunityCreateView'
 import CommunityDetailView from '@/views/Community/CommunityDetailView'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -28,17 +29,33 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: SignupPageView
+    component: SignupPageView,
+    beforeEnter: function(to, from, next) {
+      if (store.getters.userPkGetters || Vue.$cookies.get('token')) {
+        alert('이미 로그인 되어있으세요!')
+        next({ name: 'main' })
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginPageView
+    component: LoginPageView,
+    beforeEnter: function(to, from, next) {
+      if (store.getters.userPkGetters || Vue.$cookies.get('token')) {
+        alert('이미 로그인 되어있으세요!')
+        next({ name: 'main' })
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/userinfo/:userPk',
     name: 'userinfo',
-    component: UserInfoPageView
+    component: UserInfoPageView,
   },
   {
     path: '/genre',
@@ -48,7 +65,15 @@ const routes = [
   {
     path: '/firstselect',
     name: 'firstselect',
-    component: FirstSelectMovieView
+    component: FirstSelectMovieView,
+    beforeEnter: function(to, from, next) {
+      if (store.getters.userPkGetters || Vue.$cookies.get('token')) {
+        next()
+      } else {
+        alert('로그인 하셔야겠는데요?')
+        next({ name: 'login'})
+      }
+    }
   },
   {
     path: '/community',
@@ -58,7 +83,15 @@ const routes = [
   {
     path: '/reviewcreate',
     name: 'communitycreate',
-    component: CommunityCreateView
+    component: CommunityCreateView,
+    beforeEnter: function(to, from, next) {
+      if (store.getters.userPkGetters || Vue.$cookies.get('token')) {
+        next()
+      } else {
+        alert('로그인 하셔야겠는데요?')
+        next({ name: 'login'})
+      }
+    }
   },
   {
     path: '/communitydetail/:movieid/:reviewid',
@@ -66,7 +99,7 @@ const routes = [
     component: CommunityDetailView
   },
   {
-    path: '/test',
+    path: '*',
     name: 'test',
     component: MyTest
   },

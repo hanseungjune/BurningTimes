@@ -135,8 +135,7 @@ export default {
             movie: this.movie.id
           }
         })
-        .then(res => {
-            console.log(res.data)
+        .then(() => {
             if (this.like_choiced === false) {
               this.like_choiced = true
             }
@@ -154,8 +153,6 @@ export default {
           url: TMDB_URL,
         })
         .then(res => {
-            console.log(res.data)
-            console.log(res.data.results[0].key)
             this.videoKey = res.data.results[0].key
           })
         .catch(err => console.log(err))

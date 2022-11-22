@@ -55,9 +55,15 @@ const movie = {
       SELECT_GENRE(state, genreId) {
         if (genreId !== 0) {
           state.genreSelectList = state.movieList.filter((el) => {
-          if (el.genres.includes(genreId)) {
-            return el
-          }
+            let isGenre = false
+            el.genres.forEach(genre => {
+              if (genre.id === genreId) {
+                isGenre = true
+              }
+            })
+            if (isGenre) {
+              return el
+            }
         })
         } else {
           state.genreSelectList = _.sampleSize(state.movieList, 20)

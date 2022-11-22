@@ -1,5 +1,5 @@
 <template>
-  <div style="d-flex">
+  <div style="d-flex align-items-center">
     <div id="background-genre" :style="{ backgroundImage: 'url(' + require(`@/assets/genre/${backgroundImages}.png`)+')'}" ></div>
         <MovieCartegory />
         <div class="circ" v-show="!this.$store.getters.genreSelectListgetters">
@@ -58,7 +58,6 @@ export default {
     transition: background-image 0.5s;
     background-position: 0% 0%;
     background-size: 100vw 1920px ;
-    filter: blur(4px);
 }
 /* 슬라이드 페이드 */
 .flip-enter-active {

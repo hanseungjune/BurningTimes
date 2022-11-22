@@ -1,7 +1,7 @@
 <template>
-<div class="d-flex container-fluid">
-  <div class="d-flex viewport overflow-hidden w-100 py-5" ref="viewport">
-    <div class="d-flex  row flex-nowrap " id="horizontalScroll" ref="content">
+
+  <div class="d-flex container-fluid viewport overflow-hidden w-100 py-5 h-100" ref="viewport">
+    <div class="d-flex row flex-nowrap " id="horizontalScroll" ref="content">
         <MovieCartegoryCard 
             v-for="genre in cartegory"
             :key="genre.id"
@@ -11,7 +11,7 @@
     <i class="bi bi-chevron-left fs-1" @click.stop="clickLeft"></i>
     <i class="bi bi-chevron-right fs-1" @click.stop="clickRight"></i>
   </div>
-</div>
+
 </template>
 
 <script>

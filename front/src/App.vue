@@ -3,14 +3,9 @@
     <NavBar />
     <!-- 슬라이드 트랜지션 -->
     <transition  mode="out-in">
-      <router-view style="margin-top: 56px;"/>
+      <router-view style="margin-top: 56px; min-height: 100vh"/>
     </transition>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+
     <FooterFoot/>
   </div>
 </template>
