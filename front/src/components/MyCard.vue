@@ -67,9 +67,25 @@
 
             <div style="width:100%;" class="row">
               <div class="col review_body">
-                <DetailReviews
-                  :movie="movie"
-                />
+                <div class="row">
+                  <div id="reviews_title" class="col-3">Review</div>
+                </div>
+                <div class="row d-flex justify-content-center mt-3 mb-3">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width: 10%" scope="col">ID</th>
+                        <th style="width: 45%" scope="col">Title</th>
+                        <th style="width: 30%" scope="col">movie</th>
+                        <th style="width: 15%" scope="col">time</th>
+                      </tr>
+                    </thead>
+                      <DetailReviews
+                      :movie="movie"
+                      @closemodal="modal.hide()"
+                      />
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -294,6 +310,19 @@ export default {
     background-color: bisque;
     margin-left: 35px;
     padding: 10px 25px !important;
+  }
+
+  #reviews_title {
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
   }
 
   .selected {
