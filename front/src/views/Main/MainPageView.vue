@@ -83,7 +83,6 @@ export default {
         this.userPk = await this.$store.getters.userPkGetters
         await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
         await this.$store.dispatch('getVoteCntMovieList', this.userPk)
-        await this.$store.dispatch('getMovieList')
     }
 }
 </script>

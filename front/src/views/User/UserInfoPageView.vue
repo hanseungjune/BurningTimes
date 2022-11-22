@@ -235,7 +235,11 @@ export default {
                 url: `${DJANGO_API_URL}/api/accounts/user/follow/${this.userInformation.id}/${this.$store.getters.userPkGetters}/`,
                 headers: {
                     Authorization: `Token ${this.$cookies.get("token")}`
+<<<<<<< HEAD
                 }
+=======
+                },
+>>>>>>> 1b1a9fc8e823cfd737907ec04e8932bb0f8df9aa
             })
             .then(res => {
                 console.log(res.data)

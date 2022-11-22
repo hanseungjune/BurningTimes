@@ -37,7 +37,6 @@ def movie_detail(request, movie_pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def movie_like(request, user_pk):
-    print(request.data)
     movie = get_object_or_404(Movie, pk=request.data['movie'])
     user = get_object_or_404(get_user_model(), pk=user_pk)
     if movie.like_users.filter(pk=user.pk).exists():
@@ -47,6 +46,28 @@ def movie_like(request, user_pk):
         movie.like_users.add(user)
         # movie["like_users"].append(user)
     return Response(status=status.HTTP_202_ACCEPTED)
+
+# 좋아요 많은 장르 선택하기
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def favorite_genre(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    like_movies = user.like_movies.all()
+    # 해당 영화와 같은 장르만
+    like_dict = dict()
+    for like_movie in like_movies:
+        for genre in like_movie.genres.all():
+            if genre.pk not in like_dict:
+                like_dict[genre.pk] = 1
+            else:
+                like_dict[genre.pk] += 1
+    # 사용자가 누른 좋아요 영화의 장르 카운팅해서 가장 많이 본 장르 정하고
+    favorite_genre_num = max(like_dict,key=like_dict.get)
+    print(favorite_genre_num)
+    context = {
+      'favorite_genre_num': favorite_genre_num
+    }
+    return Response(context, status=status.HTTP_202_ACCEPTED)
 
 # (좋아요 누른 영화만)(회원만)
 @api_view(['POST'])

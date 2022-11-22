@@ -16,7 +16,7 @@
   
   <!-- Detail -->
   <div class="modal fade zoom-in" ref="exampleModal" tabindex="-1" aria-hidden="true"  style="overflow: hidden;">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
       <div class="modal-content" style="height: 100vh;">
         <div class="modal-header">
           <span class="modal-title" id="exampleModalLabel"></span>
