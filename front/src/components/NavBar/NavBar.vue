@@ -12,6 +12,7 @@
           <i class="bi bi-search"></i>
         </button>
         <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
+        <router-link class="nav-link" :to="{ name: 'allmovie'}">AllMovie</router-link>
         <router-link class="nav-link" :to="{ name: 'genre'}">Genre</router-link>
         <router-link class="nav-link" :to="{ name: 'community'}">Reviews</router-link>
         <router-link class="nav-link" :to="{ name: 'login'}" v-show="!isLogin">Login</router-link>
@@ -60,7 +61,7 @@ export default {
     z-index: 10;
   }
   nav{
-    background-color: rgb(27, 27, 27);
+    background-color: #212529;
     animation: navfade 5s;
   }
   @keyframes navfade {
