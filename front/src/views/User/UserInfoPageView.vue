@@ -1,10 +1,25 @@
 <template>
-<div>
+<div class="container">
+    <br>
+    <br>
+    <div class="card text-center">
+        <div class="card-header">
+            <h1>MyPage</h1>
+        </div>
+        <div class="card-body">
+            <h2><b>{{ userInformation?.username }}</b>'s ROOM (●'◡'●)</h2>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
   <h1>UserInfo</h1>
   <h2>{{ userInformation?.username }}</h2>
   <button class="btn btn-danger" v-show="$store.getters.userPkGetters" @click="removeUser">회원탈퇴</button>
   <button class="btn btn-primary" v-show="$store.getters.userPkGetters" @click="updateShow=!updateShow">정보 수정</button>
-  <button class="btn btn-success" @click="followUser" v-show="!$store.getters.userPkGetters">팔로우</button>
+  <button class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters">팔로우</button>
   <div id="userInfoUpdate">
     <form @submit.prevent="updateUser"  v-show="updateShow">
         <div class="form-floating mb-3">
