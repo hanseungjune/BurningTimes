@@ -247,7 +247,7 @@ export default {
   .flip-card-back {
     position: fixed;
     top: 0;
-    background-color: black;
+    background-color: #FF4301;
     color: white;
     transform: rotateY(180deg);
   }

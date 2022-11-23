@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr 
-                    v-for="review in communityList"
+                    v-for="review in communityList.slice(presentPage*8-8, presentPage*8)"
                     :key="review.id"
                     @click="moveToDetail(review.id, review.movie.id)"
                 >
@@ -30,7 +30,6 @@
             </tbody>
         </table>
     </div>
-    {{ pageRange }}
     <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center mt-5">
                     <!-- 처음으로 -->
@@ -47,8 +46,8 @@
                     </li>
                     <!-- 시작 -->
                     <li 
-                        v-for="(n, index) in pageRange"
-                        :key=index
+                        v-for="n in pageRange"
+                        :key=n.id
                         class="page-item"
                         :class="{ 'active' : n === presentPage }"
                         @click.prevent="presentPage=n"
@@ -70,15 +69,6 @@
                 </ul>
             </nav>
   </div>
-<!-- <div 
-        v-for="review in communityList"
-        :key="review.id"
-     >
-        {{ review.id }} {{ review.movie.title }} {{review.title}} {{ review.user.username }} {{ review.created_at.slice(0,10)}}
-        <button class="btn btn-primary" @click="moveToDetail(review.id, review.movie.id)">상세</button>
-        <br>
-        <br>
-    </div> -->
 </template>
 
 <script>
@@ -90,17 +80,19 @@ export default {
         return{
             communityList: null,
             presentPage: 1,
-            pageRange: []
+            pageRange: [1]
         }
     },
     methods: {
         getCommunityList() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
-            axios({
+            return axios({
                 method: 'get',
                 url: `${DJANGO_API_URL}/api/v1/community/`
             })
-            .then(res => {this.communityList = res.data})
+            .then(res => {
+                this.communityList = res.data
+            })
             .catch(err => {
                 console.log(err.response)
                 console.log(err.request)
@@ -123,7 +115,6 @@ export default {
     },
     computed: {
         orderListmaxPage() {
-            console.log(Math.ceil(this.communityList.length/8))
             return Math.ceil(this.communityList.length/8)
         },
         presentFirstPage() {
@@ -132,6 +123,7 @@ export default {
             } else {
                 return this.presentPage -2 
             }
+            
         },
         presentLastPage() {
             if (this.presentFirstPage + 4 < this.orderListmaxPage) {
@@ -141,10 +133,22 @@ export default {
             }
         },
     },
-    created() {
-        this.getCommunityList()
+    async created() {
+        await this.getCommunityList()
+        this.pageRange = []
         for(let i = this.presentFirstPage; i<=this.presentLastPage ; i++) {
-                this.pageRange.push(i)
+            console.log(i)
+            this.pageRange.push(i)
+            console.log(this.pageRange)
+        }
+    },
+    watch: {
+        orderListmaxPage() {
+            this.pageRange = []
+            for(let i = this.presentFirstPage; i<=this.presentLastPage ; i++) {
+                console.log(i)
+                    this.pageRange.push(i)
+            }
         }
     }
 }

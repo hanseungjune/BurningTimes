@@ -76,7 +76,7 @@ export default {
     z-index: 10;
   }
   .navbar{
-    background-color: #7D6E83;
+    background-color: #FF4301;
     animation: navfade 5s;
   }
   @keyframes navfade {

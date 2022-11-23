@@ -42,7 +42,7 @@
             <div class="row">
               <div id="vote_avg_title" class="col-3">VOTE_COUNT</div>
               <br>
-              <transition-group name="flip" mode="flip" class="row">
+              <transition-group mode="out-in" class="row">
                 <MyCard 
                 v-for="movie in voteCntList"
                 :key = movie.id

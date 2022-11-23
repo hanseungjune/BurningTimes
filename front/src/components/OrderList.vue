@@ -152,6 +152,7 @@ export default {
 
 <style>
 #order-box{
-    background-color: white;
+    background-color: #4A3F35;
+    color: white;
 }
 </style>

@@ -31,27 +31,32 @@ export default {
 </script>
 
 <style>
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'LINESeedKR-Bd', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: unset;
   color: #2c3e50;
+  background-color: #130f0a;
 }
 
 /* 슬라이드 페이드 */
 .v-enter-active {
-  transition: all .3s ease;
+  transition: all 1.5s ease;
 }
 .v-leave-active {
-  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 1.5s ease;
 }
 .v-enter{
-  transform: translateX(-50%);
   opacity: 0;
 } 
 .v-leave-to {
-  transform: translateX(50%);
   opacity: 0;
 }
 
