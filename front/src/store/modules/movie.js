@@ -19,6 +19,7 @@ const movie = {
     firstSelectList: null,
     likeMovieList: null,
     backgroundImg: '0',
+    reviewId: null
   },
   getters: {
       getAllMovies(state) {
@@ -60,6 +61,16 @@ const movie = {
       },
       orderAllMovieGetters(state) {
         return state.orderMovieList
+      },
+      getReviewMovie(state) {
+        const rMovie = state.movieList.filter((movie) => {
+          if (state.reviewId === movie.id){
+            console.log(movie)
+            return movie
+          }
+        })
+        console.log(rMovie)
+        return rMovie[0]
       }
   },
   mutations: {
@@ -200,6 +211,9 @@ const movie = {
       },
       pageMove(state, pageNum) {
         state.orderMovieListPage = state.orderMovieList.slice(pageNum*8 - 8,pageNum*8)
+      },
+      REVIEW_NUMS_GET(state, review) {
+        state.reviewId = review
       }
   },
   actions: {
