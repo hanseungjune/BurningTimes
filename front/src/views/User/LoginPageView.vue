@@ -1,6 +1,9 @@
 <template>
-<div>
-  <h1>Login</h1>
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <h1 style="color:white;">Login</h1>
     <form @submit.prevent="logIn">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="userid" placeholder="이이디를 입력하세요" v-model="username">

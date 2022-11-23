@@ -15,10 +15,14 @@
           </div>
         </div>
         <div class="container pt-5" v-show="$store.getters.userPkGetters">
-            <div class="row">
-              <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
+            <br>
+            <br>
+            <br>
+            <div class="row text-center">
+
+
+              <span class="vote_avg_cnt">이달의 평점 순위</span>
               <br>
-              <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
               <transition-group name="flip" mode="flip" class="row">
                 <MyCard 
                   v-for="movie in voteAvgList"
@@ -34,9 +38,8 @@
             <br>
             <br>
             <div class="row">
-              <div id="vote_avg_title" class="col-3">VOTE_COUNT</div>
-              <br>
-              <transition-group name="group" mode="out-in" class="row">
+              <h1 class="vote_avg_cnt">이달의 선호도 순위</h1>
+              <transition-group mode="out-in" class="row">
                 <MyCard 
                 v-for="movie in voteCntList"
                 :key = movie.id
@@ -44,6 +47,12 @@
                 />
               </transition-group>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
 </template>
@@ -83,6 +92,7 @@ export default {
 </script>
 
 <style>
+
 #left {
   position: fixed;
   width: 50%;
@@ -254,11 +264,11 @@ export default {
      100% { width:13ch;} 
 }
 
-#vote_avg_title{
-  width: 300px;
+/* .vote_avg_cnt{
+  width: 800px;
   height: 50px;
   text-align: center;
-  font-size: 30px;
+  font-size: 50px;
   margin-left: 15px;
   margin-bottom: 50px;
   color: white;
@@ -268,4 +278,78 @@ export default {
 
 
 
+  @keyframes scrolling-left1 {
+      0% {transform: translateX(100%);
+          -webkit-transform: translateX(100%);}
+        100% {transform: translateX(-100%);
+            -webkit-transform: translateX(-100%);}
+  }
+  @keyframes scrolling-left2 {
+      0% {transform: translateX(0%);
+          -webkit-transform: translateX(0%);}
+        100% {transform: translateX(-200%);
+            -webkit-transform: translateX(-200%);}
+  } */
+
+  /* ㅇㄴㄻㅇㄴㄹㅇㄴㅁㄹ */
+  @keyframes tipsy {
+    0% {
+      transform: translateX(0%) translateY(-40%);
+    }
+    25% {
+      transform: translateX(-5%) translateY(-30%);
+    }
+    50% {
+      transform: translateX(5%) translateY(-30%);
+    }
+    75% {
+      transform: translateX(5%) translateY(-50%);
+    }
+    100% {
+      transform: translateX(-5%) translateY(-50%);
+    }
+  }
+
+  body {
+    font-family: helvetica, arial, sans-serif;
+    background-color: #2e2e31;
+  }
+
+  .vote_avg_cnt {
+    color: #fffbf1;
+    text-shadow: 0 20px 25px #2e2e31, 0 40px 60px #2e2e31;
+    font-size: 80px;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: -3px;
+    margin-bottom: 100px !important;
+    position: inherit;
+    /* display: flex; */
+    text-align: center;
+    transform: translateX(0%) translateY(0%);
+  }
+
+  .vote_avg_cnt:before,
+  .vote_avg_cnt:after {
+    content: '';
+    padding: .9em .4em;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    top: 25%;
+    display: block;
+    border: 15px solid red;
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    animation: 10s infinite alternate ease-in-out tipsy;
+  }
+
+  .vote_avg_cnt:before {
+    border-color: #d9524a #d9524a rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    z-index: -2;
+  }
+
+  .vote_avg_cnt:after {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #d9524a #d9524a;
+    box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
+  }
 </style>
