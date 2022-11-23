@@ -1,5 +1,5 @@
 <template>
-  <div id="order-box" class="col-2 container border border-2 rounded">
+  <div id="order-box" class="col-3 container border border-2 rounded p-4 mb-3">
     <h1>정렬기준</h1>
     <div class="btn-group d-flex flex-column aling-items-center" role="group" aria-label="Basic radio toggle button group">
         <h4>개봉 날짜 순</h4>
