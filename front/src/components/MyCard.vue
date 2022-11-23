@@ -37,8 +37,12 @@
                   평론수<br>
                   {{movie?.vote_count}}
                 </div>
-                <div class="avg_cnt_like" @click="ToLiking" :class="{'selected':like_choiced}">
+                <div class="avg_cnt_like" @click="ToLiking" v-show="!this.movie?.like_users.includes($store.getters.userPkGetters)">
                   좋아요<br>
+                  <i class="bi bi-hand-thumbs-up-fill"></i>
+                </div>
+                <div class="avg_cnt_like selected" @click="ToLiking" v-show="this.movie?.like_users.includes($store.getters.userPkGetters)">
+                  싫어요<br>
                   <i class="bi bi-hand-thumbs-up-fill"></i>
                 </div>
               </div>
@@ -121,7 +125,7 @@ export default {
         userPk : null,
         like_choiced : false,
         videoUrl : "http://www.youtube.com/embed/",
-        videoKey : null 
+        videoKey : null,
       }
     },
     computed: {
@@ -134,6 +138,7 @@ export default {
       await this.videoLoad()
     },
     methods : {
+      // 영화 좋아요
       async ToLiking() {
         console.log(this.movie)
         await this.$store.dispatch('getUserPk')
@@ -153,16 +158,12 @@ export default {
           }
         })
         .then(() => {
-            if (this.like_choiced === false) {
-              this.like_choiced = true
-            }
-            else {
-              this.like_choiced = false
-            }
+            console.log(payload)
             this.$store.commit('TO_LIKING', payload)
           })
         .catch(err => console.log(err))
       },
+      // 비디오 불러오기
       videoLoad() {
         const TMDB_URL = `https://api.themoviedb.org/3/movie/${this.movie.tmdb_id}/videos?api_key=${TMDB_API_KEY}&language=ko-KR`
         axios({

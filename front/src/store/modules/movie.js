@@ -13,8 +13,8 @@ const movie = {
     movieList: [],
     orderMovieList: [],
     orderMovieListPage: null,
-    movieVoteAvgList: null,
-    movieVoteCntList: null,
+    movieVoteAvgList: [],
+    movieVoteCntList: [],
     genreSelectList: null,
     firstSelectList: null,
     likeMovieList: null,
@@ -31,10 +31,20 @@ const movie = {
         return _.sampleSize(state.genreSelectList, 20)
       },
       movieVoteAvgListCutting: (state) => {
-        return _.sampleSize(state.movieVoteAvgList, 12)
+        const avglist = state.movieList.filter((movie)=> {
+          if (state.movieVoteAvgList.includes(movie.id)) {
+            return movie
+          }
+        })
+        return _.sampleSize(avglist, 12)
       },
       movieVoteCntListCutting: (state) => {
-        return _.sampleSize(state.movieVoteCntList, 12)
+        const avgCnt = state.movieList.filter((movie) => {
+          if (state.movieVoteCntList.includes(movie.id)){
+            return movie
+          }
+        })
+        return _.sampleSize(avgCnt, 12)
       },
       moviesLikeListGetters: (state) => {
         return state.likeMovieList
@@ -87,16 +97,21 @@ const movie = {
         state.firstSelectList = state.movieList.slice(nums-8, nums)
       },
       TO_LIKING(state, payload) {
+        // movie의 like_users 에 추가하거나 빼려는 작업
         state.movieList.forEach((movie) => {
           if (movie.id == payload.moviePk){
             // console.log(12323534252)
             if (movie.like_users.includes(payload.userPk)){
               movie.like_users = movie.like_users.filter((el)=> {
-                return el !== payload.userPk
+                if (el !== payload.userPk) {
+                  return el 
+                }
               })
+              console.log(movie)
             }else{
               // console.log(movie)
               movie.like_users.push(payload.userPk)
+              console.log(movie)
             }
           }
         })
@@ -205,7 +220,13 @@ const movie = {
           }
         })
           .then(res => {
-            context.commit('GET_VOTE_AVG_MOVIE_LIST', res.data)
+            // 뽑아온 배열
+            const voteAvg = res.data
+            const idlist = []
+            voteAvg.forEach((el)=> {
+              idlist.push(el.id)
+            })
+            context.commit('GET_VOTE_AVG_MOVIE_LIST', idlist)
           })
           .catch(err => console.log(err))
       },
@@ -218,7 +239,12 @@ const movie = {
           }
         })
           .then(res => {
-            context.commit('GET_VOTE_CNT_MOVIE_LIST', res.data)
+            const voteCnt = res.data
+            const idlist2 = []
+            voteCnt.forEach((el) => {
+              idlist2.push(el.id)
+            })
+            context.commit('GET_VOTE_CNT_MOVIE_LIST', idlist2)
           })
           .catch(err => console.log(err))
       },
