@@ -3,7 +3,7 @@
     <div class="row">
         <h1>All Movie!</h1>
     </div>
-    <div class="row">
+    <div class="row justify-content-around">
         <OrderList />
         <div class="col-9 row">
             <MyCard

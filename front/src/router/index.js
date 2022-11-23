@@ -7,12 +7,12 @@ import LoginPageView from '@/views/User/LoginPageView'
 import SignupPageView from '@/views/User/SignupPageView'
 import UserInfoPageView from '@/views/User/UserInfoPageView'
 import GenrePageView from '@/views/Genre/GenrePageView'
-import MyTest from '@/views/MyTest'
 import FirstSelectMovieView from '@/views/User/FirstSelectMovieView'
 import CommunityView from '@/views/Community/CommunityView'
 import CommunityCreateView from '@/views/Community/CommunityCreateView'
 import CommunityDetailView from '@/views/Community/CommunityDetailView'
 import AllMoviePageView from '@/views/AllMovie/AllMoviePageView'
+import My404Error from '@/views/My404Error'
 
 Vue.use(VueRouter)
 
@@ -106,8 +106,8 @@ const routes = [
   },
   {
     path: '*',
-    name: 'test',
-    component: MyTest
+    name: '404',
+    component: My404Error
   },
 ]
 
