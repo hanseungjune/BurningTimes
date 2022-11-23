@@ -71,8 +71,9 @@
 
             <div style="width:100%;" class="row">
               <div class="col review_body">
-                <div class="row">
+                <div class="row justify-content-between">
                   <div id="reviews_title" class="col-3">Review</div>
+                  <button class="col-3" @click="goToReview">리뷰쓰러 드~가자~</button>
                 </div>
                 <div class="row d-flex justify-content-center mt-3 mb-3">
                   <table class="table">
@@ -175,6 +176,12 @@ export default {
           })
         .catch(err => console.log(err))
       },
+      goToReview() {
+        const movieId = this.movie.id
+        const movieTitle = this.movie.title
+        this.$router.push({ name: "communitycreate", params : { movieId, movieTitle } })
+        this.modal.hide()
+      }
     },
   }
 
