@@ -80,6 +80,13 @@ export default {
         this.movieInput = movie.title
         this.movieId = movie.id
       }
+    },
+    created() {
+      console.log(this.$route.params.movieId, this.$route.params.movieTitle)
+      if (this.$route.params.movieId && this.$route.params.movieTitle) {
+        this.movieInput = this.$route.params.movieTitle
+        this.movieId = this.$route.params.movieId
+      }
     }
 }
 </script>
