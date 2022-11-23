@@ -1,13 +1,13 @@
 <template>
-    <div>
-      <div id="actors_title" class="col-3">Actor</div>
+    <div style="height: 100%;" class="d-flex align-items-center justify-content-center">
+      <div id="actors_title" class="col-3"><h4>Actor</h4></div>
       <div id="actors_list">
           <span
-          v-for="(actor, idx) in movie.actors.slice(0,4)"
+          v-for="(actor, idx) in movie.actors.slice(0,8)"
           :key="idx"
           class="actors">
-            <a id="actor_link" :href="'https://www.themoviedb.org/person/'+actor.id">
-                {{actor.name}},
+            <a id="actor_link" class="btn btn-secondary" :href="'https://www.themoviedb.org/person/'+actor.id">
+                {{actor.name}}
             </a>
           </span>
       </div>
@@ -31,25 +31,36 @@
     }
 
     #actors_title {
-        width: 200px;
-        height: 30px;
+        width: 80px;
+        height: 90%;
         text-align: center;
         font-size: 20px;
-        margin-left: 5px;
-        margin-top: 10px;
+        margin-top: 30px;
+        padding-top: 50px;
         margin-bottom: 10px;
-        background-color: green;
-        color: white;
+        background-color: rgb(208, 184, 168);
+        color: black;
         border-radius: 5px;
+        box-shadow: 5px 5px gainsboro;
     }
 
     #actors_list {
         text-align: center;
+        padding-top: 10px;
     }
 
     #actor_link{
+        margin-top: 10px;
+        height: 20% !important;
         text-decoration: none;
         color: black;
         font-weight: bold;
+        font-size: 15px;
+        background-color: rgb(223, 211, 195);
+        border: 1px solid transparent;
+    }
+    
+    #actor_link:hover {
+      opacity: 0.7;
     }
   </style>
