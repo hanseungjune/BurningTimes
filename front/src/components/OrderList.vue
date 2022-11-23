@@ -1,37 +1,37 @@
 <template>
-  <div id="order-box" class="col-3 container border border-2 rounded p-4 mb-3">
+  <div id="order-box" class="col-2 border border-2 rounded p-4">
     <h1>정렬기준</h1>
     <div class="btn-group d-flex flex-column aling-items-center" role="group" aria-label="Basic radio toggle button group">
         <h4>개봉 날짜 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="new" autocomplete="off" value="new" v-model="order" >
-            <label class="btn btn-outline-primary  col-3" for="new"><i class="bi bi-caret-up"></i></label>
+            <label class="btn btn-light  col-3" for="new"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="old" autocomplete="off" value="old" v-model="order">
-            <label class="btn btn-outline-primary  col-3" for="old"><i class="bi bi-caret-down"></i></label>
+            <label class="btn btn-light  col-3" for="old"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
 
         <h4>평점 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="high" autocomplete="off" value="high" v-model="order">
-            <label class="btn btn-outline-primary  col-3" for="high"><i class="bi bi-caret-up"></i></label>
+            <label class="btn btn-light  col-3" for="high"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="low" autocomplete="off" value="low" v-model="order">
-            <label class="btn btn-outline-primary  col-3" for="low"><i class="bi bi-caret-down"></i></label>
+            <label class="btn btn-light  col-3" for="low"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
 
         <h4>좋아요 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="many" autocomplete="off" value="many" v-model="order">
-            <label class="btn btn-outline-primary  col-3" for="many"><i class="bi bi-caret-up"></i></label>
+            <label class="btn btn-light  col-3" for="many"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="few" autocomplete="off" value="few" v-model="order">
-            <label class="btn btn-outline-primary  col-3" for="few"><i class="bi bi-caret-down"></i></label>
+            <label class="btn btn-light  col-3" for="few"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
-        <button class="btn btn-outline-danger col-12 rounded" @click="clearOrder">초기화</button>
+        <button class="btn btn-danger col-12 rounded" @click="clearOrder">초기화</button>
     </div>
     <br>
     <div class="container">

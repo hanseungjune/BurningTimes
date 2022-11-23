@@ -10,9 +10,9 @@
             <div class="eye"></div>
           </div>
         </div>
-        <div class="container">
+        <div class="container ">
             <div class="row">
-                <transition-group mode="out-in" class="row">
+                <transition-group name="group" mode="out-in" class="row">
                 <MyCard 
                 v-for="movie in allMovieList"
                 :key = movie.id
@@ -50,10 +50,23 @@ export default {
 </script>
 
 <style>
+.group-enter-active {
+  transition: all 1s ease;
+  transition-delay: 1s;
+}
+.group-leave-active {
+  transition: all 1s ease;
+}
+.group-enter{
+  opacity: 0;
+} 
+.group-leave-to {
+  opacity: 0;
+}
 #background-genre{
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 0;
     transition: background-image 0.5s;
     background-position: 0% 0%;

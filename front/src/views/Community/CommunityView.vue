@@ -1,11 +1,11 @@
 <template>
-  <div class="container d-flex flex-column justify-content-center">
+  <div class="container d-flex flex-column justify-content-center" id="reviewlist">
     <div class="row justify-content-between">
-        <span class="col-3">리뷰 페이지</span>
-        <router-link class="btn btn-success col-2" :to="{ name: 'communitycreate'}">리뷰 작성</router-link>
+        <h2 class="col-3">리뷰 페이지</h2>
+        <router-link class="btn col-2 fs-3" :to="{ name: 'communitycreate'}" id="reviewcreatebtn">리뷰 작성</router-link>
     </div>
-    <div class="container justfy-content-center">
-        <table class="table table-hover">
+    <div class="container mt-2">
+        <table class="table table-light table-hover">
             <thead>
                 <tr>
                 <th scope="col" id="rNum">번호</th>
@@ -157,19 +157,29 @@ export default {
 </script>
 
 <style>
+#reviewlist {
+    color: white;
+}
 #rNum {
-    width: 10vw;
+    width: 10%;
 }
 #rmovie {
-    width: 20vw
+    width: 20%
 }
 #rtitle {
-    width: 50vw;
+    width: 50%;
 }
 #rRecommend {
-    width: 10vw;
+    width: 10%;
 }
 #rWriter {
-    width: 10vw;
+    width: 10%;
+}
+#reviewcreatebtn {
+    background-color: #FF4301;
+}
+#reviewcreatebtn:hover {
+    background-color: #FA7D09;
+    transition: all 2s;
 }
 </style>

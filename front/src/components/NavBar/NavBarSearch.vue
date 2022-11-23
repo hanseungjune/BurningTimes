@@ -42,14 +42,14 @@ export default {
 <style>
     .nav-search{
         width: 20rem !important;
-        background-color: #7D6E83 !important;
+        background-color: #FF4301 !important;
         z-index: 10;
         -webkit-transition: background-color 150ms linear !important;
         -ms-transition: background-color 150ms linear !important;
         transition: background-color 150ms linear !important;
     }
     .nav-search-btn{
-        background-color: #7D6E83 !important;
+        background-color: #FF4301 !important;
         z-index: 10;
     }
     .searchClicked {

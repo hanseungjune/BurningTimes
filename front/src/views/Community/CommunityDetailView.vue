@@ -1,34 +1,61 @@
 <template>
-  <div class="container">
-    <div v-show="!isUpdateOpen">
-        <h1>제목 : {{ reviewDetail?.title }}</h1>
-        <h2>작성자 : {{ reviewDetail?.user?.username }}</h2>
-        <h3>영화 : {{ reviewDetail?.movie?.title }}</h3>
-        <button @click="likeReview" v-show="!reviewDetail?.like_users.includes($store.getters.userPkGetters)">리뷰 좋아요</button>
-        <button @click="likeReview" v-show="reviewDetail?.like_users.includes($store.getters.userPkGetters)">리뷰 좋아요 취소</button>
-        <div>
-            <button @click="deleteReview" class="btn btn-danger">리뷰 삭제</button>
-            <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary">리뷰 수정</button>
+  <div class="container" id="reviewdetail">
+    <div v-show="!isUpdateOpen" class="container">
+        <div class="row pt-5" id="reviewTitle">
+            <h1>제목 : {{ reviewDetail?.title }}</h1>
         </div>
-        <img :src="'https://image.tmdb.org/t/p/w500/'+ reviewDetail?.movie.poster_path" alt="">
-        <h4>내용 : {{ reviewDetail?.content }}</h4>
-        <CommunityComment 
-            v-for="comment in reviewDetail?.comments.filter(el => {
-                if (!el.parent_comment) {
-                    return el
-                }
-            })" 
-            :key="comment.id"
-            :comment = comment
-            @deleteComment="deleteComment"
-        />
-        <form @submit.prevent="createComment">
-        <div class="form-floating m-3">
-            <textarea class="form-control" placeholder="내용을 작성하세요" id="commentInput" style="height: 150px" v-model.trim="commentInput"></textarea>
-            <label for="commentInput">Comment</label>
+        <div class="row text-end p-3" id="reviewUser">
+            <h2 @click="goToReviewer">작성자 : {{ reviewDetail?.user?.username }}</h2>
         </div>
-        <input class="btn btn-success" type="submit" value="댓글작성">
-        </form>
+        <div class="row">
+            <div class="col">
+                <MyCard
+                    :movie="reviewDetail.movie"
+                    class="w-100"
+                 />
+            </div>
+            <div class="col">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button 
+                            @click="likeReview" 
+                            v-show="$store.getters.userPkGetters && !reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id"
+                        >리뷰 좋아요</button>
+                        <button 
+                        @click="likeReview" 
+                        v-show="$store.getters.userPkGetters && reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id">리뷰 좋아요 취소</button>
+                        <div class="row justify-content-evenly m-2">
+                            <button @click="deleteReview" class="btn btn-danger col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 삭제</button>
+                            <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 수정</button>
+                        </div>
+                    </div>
+                    <div class="col-9 h-100 w-100">
+                        <h4>내용<br><br>{{ reviewDetail?.content }}</h4>
+                    </div>
+                    <div class="col-2 w-100">
+                        <CommunityComment 
+                            v-for="comment in reviewDetail?.comments.filter(el => {
+                                if (!el.parent_comment) {
+                                    return el
+                                }
+                            })" 
+                            :key="comment.id"
+                            :comment = comment
+                            @deleteComment="deleteComment"
+                        />
+                        <form @submit.prevent="createComment">
+                        <div class="form-floating m-3">
+                            <textarea class="form-control" placeholder="내용을 작성하세요" id="commentInput" style="height: 150px" v-model.trim="commentInput"></textarea>
+                            <label for="commentInput">Comment</label>
+                        </div>
+                        <input class="btn btn-success" type="submit" value="댓글작성">
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
     </div>
     <!-- 수정페이지 -->
     <div v-show="isUpdateOpen">
@@ -64,11 +91,13 @@
 <script>
 import axios from 'axios'
 import CommunityComment from '@/components/Community/CommunityComment'
+import MyCard from '@/components/MyCard'
 
 export default {
     name: 'CommunityDetailView',
     components: {
         CommunityComment,
+        MyCard
     },
     data() {
         return {
@@ -199,6 +228,9 @@ export default {
                 this.isUpdateOpen = false
             })
             .catch(err => console.log(err))
+        },
+        goToReviewer() {
+            this.$router.push({name: 'userinfo', params: { userPk: this.reviewDetail.user.id}})
         }
     },
     created() {
@@ -208,5 +240,13 @@ export default {
 </script>
 
 <style>
-
+#reviewdetail {
+    color: white;
+}
+#reviewTitle{
+    background-color: rgb(47, 37, 25);
+}
+#reviewUser {
+    background-color: rgb(74, 63, 53);
+}
 </style>
