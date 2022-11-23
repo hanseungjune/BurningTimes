@@ -24,7 +24,7 @@
           </div>
           <div class="card-footer text-muted d-flex justify-content-between">
             <button class="btn btn-secondary" v-show="$store.getters.userPkGetters" @click="updateShow=!updateShow">UPDATE</button>
-            <button class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters"><i id="user_follow" class="bi bi-hand-index-thumb-fill"></i> FOLLOW</button>
+            <button class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters && $store.getters.userPkGetters !== this.userInformation.id"><i id="user_follow" class="bi bi-hand-index-thumb-fill"></i> FOLLOW</button>
             <button class="btn btn-danger" v-show="$store.getters.userPkGetters" @click="removeUser">USERBYE</button>
           </div>
       </div>

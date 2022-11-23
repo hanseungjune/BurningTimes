@@ -245,6 +245,7 @@ export default {
 
   /* Style the back side */
   .flip-card-back {
+    text-align: unset;
     position: fixed;
     top: 0;
     background-color: #FF4301;

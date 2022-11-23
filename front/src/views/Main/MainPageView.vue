@@ -2,7 +2,7 @@
     <div class="d-flex">
       <img id="left" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
       <img id="right" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
-      <!-- <div id="background-genre" :style="{ 'backgroundColor':'black' }" ></div> -->
+      
         <br>
         <br>
         <br>
@@ -14,12 +14,6 @@
             <div class="eye"></div>
           </div>
         </div>
-        <!-- <div id="rssBlock" v-show="!$store.getters.userPkGetters">
-          <p class="cnnContents">
-            <span class="marqueeStyle"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
-            <span class="marqueeStyle2"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
-          </p>
-        </div> -->
         <div class="container pt-5" v-show="$store.getters.userPkGetters">
             <br>
             <br>
@@ -279,37 +273,10 @@ export default {
   margin-bottom: 50px;
   color: white;
   border-radius: 5px;
-} */
+  z-index: 1;
+}
 
-  /* #rssBlock{
-    left:0px;
-    height: 80px;
-    background: #FFFFFF;
-    position: absolute;
-    width:100%;
-    overflow: hidden;
-  }
 
-  .cnnContents {
-    width:100%;
-    padding-top: 20px;
-    margin:0 auto;
-    font-size: 30px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-family: 'Museo';
-    font-weight: 300;
-  }
-  .marqueeStyle {
-    display:inline-block;
-    animation: scrolling-left1 10s linear infinite;
-  }
-
-  .marqueeStyle2 {
-    display:inline-block;
-    animation: scrolling-left2 10s linear infinite;
-    animation-delay: 5s;
-  }
 
   @keyframes scrolling-left1 {
       0% {transform: translateX(100%);
