@@ -3,12 +3,10 @@
   <nav class="navbar navbar-dark fixed-top">
     <div class="container-fluid">
       <div class="nav">
-        <router-link class="nav-link" :to="{ name: 'test'}">Test</router-link>
-        <router-link class="navbar-brand" :to="{ name: 'main'}">Ssafy Movie</router-link>
-        
+        <a class="navbar-brand" id="head">MIcT</a>
       </div>
       <div class="nav">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="bi bi-search"></i>
         </button>
         <router-link class="nav-link" :to="{ name: 'main'}">Home</router-link>
@@ -23,7 +21,7 @@
     </div>
   </nav>
   <div class="collapse" id="navbarToggleExternalContent">
-    <div class="d-flex justify-content-end bg-dark p-3">
+    <div class="d-flex justify-content-end p-3">
       <NavBarSearch class="d-flex" />
     </div>
   </div>
@@ -53,7 +51,24 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans:400');
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean');
+  #head{
+    font-family: 'Black Han Sans', sans-serif !important;
+    color: #C0FD5B;
+  }
 
+  .nav-link{
+    color: white !important
+  }
+  .router-link{
+    color: black !important
+  }
+  .router-link-exact-active {
+    color: rgb(9, 27, 192) !important;
+    background-color: white;
+    border-radius: 10px;
+  }
   #navbarToggleExternalContent {
     position: fixed;
     right: 0;
@@ -61,11 +76,14 @@ export default {
     z-index: 10;
   }
   .navbar{
-    background-color: #212529;
+    background-color: #7D6E83;
     animation: navfade 5s;
   }
   @keyframes navfade {
     from {
+      background-color: rgb(143, 38, 38);
+    }
+    70% {
       background-color: rgb(143, 38, 38);
     }
     to {

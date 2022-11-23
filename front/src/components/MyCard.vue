@@ -1,5 +1,5 @@
 <template>
-<div class="col-3 my-2">
+<div class="col-3 my-2 ">
   <div class="flip-card">
     <div class="flip-card-inner">
       <div class="card h-100 border-0 flip-card-front" id="mycard" @click="modal.show()" >
@@ -196,6 +196,8 @@ export default {
 
   /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
   .flip-card {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-radius: 10px;
     background-color: transparent;
     width: 100%;
     height: 100%;
