@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex container-fluid">
   <div class="d-flex viewport overflow-hidden " ref="viewport">
-    <div class="d-flex  row flex-nowrap " id="horizontalScroll" ref="content">
+    <div class="d-flex row flex-nowrap " id="horizontalScroll" ref="content">
         <FirstSelectCard 
             v-for="movie in selected"
             :key="movie.title"
@@ -102,5 +102,8 @@ export default {
     position: absolute;
     top: 43%;
     right: 10px;
+}
+#horizontalScroll {
+  width: 100vw;
 }
 </style>
