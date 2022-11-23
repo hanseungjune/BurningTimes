@@ -151,4 +151,7 @@ export default {
 </script>
 
 <style>
+#order-box{
+    background-color: white;
+}
 </style>
