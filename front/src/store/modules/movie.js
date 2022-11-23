@@ -18,6 +18,7 @@ const movie = {
     genreSelectList: null,
     firstSelectList: null,
     likeMovieList: null,
+    userReviewList: [],
     backgroundImg: '0',
     reviewId: null
   },
@@ -48,7 +49,12 @@ const movie = {
         return _.sampleSize(avgCnt, 12)
       },
       moviesLikeListGetters: (state) => {
-        return state.likeMovieList
+        const likedmovie = state.movieList.filter((movie) => {
+          if (state.likeMovieList.includes(movie.id)){
+              return movie
+          }
+        })
+        return likedmovie
       },
       genreSelectListgetters: (state) => {
         return state.genreSelectList
@@ -129,6 +135,9 @@ const movie = {
             }
           }
         })
+      },
+      MY_REVIEWS_SETTING(state, payload){
+          state.userReviewList = payload
       },
       allMovieOrder(state, payload) {
         const genreOrder = payload.genre
@@ -276,10 +285,19 @@ const movie = {
           }
         })
           .then(res => {
-            console.log(res.data)
-            context.commit('GET_LIKE_MOVIE_LIST', res.data)
+            const likeMovies = res.data
+            const idlist3 = []
+            likeMovies.forEach((el) => {
+              idlist3.push(el.id)
+            })
+            context.commit('GET_LIKE_MOVIE_LIST', idlist3)
           })
           .catch(err => console.log(err))
+      },
+      myReviewsSetting(context, payload){
+          // console.log(context)
+          console.log(payload)
+          context.commit('MY_REVIEWS_SETTING', payload)
       },
       async startMovieOrder (context, payload) {
         if (!context.state.movieList.length) {
