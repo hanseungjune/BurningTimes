@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col">
                 <MyCard
-                    :movie="reviewDetail.movie"
+                    :movie="reviewMovieGet || reviewDetail.movie"
                     class="w-100"
                  />
             </div>
@@ -20,10 +20,12 @@
                         <button 
                             @click="likeReview" 
                             v-show="$store.getters.userPkGetters && !reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id"
+                            class="btn"
+                            id="likebtn"
                         >리뷰 좋아요</button>
                         <button 
                         @click="likeReview" 
-                        v-show="$store.getters.userPkGetters && reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id">리뷰 좋아요 취소</button>
+                        v-show="$store.getters.userPkGetters && reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id" class="btn" id="unlikebtn">리뷰 좋아요 취소</button>
                         <div class="row justify-content-evenly m-2">
                             <button @click="deleteReview" class="btn btn-danger col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 삭제</button>
                             <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 수정</button>
@@ -234,7 +236,13 @@ export default {
         }
     },
     created() {
+        this.$store.commit('REVIEW_NUMS_GET', this.$route.params.movieid)
         this.getReviewDetail()
+    },
+    computed: {
+        reviewMovieGet() {
+            return this.$store.getters.getReviewMovie
+        }
     }
 }
 </script>
@@ -248,5 +256,13 @@ export default {
 }
 #reviewUser {
     background-color: rgb(74, 63, 53);
+}
+#likebtn {
+    background-color: #FA7D09;
+    animation: like 2s;
+}
+#unlikebtn {
+    background-color: #FF4301;
+    animation: like 2s;
 }
 </style>
