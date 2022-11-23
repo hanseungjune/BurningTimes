@@ -47,6 +47,9 @@ const movie = {
       },
       orderMovieGetters(state) {
         return state.orderMovieListPage
+      },
+      orderAllMovieGetters(state) {
+        return state.orderMovieList
       }
   },
   mutations: {
@@ -179,7 +182,9 @@ const movie = {
         }
         state.orderMovieList = orderList
         state.orderMovieListPage = orderList.slice(0, 8)
-        console.log(state.orderMovieListPage )
+      },
+      pageMove(state, pageNum) {
+        state.orderMovieListPage = state.orderMovieList.slice(pageNum*8 - 8,pageNum*8)
       }
   },
   actions: {
