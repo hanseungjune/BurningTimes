@@ -60,7 +60,7 @@ export default {
     width: 100%;
     z-index: 10;
   }
-  nav{
+  .navbar{
     background-color: #212529;
     animation: navfade 5s;
   }
