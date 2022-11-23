@@ -23,7 +23,7 @@
           <button type="button" class="btn-close" @click="modal.hide()" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="container">
+          <div class="container d-flex flex-column justify-content-center">
             <div id="Detail_title_vote" class="row">
               <div id="detail_title" class="col-4">
                 <h3>{{ movie?.title }}</h3>
@@ -48,21 +48,21 @@
               </div>
             </div>
 
-            <div style="height: 20%;" class="row">
+            <div class="row">
               <div class="col-4">
                 <img id="detail_img" :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + `${movie?.poster_path}`">
               </div>
               <div class="col-8">
                 <div style="height: 70%;" class="row">
-                  <div style="height: 100%;" class="col">
+                  <div style="height: 100%;" id="iframe_img" class="col">
                     <iframe id="player" type="text/html" class="iframe_wid_hei"
                       :src="videoUrl+videoKey"
                     frameborder="0" v-if="videoKey"></iframe>
                     <img class="img_wid_hei" src="https://www.tooli.co.kr/files/attach/images/571601/933/121/001/b3fb122e830eeb9a3a8a916f1c87fd69.gif" alt="안나올 뜨는 이미지" v-if="!videoKey">
                   </div>
                 </div>
-                <div style="height: 30%;" class="row">
-                  <div class="col">
+                <div style="height: 30%; " class="row">
+                  <div style="width: 100%;" class="col">
                     <Actors
                       style="height: 100%;"
                       :movie="movie"
@@ -276,10 +276,11 @@ export default {
 
   /* 배경색 맞추기 */
   .modal-header{
-    background-color: rgb(125, 110, 131);
+    background-color: #FF4301;
+    border-bottom: 1px solid #FF4301 !important;
   }
   .modal-body{
-    background-color: rgb(248, 237, 227);
+    background-color: #130f0a;
   }
 
   .modal-title {
@@ -298,14 +299,21 @@ export default {
   .avg_cnt_like {
     width: 250px;
     height: 80px;
-    border: 1px solid rgb(208, 184, 168);
-    background-color: rgb(208, 184, 168);
-    color: black;
+    border: 1px solid #FF4301;
+    background-color: #FF4301;
+    color: white;
     padding-top: 15px;
     text-align: center;
     border-radius: 50%;
     box-shadow: 5px 5px gainsboro;
     margin: 20px;
+    animation: like 3s ease-out;
+  }
+
+  @keyframes like {
+    to {
+      transform: rotate3d(100, 100, 100, 30turn);
+    }
   }
 
   #Detail_title_vote {
@@ -318,6 +326,7 @@ export default {
     display: flex;
     justify-content: center;
     font-size: 30px;
+    color: white;
     font-weight: 900;
   }
 
@@ -335,33 +344,42 @@ export default {
     margin-bottom: 30px;
     padding: 30px 20px;
     border: 1px inset transparent;
-    background-color: rgb(223, 211, 195);
+    background-color: #1d1812;
+    color: white;
     border-radius: 5px;
-    box-shadow: 5px 5px gainsboro;
+    box-shadow: 2px 2px #444444;
   }
 
   .review_body {
-    background-color: bisque;
+    background-color: #1d1812;
     width:80%;
     margin-left: 10px;
     margin-right: 20px;
     padding: 10px 20px !important;
     border: 1px inset transparent;
-    background-color: rgb(223, 211, 195);
     border-radius: 5px;
-    box-shadow: 5px 5px gainsboro;
+    box-shadow: 2px 2px #444444;
+  }
+
+  .review_body th,
+  .review_body td {
+    color: white;
   }
 
   #reviews_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 200px;
-    height: 30px;
+    height: 50px;
     text-align: center;
     font-size: 20px;
     margin-left: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: rgb(208, 184, 168);
-    box-shadow: 5px 5px gainsboro;
+    padding-top: 10px;
+    background-color: #FF4301;
+    box-shadow: 5px 5px #ff4501a4;
     color: black;
     border-radius: 5px;
   }
@@ -371,8 +389,10 @@ export default {
   }
 
   .selected {
-    border: 1px solid rgb(125, 110, 131);
-    background-color: rgb(125, 110, 131);
+    border: 1px solid #2F2519;
+    background-color: #2F2519;
+    box-shadow: none;
+
   }
 
   .avg_cnt_like:hover{
@@ -382,6 +402,12 @@ export default {
   .iframe_wid_hei {
     width: 100%;
     height: 100%;
+  }
+
+  #iframe_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .img_wid_hei {
