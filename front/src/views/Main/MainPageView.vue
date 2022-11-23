@@ -116,7 +116,7 @@ export default {
   }
   40%{
     opacity: 1;
-    transform: translateX(-30%);
+    transform: translateX(-27%);
   }
   70%{
     opacity: 1;
@@ -124,7 +124,7 @@ export default {
   }
   80%{
     opacity: 1;
-    transform: translateX(-70%);
+    transform: translateX(-67%);
   }
   to {
     opacity: 0;
@@ -142,7 +142,7 @@ export default {
   }
   40%{
     opacity: 1;
-    transform: translateX(30%);
+    transform: translateX(27%);
   }
   70%{
     opacity: 1;
@@ -150,7 +150,7 @@ export default {
   }
   80%{
     opacity: 1;
-    transform: translateX(70%);
+    transform: translateX(67%);
   }
   to {
     opacity: 0;
@@ -271,6 +271,7 @@ export default {
   color: black;
   border-radius: 5px;
 }
+
 
   /* #rssBlock{
     left:0px;
