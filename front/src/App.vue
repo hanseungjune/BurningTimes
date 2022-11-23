@@ -26,7 +26,6 @@ export default {
           this.$store.dispatch('getUserPk')
         }
     },
-    
 }
 </script>
 
@@ -44,6 +43,7 @@ export default {
   text-align: unset;
   color: #2c3e50;
   background-color: #130f0a;
+  z-index: 0;
 }
 
 /* 슬라이드 페이드 */
@@ -59,5 +59,4 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
-
 </style>
