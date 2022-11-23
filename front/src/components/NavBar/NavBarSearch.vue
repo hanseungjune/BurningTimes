@@ -42,17 +42,18 @@ export default {
 <style>
     .nav-search{
         width: 20rem !important;
-        background-color: #323232 !important;
+        background-color: #7D6E83 !important;
         z-index: 10;
         -webkit-transition: background-color 150ms linear !important;
         -ms-transition: background-color 150ms linear !important;
         transition: background-color 150ms linear !important;
     }
     .nav-search-btn{
+        background-color: #7D6E83 !important;
         z-index: 10;
     }
     .searchClicked {
-        background-color: rgb(255, 255, 255) !important;
+        background-color: #F8EDE3 !important;
         -webkit-transition: background-color 150ms linear !important;
         -ms-transition: background-color 150ms linear !important;
         transition: background-color 150ms linear !important;
@@ -62,6 +63,7 @@ export default {
         background-size: contain;
         background-position:  1px center;
         background-repeat: no-repeat;
+        color: #F8EDE3 !important;
         text-indent: 0;
         padding-left: 1.5rem;
     }
