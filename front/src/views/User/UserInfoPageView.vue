@@ -18,14 +18,14 @@
                 <span href="#" @click="favoriteGenre" class="btn btn-primary">당신이 가장 좋아하는 장르는?</span>
               </div>
               <div id="favorite_genre_box">
-                <button type="button" v-if="favorite_genre" @click="goToGenre" class="btn btn-outline-secondary">{{favorite_genre}}</button>
+                <button id="genre_choice" type="button" v-if="favorite_genre" @click="goToGenre" class="btn btn-outline-secondary">{{favorite_genre}}</button>
                 <button type="button" v-if="!favorite_genre" class="btn btn-outline-secondary"> 장르를 클릭하면 해당 페이지로 넘어가요! d=====(￣▽￣*)b </button>
               </div>
           </div>
           <div class="card-footer text-muted d-flex justify-content-between">
-            <button class="btn btn-secondary" v-show="$store.getters.userPkGetters" @click="updateShow=!updateShow">UPDATE</button>
-            <button class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters && $store.getters.userPkGetters !== this.userInformation.id"><i id="user_follow" class="bi bi-hand-index-thumb-fill"></i> FOLLOW</button>
-            <button class="btn btn-danger" v-show="$store.getters.userPkGetters" @click="removeUser">USERBYE</button>
+            <button id="userUpdate" class="btn btn-secondary" v-show="$store.getters.userPkGetters" @click="updateShow=!updateShow">UPDATE</button>
+            <button id="userFollow" class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters && $store.getters.userPkGetters !== this.userInformation.id"><i id="user_follow" class="bi bi-hand-index-thumb-fill"></i> FOLLOW</button>
+            <button id="userDelete" class="btn btn-danger" v-show="$store.getters.userPkGetters" @click="removeUser">USERBYE</button>
           </div>
       </div>
       <br>
@@ -61,6 +61,16 @@
     </div>
       <div class="container pt-5" v-show="$store.getters.userPkGetters">
         <div class="row">
+          <div id="like_movies_title" class="col-3">My Review</div>
+          <br>
+          <!-- {{userInformation.review}} -->
+            <MyReview
+                v-for="re in userInformation.review"
+                :key="re.id"
+                :review="re"
+            />
+        </div>
+        <div class="row">
           <div id="like_movies_title" class="col-3">LIKE MOVIE</div>
           <br>
           <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
@@ -68,9 +78,9 @@
         <div class="row">
           <transition-group name="flip" mode="flip" class="row">
             <MyCard 
-            v-for="movie in getLikeMovieListShow"
-            :key = movie.id
-            :movie = movie
+              v-for="movie in getLikeMovieListShow"
+              :key = movie.id
+              :movie = movie
             />
           </transition-group>
         </div>
@@ -81,12 +91,14 @@
 
 <script>
 import MyCard from '@/components/MyCard.vue'
+import MyReview from '@/components/MyReview.vue'
 
 import axios from 'axios'
 export default {
     name: 'UserInfoPageView',
     components: {
-      MyCard
+      MyCard,
+      MyReview,
     },
     data() {
         return {
@@ -96,6 +108,7 @@ export default {
             userLastName: null,
             userEmail: null,
             favorite_genre: null,
+            myReviewList: [],
             genre_category: [
                 {
                     "id": 12,
@@ -303,6 +316,11 @@ export default {
         await this.$store.dispatch('getUserPk')
         this.userPk = await this.$store.getters.userPkGetters
         await this.$store.dispatch('getLikeMovieList', this.userPk)
+        this.myReviewList = await this.$state.userReviewList.filter((user) => {
+            if (user.id == this.userInformation.id) {
+              return user
+            }
+        })
     }
 }
 </script>
@@ -323,6 +341,7 @@ export default {
     font-size: 20px;
   }
   .userinfo_box {
+    margin-top: 100px;
     width: 70% !important;
   }
   .like_movies {
@@ -340,5 +359,49 @@ export default {
   background-color: black;
   color: white;
   border-radius: 5px;
+}
+
+#genre_choice:hover,
+#userUpdate:hover,
+#userFollow:hover {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+#userDelete {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+#userDelete:hover {
+  animation: avoidedmouse 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes avoidedmouse {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(300px);
+    pointer-events: none;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 </style>

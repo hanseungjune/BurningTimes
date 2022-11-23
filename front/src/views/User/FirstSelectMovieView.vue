@@ -1,11 +1,16 @@
 <template>
-  <div>
-    <h1>좋아하시는 영화를 선택 해주세요!</h1>
+  <div class="container text-center">
+    <br>
+    <br>
+    <br>
+    <h1 style="color:white;">좋아하시는 영화를 선택 해주세요!</h1>
     <div class="container">
-      <button @click="updateSelect(1)">뒤로!</button>
-      <button @click="updateSelect(2)">다음으로!</button>
-      <button @click="likeMovieEnd">선택완료!</button>
-      <h2>선택된 영화</h2>
+      <div class="btn-group mt-3 mb-3" role="group" aria-label="Basic mixed styles example">
+        <button type="button" class="btn btn-danger btngroup" @click="updateSelect(1)">뒤로!</button>
+        <button type="button" class="btn btn-warning btngroup" @click="updateSelect(2)">다음으로!</button>
+        <button type="button" class="btn btn-success btngroup" @click="likeMovieEnd">선택완료!</button>
+      </div>
+      <h2 style="color:white;">선택된 영화</h2>
         <FirstSelectScroll 
           :selected=selectedShow
           @movieId="selectMovie"
@@ -109,5 +114,8 @@ export default {
 #FirstSigncard {
   opacity: 1;
   transition: all 0.3s ease-in-out
+}
+.btngroup {
+  background-color: #FF4301;
 }
 </style>
