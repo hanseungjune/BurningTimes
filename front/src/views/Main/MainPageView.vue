@@ -2,7 +2,7 @@
     <div class="d-flex">
       <img id="left" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
       <img id="right" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
-      <div id="background-genre" :style="{ 'backgroundColor':'black' }" ></div>
+      
         <br>
         <br>
         <br>
@@ -14,17 +14,15 @@
             <div class="eye"></div>
           </div>
         </div>
-        <!-- <div id="rssBlock" v-show="!$store.getters.userPkGetters">
-          <p class="cnnContents">
-            <span class="marqueeStyle"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
-            <span class="marqueeStyle2"><b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! <b>로그인</b>해야 추천을 할 수 있어요! <b>로그인</b>해주세요! </span>
-          </p>
-        </div> -->
         <div class="container pt-5" v-show="$store.getters.userPkGetters">
-            <div class="row">
-              <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
+            <br>
+            <br>
+            <br>
+            <div class="row text-center">
+
+
+              <span class="vote_avg_cnt">이달의 평점 순위</span>
               <br>
-              <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
               <transition-group name="flip" mode="flip" class="row">
                 <MyCard 
                   v-for="movie in voteAvgList"
@@ -40,8 +38,7 @@
             <br>
             <br>
             <div class="row">
-              <div id="vote_avg_title" class="col-3">VOTE_COUNT</div>
-              <br>
+              <h1 class="vote_avg_cnt">이달의 선호도 순위</h1>
               <transition-group mode="out-in" class="row">
                 <MyCard 
                 v-for="movie in voteCntList"
@@ -50,6 +47,12 @@
                 />
               </transition-group>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
 </template>
@@ -89,6 +92,7 @@ export default {
 </script>
 
 <style>
+
 #left {
   position: fixed;
   width: 50%;
@@ -260,48 +264,19 @@ export default {
      100% { width:13ch;} 
 }
 
-#vote_avg_title{
-  width: 300px;
+/* .vote_avg_cnt{
+  width: 800px;
   height: 50px;
   text-align: center;
-  font-size: 30px;
+  font-size: 50px;
   margin-left: 15px;
   margin-bottom: 50px;
-  background-color: white;
-  color: black;
+  color: white;
   border-radius: 5px;
+  z-index: 1;
 }
 
 
-  /* #rssBlock{
-    left:0px;
-    height: 80px;
-    background: #FFFFFF;
-    position: absolute;
-    width:100%;
-    overflow: hidden;
-  }
-
-  .cnnContents {
-    width:100%;
-    padding-top: 20px;
-    margin:0 auto;
-    font-size: 30px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-family: 'Museo';
-    font-weight: 300;
-  }
-  .marqueeStyle {
-    display:inline-block;
-    animation: scrolling-left1 10s linear infinite;
-  }
-
-  .marqueeStyle2 {
-    display:inline-block;
-    animation: scrolling-left2 10s linear infinite;
-    animation-delay: 5s;
-  }
 
   @keyframes scrolling-left1 {
       0% {transform: translateX(100%);
@@ -315,4 +290,66 @@ export default {
         100% {transform: translateX(-200%);
             -webkit-transform: translateX(-200%);}
   } */
+
+  /* ㅇㄴㄻㅇㄴㄹㅇㄴㅁㄹ */
+  @keyframes tipsy {
+    0% {
+      transform: translateX(0%) translateY(-40%);
+    }
+    25% {
+      transform: translateX(-5%) translateY(-30%);
+    }
+    50% {
+      transform: translateX(5%) translateY(-30%);
+    }
+    75% {
+      transform: translateX(5%) translateY(-50%);
+    }
+    100% {
+      transform: translateX(-5%) translateY(-50%);
+    }
+  }
+
+  body {
+    font-family: helvetica, arial, sans-serif;
+    background-color: #2e2e31;
+  }
+
+  .vote_avg_cnt {
+    color: #fffbf1;
+    text-shadow: 0 20px 25px #2e2e31, 0 40px 60px #2e2e31;
+    font-size: 80px;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: -3px;
+    margin-bottom: 100px !important;
+    position: inherit;
+    /* display: flex; */
+    text-align: center;
+    transform: translateX(0%) translateY(0%);
+  }
+
+  .vote_avg_cnt:before,
+  .vote_avg_cnt:after {
+    content: '';
+    padding: .9em .4em;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    top: 25%;
+    display: block;
+    border: 15px solid red;
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    animation: 10s infinite alternate ease-in-out tipsy;
+  }
+
+  .vote_avg_cnt:before {
+    border-color: #d9524a #d9524a rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    z-index: -2;
+  }
+
+  .vote_avg_cnt:after {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #d9524a #d9524a;
+    box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
+  }
 </style>

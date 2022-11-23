@@ -32,7 +32,7 @@ export default {
 <style>
   .reviews {
     border-radius: 5px;
-    background-color: white;
+    background-color: #1d1812;
     width: 90%;
     font-size: 18px;
     text-align: left;
@@ -41,7 +41,6 @@ export default {
   #reviews_title {
       width: 200px;
       height: 30px;
-      text-align: center;
       font-size: 20px;
       margin-left: 5px;
       margin-top: 10px;
@@ -52,7 +51,7 @@ export default {
   }
 
   #reviews_list {
-      text-align: center;
+      text-align: left;
   }
 
   #actor_link{
@@ -74,7 +73,7 @@ export default {
 
   .table_body th,
   .table_body td {
-    text-align: center;
+    text-align: left;
   }
 
   .table_body:hover {
