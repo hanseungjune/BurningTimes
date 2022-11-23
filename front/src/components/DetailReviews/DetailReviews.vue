@@ -31,6 +31,7 @@ export default {
 
 <style>
   .reviews {
+    border-radius: 5px;
     background-color: white;
     width: 90%;
     font-size: 18px;
@@ -74,5 +75,9 @@ export default {
   .table_body th,
   .table_body td {
     text-align: center;
+  }
+
+  .table_body:hover {
+    opacity: 0.7;
   }
 </style>

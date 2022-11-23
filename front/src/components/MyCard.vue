@@ -25,10 +25,10 @@
         <div class="modal-body">
           <div class="container">
             <div id="Detail_title_vote" class="row">
-              <div id="detail_title" class="col-3">
-                {{ movie?.title }}
+              <div id="detail_title" class="col-4">
+                <h3>{{ movie?.title }}</h3>
               </div>
-              <div id="avg_cnt_like_set" class="col-3">
+              <div id="avg_cnt_like_set" class="col-4">
                 <div class="avg_cnt_like">
                   평점<br>
                   {{movie?.vote_average}}
@@ -48,32 +48,40 @@
               </div>
             </div>
 
-            <div class="row">
+            <div style="height: 20%;" class="row">
               <div class="col-4">
                 <img id="detail_img" :src="'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + `${movie?.poster_path}`">
               </div>
               <div class="col-8">
-                <iframe id="player" type="text/html" width="700" height="360"
-                  :src="videoUrl+videoKey"
-                frameborder="0" v-if="videoKey"></iframe>
-                <img style="width:700px; height:360px" src="https://www.tooli.co.kr/files/attach/images/571601/933/121/001/b3fb122e830eeb9a3a8a916f1c87fd69.gif" alt="안나올 뜨는 이미지" v-if="!videoKey">
-                <Actors
-                  :movie="movie"
-                />
+                <div style="height: 70%;" class="row">
+                  <div style="height: 100%;" class="col">
+                    <iframe id="player" type="text/html" class="iframe_wid_hei"
+                      :src="videoUrl+videoKey"
+                    frameborder="0" v-if="videoKey"></iframe>
+                    <img class="img_wid_hei" src="https://www.tooli.co.kr/files/attach/images/571601/933/121/001/b3fb122e830eeb9a3a8a916f1c87fd69.gif" alt="안나올 뜨는 이미지" v-if="!videoKey">
+                  </div>
+                </div>
+                <div style="height: 30%;" class="row">
+                  <div class="col">
+                    <Actors
+                      style="height: 100%;"
+                      :movie="movie"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-
+            
             <div class="row">
               <div id="detail_content" class="col">
                 {{movie.overview}}
               </div>
             </div>
 
-            <div style="width:100%;" class="row">
+            <div class="row">
               <div class="col review_body">
                 <div class="row justify-content-between">
-                  <div id="reviews_title" class="col-3">Review</div>
-                  <button class="col-3" @click="goToReview">리뷰쓰러 드~가자~</button>
+                  <div id="reviews_title" @click="goToReview" class="col-3"><h4>Review</h4></div>
                 </div>
                 <div class="row d-flex justify-content-center mt-3 mb-3">
                   <table class="table">
@@ -86,6 +94,7 @@
                       </tr>
                     </thead>
                       <DetailReviews
+                      
                       :movie="movie"
                       @closemodal="modal.hide()"
                       />
@@ -265,7 +274,16 @@ export default {
     transform:none!important;
   }
 
+  /* 배경색 맞추기 */
+  .modal-header{
+    background-color: rgb(125, 110, 131);
+  }
+  .modal-body{
+    background-color: rgb(248, 237, 227);
+  }
+
   .modal-title {
+
     font-weight: 900;
     font-size: 25px;
     margin-left: 20px;
@@ -280,44 +298,58 @@ export default {
   .avg_cnt_like {
     width: 250px;
     height: 80px;
-    border: 1px solid green;
-    background-color: green;
-    color: white;
+    border: 1px solid rgb(208, 184, 168);
+    background-color: rgb(208, 184, 168);
+    color: black;
     padding-top: 15px;
     text-align: center;
     border-radius: 50%;
+    box-shadow: 5px 5px gainsboro;
     margin: 20px;
   }
 
   #Detail_title_vote {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   #detail_title {
-    margin-top: 20px;
-    margin-left: 10px;
+    display: flex;
+    justify-content: center;
     font-size: 30px;
     font-weight: 900;
   }
 
   #detail_img {
-    width: 300px;
-    height: 450px;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
   }
 
   #detail_content {
-    margin-left: 35px;
+    text-align: left;
+    margin-left: 10px;
     margin-right: 20px;
     margin-top: 30px;
     margin-bottom: 30px;
-    border: 1px solid black;
+    padding: 30px 20px;
+    border: 1px inset transparent;
+    background-color: rgb(223, 211, 195);
+    border-radius: 5px;
+    box-shadow: 5px 5px gainsboro;
   }
 
   .review_body {
     background-color: bisque;
-    margin-left: 35px;
-    padding: 10px 25px !important;
+    width:80%;
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 10px 20px !important;
+    border: 1px inset transparent;
+    background-color: rgb(223, 211, 195);
+    border-radius: 5px;
+    box-shadow: 5px 5px gainsboro;
   }
 
   #reviews_title {
@@ -328,13 +360,69 @@ export default {
     margin-left: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: green;
-    color: white;
+    background-color: rgb(208, 184, 168);
+    box-shadow: 5px 5px gainsboro;
+    color: black;
     border-radius: 5px;
   }
 
+  #reviews_title:hover {
+    opacity: 0.7;
+  }
+
   .selected {
-    border: 1px solid rgb(0, 149, 248);
-    background-color: rgb(0, 149, 248);
+    border: 1px solid rgb(125, 110, 131);
+    background-color: rgb(125, 110, 131);
+  }
+
+  .avg_cnt_like:hover{
+    opacity: 0.7;
+  }
+
+  .iframe_wid_hei {
+    width: 100%;
+    height: 100%;
+  }
+
+  .img_wid_hei {
+    height: 100%;
+    animation: heundlehundle 10s;
+    animation-iteration-count: infinite;
+  }
+  @keyframes heundlehundle {
+    0%{
+      transform: translateX(10%);
+    }
+    10%{
+      transform: translateX(-10%);
+    }
+    20%{
+      transform: translateX(10%);
+    }
+    30%{
+      transform: translateX(-10%);
+    }
+    40%{
+      transform: translateX(10%);
+    }
+    50%{
+      transform: translateX(-10%);
+    }
+    60%{
+      transform: translateX(10%);
+    }
+    70%{
+      transform: translateX(-10%);
+    }
+    80%{
+      transform: translateX(10%);
+    }
+    90%{
+      transform: translateX(-10%);
+    }
+    100%{
+      transform: translateX(10%);
+    }
+    
   }
 </style>
