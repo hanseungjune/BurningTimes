@@ -22,16 +22,16 @@
         </div> -->
         <div class="container pt-5" v-show="$store.getters.userPkGetters">
             <div class="row">
-                <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
-                <br>
-                <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
-                <transition-group name="flip" mode="flip" class="row">
+              <div id="vote_avg_title" class="col-3">VOTE_AVERAGE</div>
+              <br>
+              <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
+              <transition-group name="flip" mode="flip" class="row">
                 <MyCard 
-                v-for="movie in voteAvgList"
-                :key = movie.id
-                :movie = movie
-                />
-                </transition-group>
+                  v-for="movie in voteAvgList"
+                  :key = movie.id
+                  :movie = movie
+                  />
+              </transition-group>
             </div>
             <br>
             <br>
@@ -79,6 +79,7 @@ export default {
       },
     },
     async created() {
+        console.log(this.$route.path)
         await this.$store.dispatch('getUserPk')
         this.userPk = await this.$store.getters.userPkGetters
         await this.$store.dispatch('getVoteAvgMovieList', this.userPk)
