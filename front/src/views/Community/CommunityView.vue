@@ -91,7 +91,10 @@ export default {
                 url: `${DJANGO_API_URL}/api/v1/community/`
             })
             .then(res => {
-                this.communityList = res.data
+              this.communityList = res.data
+              const payload = []
+              payload.push(res.data)
+              this.$store.dispatch('myReviewsSetting', payload)
             })
             .catch(err => {
                 console.log(err.response)
@@ -157,6 +160,7 @@ export default {
 </script>
 
 <style>
+
 #reviewlist {
     color: white;
 }
@@ -176,10 +180,12 @@ export default {
     width: 10%;
 }
 #reviewcreatebtn {
+    margin-right: 22px;
     background-color: #FF4301;
 }
 #reviewcreatebtn:hover {
     background-color: #FA7D09;
     transition: all 2s;
 }
+
 </style>
