@@ -2,14 +2,14 @@
   <div class="container m-2">
     <div class="row d-flex justify-content-between align-items-center">
         <div class="col">
-            <i class="bi bi-arrow-return-right"></i>{{ recommentThis.user.username }}
+            <i class="bi bi-arrow-return-right"></i>&nbsp;&nbsp;&nbsp;<span>{{ recommentThis.user.username }}</span>
         </div>
         <div class="col">
             {{ recommentThis.content}} 
         </div>
         <div class="col">
-            <button class="btn btn-primary" @click="updateRecommentOpen = !updateRecommentOpen">댓글수정</button>
-            <button class="btn btn-danger" @click="deleteRecomment(recomment.review, recomment.id)">댓글삭제</button>
+            <button @click="updateRecommentOpen = !updateRecommentOpen">대댓글수정</button>
+            <button @click="deleteRecomment(recomment.review, recomment.id)">대댓글삭제</button>
         </div>
     </div>
         <!-- 대댓글 수정폼 -->
