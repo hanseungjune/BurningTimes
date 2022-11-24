@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex flex-column justify-content-center" id="reviewlist">
-    <div class="row justify-content-between">
+    <div class="row justify-content-between mt-5">
         <h2 class="col-3">리뷰 페이지</h2>
         <router-link class="btn col-2 fs-3" :to="{ name: 'communitycreate'}" id="reviewcreatebtn">리뷰 작성</router-link>
     </div>

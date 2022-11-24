@@ -2,7 +2,6 @@
     <div class="d-flex">
       <img id="left" :src="require(`@/assets/curtain.jpg`)" alt="">
       <img id="right" :src="require(`@/assets/curtain.jpg`)" alt="">
-      
         <br>
         <br>
         <br>
@@ -19,8 +18,6 @@
             <br>
             <br>
             <div class="row text-center">
-
-
               <span class="vote_avg_cnt">이달의 평점 순위</span>
               <br>
               <transition-group name="flip" mode="flip" class="row">
