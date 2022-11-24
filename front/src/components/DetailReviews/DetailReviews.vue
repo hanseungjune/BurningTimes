@@ -1,9 +1,8 @@
 <template>
   <tbody class="table_body">
-    <tr
+    <tr class="reviews detailReview_tr"
       v-for="(review) in movie.reviews"
       :key="review.id"
-      class="reviews"
       @click="GoToTheReview(review.movie.id, review.id)"
       >
       <th style="width: 10%" scope="row">{{review.user.username}}</th>
@@ -76,7 +75,7 @@ export default {
     text-align: left;
   }
 
-  .table_body:hover {
+  .detailReview_tr:hover {
     opacity: 0.7;
   }
 </style>

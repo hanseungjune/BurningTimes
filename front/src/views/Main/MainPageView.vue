@@ -2,7 +2,42 @@
     <div class="d-flex">
       <img id="left" :src="require(`@/assets/curtain.jpg`)" alt="">
       <img id="right" :src="require(`@/assets/curtain.jpg`)" alt="">
-      
+      <img id="nologin" :src="require(`@/assets/movie.png`)" alt="" v-show="!$store.getters.userPkGetters">
+      <div id="nologin" style="top: 33vh; left: 30vw; font-size: 80px;" v-show="!$store.getters.userPkGetters">
+        <div style="color: white;" class="d-flex">
+          <div id="uletter-1">R</div>
+          <div id="uletter-2">e</div>
+          <div id="uletter-3">c</div>
+          <div id="uletter-4">o</div>
+          <div id="uletter-5">m</div>
+          <div id="uletter-6">m</div>
+          <div id="uletter-7">e</div>
+          <div id="uletter-8">n</div>
+          <div id="uletter-9">d</div>
+          <div id="uletter-10">S</div>
+          <div id="uletter-11">y</div>
+          <div id="uletter-12">s</div>
+          <div id="uletter-13">t</div>
+          <div id="uletter-14">e</div>
+          <div id="uletter-15">m</div>
+        </div>
+        <div style="color: white;" class="d-flex mt-2">
+          <div id="lletter-1">L</div>
+          <div id="lletter-2">o</div>
+          <div id="lletter-3">g</div>
+          <div id="lletter-4">i</div>
+          <div id="lletter-5">n </div>
+          <div id="lletter-6">R</div>
+          <div id="lletter-7">e</div>
+          <div id="lletter-8">q</div>
+          <div id="lletter-9">u</div>
+          <div id="lletter-10">i</div>
+          <div id="lletter-11">r</div>
+          <div id="lletter-12">e</div>
+          <div id="lletter-13">d</div>
+          <div id="lletter-14">!</div>
+        </div>
+      </div>
         <br>
         <br>
         <br>
@@ -19,8 +54,6 @@
             <br>
             <br>
             <div class="row text-center">
-
-
               <span class="vote_avg_cnt">이달의 평점 순위</span>
               <br>
               <transition-group name="flip" mode="flip" class="row">
@@ -359,5 +392,195 @@ export default {
   .vote_avg_cnt:after {
     border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #d9524a #d9524a;
     box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
+  }
+  #nologin{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    filter: brightness(2);
+    animation: blink 1s ease-in-out;
+    animation-iteration-count: 2;
+    animation-delay: 3.5s;
+  }
+  @keyframes blink {
+    to {
+      filter: brightness(1);
+    }
+    10% {
+      filter: brightness(2);
+    }
+    20% {
+      filter: brightness(1.3);
+    }
+    50% {
+      filter: brightness(2);
+    }
+    70% {
+      filter: brightness(1.5);
+    }
+    80% {
+      filter: brightness(2);
+    }
+    from {
+      filter: brightness(2);
+    }
+  }
+
+  #uletter-1{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+  }
+  #uletter-2{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.1s;
+  }
+  #uletter-3{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.2s;
+  }
+  #uletter-4{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.3s;
+  }
+  #uletter-5{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.4s;
+  }
+  #uletter-6{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.5s;
+  }
+  #uletter-7{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.6s;
+  }
+  #uletter-8{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.7s;
+  }
+  #uletter-9{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.8s;
+  }
+  #uletter-10{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.9s;
+  }
+  #uletter-11{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1s;
+  }
+  #uletter-12{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.1s;
+  }
+  #uletter-13{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.2s;
+  }
+  #uletter-14{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.3s;
+  }
+  #uletter-15{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.4s;
+  }
+  #lletter-1{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    
+  }
+  #lletter-2{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.1s;
+  }
+  #lletter-3{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.2s;
+  }
+  #lletter-4{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.3s;
+  }
+  #lletter-5{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.4s;
+  }
+  #lletter-6{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.5s;
+  }
+  #lletter-7{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.6s;
+  }
+  #lletter-8{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.7s;
+  }
+  #lletter-9{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.8s;
+  }
+  #lletter-10{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.9s;
+  }
+  #lletter-11{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1s;
+  }
+  #lletter-12{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.1s;
+  }
+  #lletter-13{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.2s;
+  }
+  #lletter-14{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 1.3s;
+  }
+
+
+  @keyframes upanddown {
+    from {
+      transform: translateY(0%);
+    }
+    50% {
+      transform: translateY(40%);
+    }
+    100%{
+      transform: translateY(0%);
+    }
   }
 </style>

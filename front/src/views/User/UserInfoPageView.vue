@@ -5,24 +5,23 @@
       <br>
       <br>
       <div class="card text-center userinfo_box">
-          <div class="card-header">
-              <h1>MyPage</h1>
+          <div id="card-header-bg" class="card-header pt-5 pb-4">
+            <h2>(☞ﾟヮﾟ)☞<b>{{ userInformation?.username }}</b>'s ROOM ☜(ﾟヮﾟ☜)</h2>
           </div>
-          <div class="card-body d-flex flex-column align-items-center">
-              <h2><b>{{ userInformation?.username }}</b>'s ROOM (●'◡'●)</h2>
-              <!-- <div class="follow_box">
-                followings : {{this.userInformation.followings.length()}}<br>
-                followers : {{this.userInformation.followers.length()}}
-              </div> -->
+          <div id="card-body-bg" class="card-body d-flex flex-column align-items-center">
+              <div class="follow_box">
+                followings : {{userInformation?.followings?.length}}<br>
+                followers : {{userInformation?.followers?.length}}
+              </div>
               <div>
-                <span href="#" @click="favoriteGenre" class="btn btn-primary">당신이 가장 좋아하는 장르는?</span>
+                <span style="color:#2F2519;" href="#" @click="favoriteGenre" class="btn btn-warning">당신이 가장 좋아하는 장르는?</span>
               </div>
               <div id="favorite_genre_box">
                 <button id="genre_choice" type="button" v-if="favorite_genre" @click="goToGenre" class="btn btn-outline-secondary">{{favorite_genre}}</button>
                 <button type="button" v-if="!favorite_genre" class="btn btn-outline-secondary"> 장르를 클릭하면 해당 페이지로 넘어가요! d=====(￣▽￣*)b </button>
               </div>
           </div>
-          <div class="card-footer text-muted d-flex justify-content-between">
+          <div id="card-footer-bg" class="card-footer text-muted d-flex justify-content-between">
             <button id="userUpdate" class="btn btn-secondary" v-show="$store.getters.userPkGetters" @click="updateShow=!updateShow">UPDATE</button>
             <button id="userFollow" class="btn btn-success" @click="followUser" v-show="$store.getters.userPkGetters && $store.getters.userPkGetters !== this.userInformation.id"><i id="user_follow" class="bi bi-hand-index-thumb-fill"></i> FOLLOW</button>
             <button id="userDelete" class="btn btn-danger" v-show="$store.getters.userPkGetters" @click="removeUser">USERBYE</button>
@@ -63,14 +62,33 @@
         <div class="row">
           <div id="like_movies_title" class="col-3">My Review</div>
           <br>
-          <!-- {{userInformation.review}} -->
-            <MyReview
-                v-for="re in userInformation.review"
-                :key="re.id"
-                :review="re"
-            />
+
+          <div class="row">
+            <div class="col review_body">
+              <div class="row d-flex justify-content-center mt-3 mb-3">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%" scope="col">ID</th>
+                      <th style="width: 45%" scope="col">Title</th>
+                      <th style="width: 30%" scope="col">movie</th>
+                      <th style="width: 15%" scope="col">time</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table_body">
+                    <MyReview
+                        v-for="re in userInformation.review"
+                        :key="re.id"
+                        :review="re"
+                    />
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="row">
+        <div class="row mt-5">
           <div id="like_movies_title" class="col-3">LIKE MOVIE</div>
           <br>
           <div class="col-3"></div><div class="col-3"></div><div class="col-3"></div>
@@ -192,7 +210,7 @@ export default {
     computed: {
       getLikeMovieListShow() {
         return this.$store.getters.moviesLikeListGetters
-      }
+      },
     },
     methods: {
         getUserInfo() {
@@ -332,17 +350,27 @@ export default {
     font-size: 20px;
   }
   .follow_box{
-    border: 1px solid black;
+    border: 1px solid #2F2519;
+    background-color: #2F2519;
     border-radius: 5px;
     padding: 10px 40px;
     margin-top: 5px;
     margin-bottom: 20px;
     width: 50%;
     font-size: 20px;
+    color: white;
   }
+
+  .follow_box:hover{
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+  }
+
   .userinfo_box {
+    border: 1px solid #130f0a !important;
+    border-radius: 15px !important;
     margin-top: 100px;
-    width: 70% !important;
+    width: 80% !important;
   }
   .like_movies {
     margin-top: 20px;
@@ -361,6 +389,11 @@ export default {
   border-radius: 5px;
 }
 
+#genre_choice{
+  width: 300px;
+  font-size: 20px;
+}
+
 #genre_choice:hover,
 #userUpdate:hover,
 #userFollow:hover {
@@ -376,9 +409,9 @@ export default {
   animation-iteration-count: infinite;
 }
 
-#userDelete:hover {
-  animation: avoidedmouse 1s;
-  animation-fill-mode: forwards;
+#userDelete:focus {
+  animation: hardshake 1s;
+  animation-iteration-count: infinite;
 }
 
 @keyframes avoidedmouse {
@@ -386,7 +419,7 @@ export default {
     transform: translateX(0px);
   }
   100% {
-    transform: translateX(300px);
+    transform: translateX(200px);
     pointer-events: none;
   }
 }
@@ -404,4 +437,50 @@ export default {
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+@keyframes hardshake {
+  0% { transform: translate(30px, 30px) rotate(0deg); }
+  10% { transform: translate(-30px, -60px) rotate(-1deg); }
+  20% { transform: translate(-90px, 90px) rotate(1deg); }
+  30% { transform: translate(90px, 60px) rotate(0deg); }
+  40% { transform: translate(30px, -30px) rotate(1deg); }
+  50% { transform: translate(-30px, 60px) rotate(-1deg); }
+  60% { transform: translate(-90px, 30px) rotate(0deg); }
+  70% { transform: translate(90px, 30px) rotate(-1deg); }
+  80% { transform: translate(-30px, -30px) rotate(1deg); }
+  90% { transform: translate(30px, 60px) rotate(0deg); }
+  100% { transform: translate(30px, -60px) rotate(-1deg); }
+}
+
+/* 리뷰 관련 */
+
+.review_body {
+    background-color: #1d1812;
+    width:80%;
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 10px 20px !important;
+    border: 1px inset transparent;
+    border-radius: 5px;
+    box-shadow: 2px 2px #444444;
+  }
+
+  .review_body th,
+  .review_body td {
+    color: white;
+  }
+
+  #card-header-bg {
+    background-color: rgb(199, 199, 199);
+    background-color: #2F2519;
+    color: white;
+  }
+
+  #card-body-bg {
+    background-color: #4A3F35;
+  }
+
+  #card-footer-bg {
+    background-color: #4A3F35;
+  }
 </style>

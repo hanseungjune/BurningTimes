@@ -2,11 +2,11 @@
   <div class="container">
     <div class="row d-flex justify-content-between align-items-center" @click="recommentOpen = !recommentOpen">
     <!-- 댓글 -->
-    <span class="col">{{ commentThis?.user.username }}</span>
+    <span class="col">{{ commentThis?.user.username }} 님</span>
     <span class="col"> {{ commentThis?.content}}</span>
     <div class="col">
-        <button class="btn btn-primary" @click.stop="updateCommentOpen = !updateCommentOpen">댓글수정</button>
-        <button class="btn btn-danger" @click.stop="deleteComment(commentThis.review, commentThis.id)">댓글삭제</button>
+        <button  @click.stop="updateCommentOpen = !updateCommentOpen">댓글수정</button>
+        <button  @click.stop="deleteComment(commentThis.review, commentThis.id)">댓글삭제</button>
     </div>
     <!-- 댓글 수정폼 -->
     <form @submit.prevent="updateComment(commentThis.review, commentThis.id)" v-show="updateCommentOpen">
