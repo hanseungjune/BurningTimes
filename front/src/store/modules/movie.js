@@ -223,6 +223,26 @@ const movie = {
       },
       REVIEW_NUMS_GET(state, review) {
         state.reviewId = review
+      },
+      CREATE_REVIEW(state, review) {
+        state.movieList.forEach(el => {
+          if (el.id === review.movie.id) {
+            el.reviews.push(review)
+          }
+        })
+      },
+      DELETE_REVIEW(state, review) {
+        state.movieList.forEach(el => {
+          console.log('1', el)
+          if (el.id === review.movie.id) {
+            console.log('2', el.reviews)
+            el.reviews = el.reviews.filter(re => {
+              if (re.id !== review.id) {
+                return re
+              }
+            })
+          }
+        })
       }
   },
   actions: {

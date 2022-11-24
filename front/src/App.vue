@@ -2,10 +2,12 @@
   <div id="app">
     <NavBar />
     <!-- 슬라이드 트랜지션 -->
-    <transition  mode="out-in">
-      <router-view style="margin-top: 56px; min-height: 100vh"/>
-    </transition>
-
+    <div style="margin-top: 80px; min-height: 100vh;">
+      <transition  mode="out-in">
+      <router-view style=""/>
+      </transition>
+    </div>
+    
     <FooterFoot/>
   </div>
 </template>

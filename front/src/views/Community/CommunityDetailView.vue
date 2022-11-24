@@ -163,6 +163,7 @@ export default {
             .then(res => {
                 console.log(res.data)
                 this.$router.push({name: 'community'})
+                this.$store.commit('DELETE_REVIEW', this.reviewDetail.id)
             })
             .catch(err => console.log(err))
         },

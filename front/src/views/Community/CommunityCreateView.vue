@@ -61,6 +61,7 @@ export default {
             this.$router.push({name: 'communitydetail', params: {
               movieid: this.movieId ,reviewid: res.data.id
             }})
+            this.$store.commit('CREATE_REVIEW', res.data)
           }
         })
         .catch(err => {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="rssBlock" v-show="!$store.getters.userPkGetters">
+    <div id="rssBlock" >
           <p class="cnnContents">
             <span class="marqueeStyle">404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`)</span>
             <span class="marqueeStyle2">404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`)</span>
@@ -20,8 +20,10 @@ export default {
     left:0px;
     background: yellow;
     position: absolute;
+    top: 50vh;
     width:100%;
     overflow: hidden;
+    z-index: 10;
   }
 
   .cnnContents {

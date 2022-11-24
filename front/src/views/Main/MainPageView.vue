@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
-      <img id="left" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
-      <img id="right" src="https://media.istockphoto.com/id/1193293229/vector/vector-classic-red-curtain-with-stage-background-modern-style.jpg?s=612x612&w=0&k=20&c=GEiLJPoxJ5fnSYXm9NU3Lj0yFBS6wQY8uvbnzBt7D44=" alt="">
+      <img id="left" :src="require(`@/assets/curtain.jpg`)" alt="">
+      <img id="right" :src="require(`@/assets/curtain.jpg`)" alt="">
       
         <br>
         <br>
@@ -114,19 +114,23 @@ export default {
 @keyframes left {
   from {
   }
-  30%{
+  50%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  55%{
     opacity: 1;
     transform: translateX(-30%);
   }
-  40%{
+  60%{
     opacity: 1;
     transform: translateX(-27%);
   }
-  70%{
+  80%{
     opacity: 1;
     transform: translateX(-70%);
   }
-  80%{
+  85%{
     opacity: 1;
     transform: translateX(-67%);
   }
@@ -140,19 +144,23 @@ export default {
 @keyframes right {
   from {
   }
-  30%{
+  50%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  55%{
     opacity: 1;
     transform: translateX(30%);
   }
-  40%{
+  60%{
     opacity: 1;
     transform: translateX(27%);
   }
-  70%{
+  80%{
     opacity: 1;
     transform: translateX(70%);
   }
-  80%{
+  85%{
     opacity: 1;
     transform: translateX(67%);
   }
