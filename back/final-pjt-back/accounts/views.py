@@ -27,11 +27,11 @@ def user_info (request, user_pk):
 @permission_classes([IsAuthenticated])
 def user_delete(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
-    # user.remove()
-    serializer = UserDeleteSerializer(user, data = request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+    user.delete()
+    # serializer = UserDeleteSerializer(user, data = request.data)
+    # if serializer.is_valid(raise_exception=True):
+    #     serializer.save()
+    return Response( status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

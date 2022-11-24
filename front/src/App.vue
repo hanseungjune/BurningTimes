@@ -62,4 +62,8 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
+
+body::-webkit-scrollbar{
+  display: none;
+}
 </style>

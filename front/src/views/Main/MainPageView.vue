@@ -2,42 +2,37 @@
     <div class="d-flex">
       <img id="left" :src="require(`@/assets/curtain.jpg`)" alt="">
       <img id="right" :src="require(`@/assets/curtain.jpg`)" alt="">
-      <img id="nologin" :src="require(`@/assets/movie.png`)" alt="" v-show="!$store.getters.userPkGetters">
-      <div id="nologin" style="top: 33vh; left: 30vw; font-size: 80px;" v-show="!$store.getters.userPkGetters">
+      <!-- <img id="nologin" :src="require(`@/assets/movie.jpg`)" alt="" v-show="!$store.getters.userPkGetters"> -->
+      <div id="nologin" style=" font-size: 200px;" v-show="!$store.getters.userPkGetters">
         <div style="color: white;" class="d-flex">
-          <div id="uletter-1">R</div>
-          <div id="uletter-2">e</div>
-          <div id="uletter-3">c</div>
-          <div id="uletter-4">o</div>
-          <div id="uletter-5">m</div>
-          <div id="uletter-6">m</div>
-          <div id="uletter-7">e</div>
-          <div id="uletter-8">n</div>
-          <div id="uletter-9">d</div>
-          <div id="uletter-10">S</div>
-          <div id="uletter-11">y</div>
-          <div id="uletter-12">s</div>
-          <div id="uletter-13">t</div>
-          <div id="uletter-14">e</div>
-          <div id="uletter-15">m</div>
+          <div id="uletter-1">W</div>
+          <div id="uletter-2">E</div>
         </div>
-        <div style="color: white;" class="d-flex mt-2">
-          <div id="lletter-1">L</div>
-          <div id="lletter-2">o</div>
-          <div id="lletter-3">g</div>
-          <div id="lletter-4">i</div>
-          <div id="lletter-5">n </div>
-          <div id="lletter-6">R</div>
-          <div id="lletter-7">e</div>
-          <div id="lletter-8">q</div>
-          <div id="lletter-9">u</div>
-          <div id="lletter-10">i</div>
-          <div id="lletter-11">r</div>
-          <div id="lletter-12">e</div>
-          <div id="lletter-13">d</div>
-          <div id="lletter-14">!</div>
+        <div style="color: white; margin-top: -100px" class="d-flex">
+          <div id="mletter-1">W</div>
+          <div id="mletter-2">I</div>
+          <div id="mletter-3">L</div>
+          <div id="mletter-4">L</div>
+          <div id="mletter-5">B</div>
+          <div id="mletter-6">U</div>
+          <div id="mletter-7">R</div>
+          <div id="mletter-8">N</div>
+        </div>
+        <div  style="color: white; margin-top: -100px" class="d-flex">
+          <div id="lletter-1">Y</div>
+          <div id="lletter-2">O</div>
+          <div id="lletter-3">U</div>
+          <div id="lletter-4">R</div>
+          <div id="lletter-5">T</div>
+          <div id="lletter-6">I</div>
+          <div id="lletter-7">M</div>
+          <div id="lletter-8">E</div>
+          <div id="lletter-9">!</div>
+          <div id="lletter-10">! </div>
         </div>
       </div>
+      <div class='v-line1'></div>
+      <div class='v-line2'></div>
         <br>
         <br>
         <br>
@@ -93,6 +88,7 @@
 <script>
 import MyCard from '@/components/MyCard'
 
+
 export default {
     name: 'MainPageView',
     components: {
@@ -125,6 +121,13 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
+@font-face {
+    font-family: 'Swager';
+    src: url('../../assets/SDSwaggerTTF.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 
 #left {
   position: fixed;
@@ -395,14 +398,16 @@ export default {
   }
   #nologin{
     position: absolute;
-    height: 100vh;
     width: 100vw;
     filter: brightness(2);
-    animation: blink 1s ease-in-out;
-    animation-iteration-count: 2;
-    animation-delay: 3.5s;
+    /* animation: blink 1s ease-in-out; */
+    /* animation-iteration-count: 2; */
+    /* animation-delay: 3.5s; */
+    /* font-family: 'Swager', 'LINESeedKR-Bd', Avenir, Helvetica, Arial, sans-serif; */
+    font-family: 'Anton', sans-serif;
+    /* font-family: 'Bebas Neue', cursive; */
   }
-  @keyframes blink {
+  /* @keyframes blink {
     to {
       filter: brightness(1);
     }
@@ -424,7 +429,7 @@ export default {
     from {
       filter: brightness(2);
     }
-  }
+  } */
 
   #uletter-1{
     animation: upanddown 2s ease-in-out;
@@ -435,70 +440,45 @@ export default {
     animation-iteration-count: 3;
     animation-delay: 0.1s;
   }
-  #uletter-3{
+
+  #mletter-1{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+  }
+  #mletter-2{
+    animation: upanddown 2s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.1s;
+  }
+  #mletter-3{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.2s;
   }
-  #uletter-4{
+  #mletter-4{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.3s;
   }
-  #uletter-5{
+  #mletter-5{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.4s;
   }
-  #uletter-6{
+  #mletter-6{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.5s;
   }
-  #uletter-7{
+  #mletter-7{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.6s;
   }
-  #uletter-8{
+  #mletter-8{
     animation: upanddown 2s ease-in-out;
     animation-iteration-count: 3;
     animation-delay: 0.7s;
-  }
-  #uletter-9{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 0.8s;
-  }
-  #uletter-10{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 0.9s;
-  }
-  #uletter-11{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1s;
-  }
-  #uletter-12{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.1s;
-  }
-  #uletter-13{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.2s;
-  }
-  #uletter-14{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.3s;
-  }
-  #uletter-15{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.4s;
   }
   #lletter-1{
     animation: upanddown 2s ease-in-out;
@@ -550,26 +530,6 @@ export default {
     animation-iteration-count: 3;
     animation-delay: 0.9s;
   }
-  #lletter-11{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1s;
-  }
-  #lletter-12{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.1s;
-  }
-  #lletter-13{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.2s;
-  }
-  #lletter-14{
-    animation: upanddown 2s ease-in-out;
-    animation-iteration-count: 3;
-    animation-delay: 1.3s;
-  }
 
 
   @keyframes upanddown {
@@ -582,5 +542,26 @@ export default {
     100%{
       transform: translateY(0%);
     }
+  }
+  .v-line1 {
+    position: fixed;
+    right: 10vw;
+    border-left : 100px solid white;
+
+    height : 2000px;
+
+    transform: rotate(30deg);
+
+  }
+  .v-line2 {
+    position: fixed;
+    top: 0;
+    right: 30vw;
+    border-left : 100px solid white;
+
+    height : 3000px;
+
+    transform: rotate(30deg);
+
   }
 </style>

@@ -243,9 +243,9 @@ export default {
                 headers: {
                     Authorization: `Token ${this.$cookies.get('token')}`
                 },
-                data: {
-                    is_active: false
-                }
+                // data: {
+                //     is_active: false
+                // }
             })
             .then(res => {
                 console.log(res)
@@ -330,8 +330,8 @@ export default {
         }
     },
     async created() {
-        await this.getUserInfo()
         await this.$store.dispatch('getUserPk')
+        await this.getUserInfo()
         this.userPk = await this.$store.getters.userPkGetters
         await this.$store.dispatch('getLikeMovieList', this.userPk)
         this.myReviewList = await this.$state.userReviewList.filter((user) => {
@@ -403,16 +403,16 @@ export default {
   /* When the animation is finished, start again */
   animation-iteration-count: infinite;
 }
-
+/* 
 #userDelete {
   animation: shake 0.5s;
   animation-iteration-count: infinite;
-}
+} */
 
-#userDelete:focus {
+/* #userDelete:focus {
   animation: hardshake 1s;
   animation-iteration-count: infinite;
-}
+} */
 
 @keyframes avoidedmouse {
   0% {
