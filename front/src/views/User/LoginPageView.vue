@@ -23,8 +23,8 @@ export default {
     name: 'LoginPageView',
     data() {
         return {
-            username: null,
-            password: null,
+            username: '',
+            password: '',
         }
     },
     methods: {

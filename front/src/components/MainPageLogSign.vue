@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="!$store.getters.userPkGetters" style="color: white;">
     <div class="login" ref="login" @mouseover="moving" @mouseleave="unmoving" @click="gotoLogin">
         <div id="firstLogin">
             <div id="L" ref="L">L</div>

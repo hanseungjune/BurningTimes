@@ -16,7 +16,7 @@
         <form @submit.prevent="updateRecomment(recomment.review, recomment.id, updateRecommentInput)" v-show="updateRecommentOpen">
             <div class="form-floating m-3">
                 <input type="text" class="form-control" id="updataRecommentInput" placeholder="대댓글수정" v-model.trim="updateRecommentInput">
-                <label for="updataRecommentInput">대댓글수정</label>
+                <label for="updataRecommentInput" style="color: black">대댓글수정</label>
             </div>
             <input class="btn btn-success" type="submit" value="대댓글수정">
         </form>

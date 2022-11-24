@@ -27,7 +27,6 @@ export default {
         if (this.$cookies.get('token')) {
           this.$store.dispatch('getUserPk')
         }
-        this.$store.dispatch('getLikeMovieList', this.userPk)
     },
 }
 </script>
@@ -44,7 +43,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: unset;
-  color: white;
+  color: black;
   background-color: #130f0a;
   z-index: 0;
 }
@@ -65,5 +64,8 @@ export default {
 
 body::-webkit-scrollbar{
   display: none;
+}
+body{
+  background-color: #130f0a !important;
 }
 </style>

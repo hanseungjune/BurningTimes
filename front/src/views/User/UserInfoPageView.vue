@@ -28,29 +28,29 @@
           </div>
       </div>
       <br>
-      <div style="height:30%" class="card text-center" v-show="updateShow">
-        <div class="card-header">
+      <div style="height:60%; border: none !important; margin-top: 40px;" class="card text-center" v-show="updateShow" id="updateform">
+        <div class="card-header" id="card-header-bg">
           UserInfo UPDATE
         </div>
-        <div class="card-body d-flex flex-column align-items-center">
+        <div class="card-body d-flex flex-column align-items-center" id="card-body-bg">
           <div id="userInfoUpdate">
             <form @submit.prevent="updateUser"  v-show="updateShow">
-                <div class="form-floating mb-3">
+                <div id="updateinput" class="form-floating mb-3">
                     <input type="text" class="form-control" id="userFirstName" placeholder="FirstName을 입력하세요" v-model="userFirstName">
-                    <label for="userFirstName">FirstName</label>
-                </div>
-                <div class="form-floating mb-3">
+                    <label for="userFirstName" style="color: white;">FirstName</label>
+                </div >
+                <div class="form-floating mb-3" id="updateinput">
                     <input type="text" class="form-control" id="userLastName" placeholder="LastName을 입력하세요" v-model="userLastName">
-                    <label for="userLastName">LastName</label>
+                    <label for="userLastName" style="color: white;">LastName</label>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" id="updateinput">
                     <input type="text" class="form-control" id="userEmail" placeholder="Email을 입력하세요" v-model="userEmail">
-                    <label for="userEmail">Email</label>
+                    <label for="userEmail" style="color: white;">Email</label>
                 </div>
                 <div>
                 </div>
                 <div class="card-footer text-muted">
-                  <input class="btn btn-primary" type="submit" value="수정">
+                  <input class="btn btn-primary" type="submit" value="UPDATE">
                 </div>
             </form>
           </div>
@@ -120,12 +120,12 @@ export default {
     },
     data() {
         return {
-            userInformation: null,
+            userInformation: '',
             updateShow: false,
-            userFirstName: null,
-            userLastName: null,
-            userEmail: null,
-            favorite_genre: null,
+            userFirstName: '',
+            userLastName: '',
+            userEmail: '',
+            favorite_genre: '',
             myReviewList: [],
             genre_category: [
                 {
@@ -215,9 +215,10 @@ export default {
     methods: {
         getUserInfo() {
             const DJANGO_API_URL = 'http://127.0.0.1:8000'
+            const userpk = this.$route.params.userPk
             axios({
                 method: 'get',
-                url: `${DJANGO_API_URL}/api/accounts/user/${this.$route.params.userPk}/`,
+                url: `${DJANGO_API_URL}/api/accounts/user/${userpk}/`,
                 // url: `${DJANGO_API_URL}/accounts/user/`,
                 // headers: {
                 //     Authorization: `Token ${this.$store.state.token.key}`
@@ -329,14 +330,14 @@ export default {
           this.$router.push({name:'genre'})
         }
     },
-    async created() {
-        await this.$store.dispatch('getUserPk')
-        await this.getUserInfo()
-        this.userPk = await this.$store.getters.userPkGetters
-        await this.$store.dispatch('getLikeMovieList', this.userPk)
-        this.myReviewList = await this.$state.userReviewList.filter((user) => {
-            if (user.id == this.userInformation.id) {
-              return user
+    mounted() {
+        this.$store.dispatch('getUserPk')
+        this.getUserInfo()
+        this.userPk = this.$store.getters.userPkGetters
+        this.$store.dispatch('getLikeMovieList', this.$route.params.userPk)
+        this.myReviewList = this.$state.userReviewList.filter((user) => {
+          if (user.id == this.userInformation.id) {
+            return user
             }
         })
     }
@@ -344,6 +345,13 @@ export default {
 </script>
 
 <style>
+  #userFirstName,
+  #userLastName,
+  #userEmail {
+    color: white;
+    background-color: #2F2519;
+    border: none;
+  }
   #favorite_genre_box {
     padding: 10px 30px;
     width: 50%;

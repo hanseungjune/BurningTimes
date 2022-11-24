@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>리뷰 작성입니다.</h1>
+    <div style="margin-top: 10vh; color: white;">
+      <h1 >리뷰 작성입니다.</h1>
+    </div>
     <form @submit.prevent="createReview">
       <div class="form-floating mb-3">
         <input type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="titleInput">
@@ -24,6 +26,7 @@
       </div>
       <input type="submit" class="btn btn-success" value="리뷰 작성!">
     </form>
+    
   </div>
 </template>
 

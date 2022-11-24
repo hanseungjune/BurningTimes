@@ -3,7 +3,7 @@
       <img id="left" :src="require(`@/assets/curtain.jpg`)" alt="">
       <img id="right" :src="require(`@/assets/curtain.jpg`)" alt="">
       <!-- <img id="nologin" :src="require(`@/assets/movie.jpg`)" alt="" v-show="!$store.getters.userPkGetters"> -->
-      <div id="nologin" style=" font-size: 200px;" v-show="!$store.getters.userPkGetters">
+      <div id="nologin" style="font-size: 200px;" v-show="!$store.getters.userPkGetters">
         <div style="color: white;" class="d-flex">
           <div id="uletter-1">W</div>
           <div id="uletter-2">E</div>

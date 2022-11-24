@@ -12,7 +12,7 @@
     <form @submit.prevent="updateComment(commentThis.review, commentThis.id)" v-show="updateCommentOpen">
         <div class="form-floating m-3">
             <input type="text" class="form-control" id="updateCommentInput" placeholder="댓글수정" v-model.trim="updateCommentInput">
-            <label for="updateCommentInput">댓글수정</label>
+            <label for="updateCommentInput" style="color: black">댓글수정</label>
         </div>
         <input class="btn btn-success" type="submit" value="댓글수정">
     </form>
@@ -29,7 +29,7 @@
     <form @submit.prevent="createRecomment" v-show="recommentOpen">
         <div class="form-floating m-3">
             <input type="text" class="form-control" id="recommentInput" placeholder="대댓글" v-model.trim="recommentInput">
-            <label for="recommentInput">대댓글</label>
+            <label for="recommentInput" style="color: black">대댓글</label>
         </div>
         <input class="btn btn-success" type="submit" value="대댓글작성">
     </form>

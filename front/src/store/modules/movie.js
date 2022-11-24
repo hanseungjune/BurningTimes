@@ -12,15 +12,15 @@ const movie = {
   state: {
     movieList: [],
     orderMovieList: [],
-    orderMovieListPage: null,
+    orderMovieListPage: [],
     movieVoteAvgList: [],
     movieVoteCntList: [],
-    genreSelectList: null,
-    firstSelectList: null,
-    likeMovieList: null,
+    genreSelectList: [],
+    firstSelectList: [],
+    likeMovieList: [],
     userReviewList: [],
     backgroundImg: '0',
-    reviewId: null
+    reviewId: []
   },
   getters: {
       getAllMovies(state) {

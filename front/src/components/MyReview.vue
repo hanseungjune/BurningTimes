@@ -1,6 +1,6 @@
 <template>
     <!-- 테이블 꾸미기 -->
-      <tr class="myReview_tr">
+      <tr class="myReview_tr" @click="goToReview">
         <th style="width: 10%" scope="row">{{review.user.username}}</th>
         <td style="width: 45%">{{review.title}}</td>
         <td style="width: 30%">{{review.movie.title}}</td>
@@ -13,6 +13,11 @@ export default {
   name:'MyReview',
   props: {
     review:Object,
+  },
+  methods: {
+    goToReview() {
+      this.$router.push({ name: "communitydetail", params: {movieid: this.review.movie.id ,reviewid: this.review.id }})
+    }
   }
 }
 </script>

@@ -152,28 +152,34 @@ export default {
     methods : {
       // 영화 좋아요
       async ToLiking() {
-        console.log(this.movie)
-        await this.$store.dispatch('getUserPk')
-        this.userPk = await this.$store.getters.userPkGetters
-        const payload = {
-          'userPk' : this.userPk,
-          'moviePk' : this.movie.id
-        }
-        return axios({
-          method: 'post',
-          url: `${DJANGO_API_URL}/api/v1/movies/${payload.userPk}/like/`,
-          headers: {
-            Authorization: `Token ${this.$cookies.get("token")}`
-          },
-          data : {
-            movie: this.movie.id
+        if (this.$store.getters.userPkGetters) {
+          console.log(this.movie)
+          await this.$store.dispatch('getUserPk')
+          this.userPk = await this.$store.getters.userPkGetters
+          const payload = {
+            'userPk' : this.userPk,
+            'moviePk' : this.movie.id
           }
-        })
-        .then(() => {
-            console.log(payload)
-            this.$store.commit('TO_LIKING', payload)
+          return axios({
+            method: 'post',
+            url: `${DJANGO_API_URL}/api/v1/movies/${payload.userPk}/like/`,
+            headers: {
+              Authorization: `Token ${this.$cookies.get("token")}`
+            },
+            data : {
+              movie: this.movie.id
+            }
           })
-        .catch(err => console.log(err))
+          .then(() => {
+              console.log(payload)
+              this.$store.commit('TO_LIKING', payload)
+            })
+          .catch(err => console.log(err))
+        } else {
+          this.modal.hide()
+          alert("로그인 하셔야겠는데요?")
+          this.$router.push({name: 'login'})
+        }
       },
       // 비디오 불러오기
       videoLoad() {

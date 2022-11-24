@@ -64,7 +64,7 @@ export default {
       }
     },
     created() {
-      this.searchMovieVue(this.searchMovieKeyword)
+      this.searchMovieVue(this.$route.params.keyword || this.searchMovieKeyword)
     },
     beforeRouteUpdate(to, from, next) {
       console.log(to.params.keyword)

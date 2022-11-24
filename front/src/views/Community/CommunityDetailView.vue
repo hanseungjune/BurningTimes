@@ -31,9 +31,13 @@
             <div class="col">
                 <div class="row d-flex flex-column">
                     <div class="col text-left ms-3">
+                        <hr style="color: #FF4301;">
                         <span class="fs-5" @click="goToReviewer">작성자 : {{ reviewDetail?.user?.username }}</span>
+                        <hr style="color: #FF4301;">
                     </div>
                     <div id="review_detail_content" class="col-9">
+                        내용
+                        <hr style="color: #FF4301;">
                         {{ reviewDetail?.content }}
                     </div>
                     <div id="review_detail_commentlist" class="col-2 w-100">
@@ -41,7 +45,7 @@
                             <div class="form-floating m-3">
                                 <textarea
                                 class="form-control " placeholder="내용을 작성하세요" id="commentInput" style="height: 150px;" v-model.trim="commentInput"></textarea>
-                                <label for="commentInput">Comment</label>
+                                <label for="commentInput" >Comment</label>
                             </div>
                             <br>
                             <input id="comment_btn" class="btn btn-dark" type="submit" value="댓글작성">
@@ -69,7 +73,7 @@
         <form @submit.prevent="updateReview">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="reviewDetail.title">
-            <label for="titleInput">Title</label>
+            <label for="titleInput" style="color: black;">Title</label>
         </div>
         영화를 하단에서 "꼭" 클릭해주세요!
         <div class="form-floating mb-3">
@@ -107,8 +111,8 @@ export default {
     },
     data() {
         return {
-            reviewDetail: null,
-            updateMovieId: null,
+            reviewDetail: [],
+            updateMovieId: '',
             commentInput: null,
             isUpdateOpen: false,
             movieSelect: this.$store.getters.getAllMovies.slice(0, 5),

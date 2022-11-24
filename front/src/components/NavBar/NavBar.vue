@@ -22,7 +22,7 @@
       </div>
     </div>
   </nav>
-  <div class="collapse" id="navbarToggleExternalContent">
+  <div class="collapse m-5" id="navbarToggleExternalContent">
     <div class="d-flex justify-content-end p-1">
       <NavBarSearch class="d-flex" />
     </div>
