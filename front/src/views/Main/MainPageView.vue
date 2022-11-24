@@ -54,8 +54,6 @@
             <br>
             <br>
             <div class="row text-center">
-
-
               <span class="vote_avg_cnt">이달의 평점 순위</span>
               <br>
               <transition-group name="flip" mode="flip" class="row">

@@ -1,59 +1,63 @@
 <template>
-  <div class="container" id="reviewdetail">
+  <div class="container" id="reviewdetailclass">
     <div v-show="!isUpdateOpen" class="container">
-        <div class="row pt-5" id="reviewTitle">
-            <h1>제목 : {{ reviewDetail?.title }}</h1>
-        </div>
-        <div class="row text-end p-3" id="reviewUser">
-            <h2 @click="goToReviewer">작성자 : {{ reviewDetail?.user?.username }}</h2>
+        <div class="row pt-5 d-flex justify-content-between align-items-center" id="reviewUser">
+            <div class="col-4 text-center">
+                <span id="review_detail_title" class="fs-3" >제목 : {{ reviewDetail?.title }}</span>
+            </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-4">
                 <MyCard
-                    :movie="reviewMovieGet || reviewDetail.movie"
-                    class="w-100"
-                 />
-            </div>
-            <div class="col">
-                <div class="row d-flex flex-column">
-                    <div class="col">
-                        <button 
-                            @click="likeReview" 
-                            v-show="$store.getters.userPkGetters && !reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id"
-                            class="btn"
-                            id="likebtn"
+                :movie="reviewMovieGet || reviewDetail.movie"
+                class="w-100"
+                />
+                <div class="col">
+                    <button 
+                    @click="likeReview" 
+                        v-show="$store.getters.userPkGetters && !reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id"
+                        class="btn"
+                        id="likebtn"
                         >리뷰 좋아요</button>
                         <button 
                         @click="likeReview" 
                         v-show="$store.getters.userPkGetters && reviewDetail?.like_users.includes($store.getters.userPkGetters) && $store.getters.userPkGetters !== reviewDetail.user.id" class="btn" id="unlikebtn">리뷰 좋아요 취소</button>
-                        <div class="row justify-content-evenly m-2">
-                            <button @click="deleteReview" class="btn btn-danger col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 삭제</button>
-                            <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 수정</button>
-                        </div>
+                    <div class="row justify-content-evenly m-2">
+                        <button @click="deleteReview" class="btn btn-danger col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 삭제</button>
+                        <button @click="isUpdateOpen = !isUpdateOpen" class="btn btn-primary col-4" v-show="$store.getters.userPkGetters === reviewDetail.user.id">리뷰 수정</button>
                     </div>
-                    <div class="col-9 h-100 w-100">
-                        <h4>내용<br><br>{{ reviewDetail?.content }}</h4>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row d-flex flex-column">
+                    <div class="col text-left ms-3">
+                        <span class="fs-5" @click="goToReviewer">작성자 : {{ reviewDetail?.user?.username }}</span>
                     </div>
-                    <div class="col-2 w-100">
+                    <div id="review_detail_content" class="col-9">
+                        {{ reviewDetail?.content }}
+                    </div>
+                    <div id="review_detail_commentlist" class="col-2 w-100">
+                        <form @submit.prevent="createComment">
+                            <div class="form-floating m-3">
+                                <textarea
+                                class="form-control " placeholder="내용을 작성하세요" id="commentInput" style="height: 150px;" v-model.trim="commentInput"></textarea>
+                                <label for="commentInput">Comment</label>
+                            </div>
+                            <br>
+                            <input id="comment_btn" class="btn btn-dark" type="submit" value="댓글작성">
+                        </form>
                         <CommunityComment 
-                            v-for="comment in reviewDetail?.comments.filter(el => {
-                                if (!el.parent_comment) {
-                                    return el
-                                }
-                            })" 
+                        id="communityCommentlist"
+                        v-for="comment in reviewDetail?.comments.filter(el => {
+                            if (!el.parent_comment) {
+                                return el
+                            }
+                        })" 
                             :key="comment.id"
                             :comment = comment
                             @deleteComment="deleteComment"
-                        />
-                        <form @submit.prevent="createComment">
-                        <div class="form-floating m-3">
-                            <textarea class="form-control" placeholder="내용을 작성하세요" id="commentInput" style="height: 150px" v-model.trim="commentInput"></textarea>
-                            <label for="commentInput">Comment</label>
-                        </div>
-                        <input class="btn btn-success" type="submit" value="댓글작성">
-                        </form>
+                            />
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -249,14 +253,14 @@ export default {
 </script>
 
 <style>
-#reviewdetail {
+#reviewdetailclass {
     color: white;
 }
 #reviewTitle{
-    background-color: rgb(47, 37, 25);
+    /* background-color: rgb(47, 37, 25); */
 }
 #reviewUser {
-    background-color: rgb(74, 63, 53);
+    /* background-color: rgb(74, 63, 53); */
 }
 #likebtn {
     background-color: #FA7D09;
@@ -265,5 +269,58 @@ export default {
 #unlikebtn {
     background-color: #FF4301;
     animation: like 2s;
+}
+#review_detail_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    background-color: black;
+    border: 1px solid #FF4301;
+    box-shadow: 5px 5px #ff4501a4;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+#review_detail_content{
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    width: 93%;
+    padding: 20px;
+    color: white;
+    border: 1px solid #FF4301;
+    background-color: black;
+    box-shadow: 5px 5px #ff4501a4;
+    border-radius: 10px;
+}
+
+#review_detail_commentlist{
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+#comment_btn{
+    margin-left: 15px;
+    width: 96%;
+    margin-bottom: 30px;
+}
+
+#communityCommentlist {
+    margin-left: 10px;
+}
+
+#commentInput {
+    background-color: black;
+    border: 1px solid #FF4301;
+    box-shadow: 5px 5px #ff4501a4;
 }
 </style>
