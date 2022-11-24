@@ -5,11 +5,11 @@
     </div>
     <form @submit.prevent="createReview">
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="titleInput">
+        <input type="text" autocomplete="off" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="titleInput">
         <label for="titleInput">Title</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control dropdown-toggle" id="titleInput" placeholder="영화" data-bs-toggle="dropdown" aria-expanded="false" v-model.trim="movieInput" @input="seachMovie(movieInput)">
+        <input type="text" autocomplete="off" class="form-control dropdown-toggle" id="titleInput" placeholder="영화" data-bs-toggle="dropdown" aria-expanded="false" v-model.trim="movieInput" @input="seachMovie(movieInput)">
         <label for="titleInput">Movie</label>
         <ul class="dropdown-menu dropdown-menu-dark w-100" aria-labelledby="dropdownMenuButton2">
           <li 
@@ -21,7 +21,7 @@
         </ul>
       </div>
       <div class="form-floating mb-3">
-        <textarea class="form-control" placeholder="내용을 작성하세요" id="contentInput" style="height: 400px" v-model.trim="contentInput"></textarea>
+        <textarea autocomplete="off" class="form-control" placeholder="내용을 작성하세요" id="contentInput" style="height: 400px" v-model.trim="contentInput"></textarea>
         <label for="contentInput">Content</label>
       </div>
       <input type="submit" class="btn btn-success" value="리뷰 작성!">

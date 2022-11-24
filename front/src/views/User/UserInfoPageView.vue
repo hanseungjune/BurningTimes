@@ -36,21 +36,21 @@
           <div id="userInfoUpdate">
             <form @submit.prevent="updateUser"  v-show="updateShow">
                 <div id="updateinput" class="form-floating mb-3">
-                    <input type="text" class="form-control" id="userFirstName" placeholder="FirstName을 입력하세요" v-model="userFirstName">
+                    <input autocomplete="off" type="text" class="form-control" id="userFirstName" placeholder="FirstName을 입력하세요" v-model="userFirstName">
                     <label for="userFirstName" style="color: white;">FirstName</label>
                 </div >
                 <div class="form-floating mb-3" id="updateinput">
-                    <input type="text" class="form-control" id="userLastName" placeholder="LastName을 입력하세요" v-model="userLastName">
+                    <input autocomplete="off" type="text" class="form-control" id="userLastName" placeholder="LastName을 입력하세요" v-model="userLastName">
                     <label for="userLastName" style="color: white;">LastName</label>
                 </div>
                 <div class="form-floating mb-3" id="updateinput">
-                    <input type="text" class="form-control" id="userEmail" placeholder="Email을 입력하세요" v-model="userEmail">
+                    <input autocomplete="off" type="text" class="form-control" id="userEmail" placeholder="Email을 입력하세요" v-model="userEmail">
                     <label for="userEmail" style="color: white;">Email</label>
                 </div>
                 <div>
                 </div>
                 <div class="card-footer text-muted">
-                  <input class="btn btn-primary" type="submit" value="UPDATE">
+                  <input autocomplete="off" class="btn btn-primary" type="submit" value="UPDATE">
                 </div>
             </form>
           </div>

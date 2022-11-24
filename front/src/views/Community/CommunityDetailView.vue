@@ -48,7 +48,7 @@
                                 <label for="commentInput" >Comment</label>
                             </div>
                             <br>
-                            <input id="comment_btn" class="btn btn-dark" type="submit" value="댓글작성">
+                            <input id="comment_btn" autocomplete="off" class="btn btn-dark" type="submit" value="댓글작성">
                         </form>
                         <CommunityComment 
                         id="communityCommentlist"
@@ -72,12 +72,12 @@
         <h1>리뷰 수정입니다.</h1>
         <form @submit.prevent="updateReview">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="reviewDetail.title">
+            <input autocomplete="off" type="text" class="form-control" id="titleInput" placeholder="게시글 제목" v-model.trim="reviewDetail.title">
             <label for="titleInput" style="color: black;">Title</label>
         </div>
         영화를 하단에서 "꼭" 클릭해주세요!
         <div class="form-floating mb-3">
-            <input type="text" class="form-control dropdown-toggle" id="titleInput" placeholder="영화" data-bs-toggle="dropdown" aria-expanded="false" v-model.trim="reviewDetail.movie.title" @input="seachMovie(reviewDetail.movie.title)">
+            <input autocomplete="off" type="text" class="form-control dropdown-toggle" id="titleInput" placeholder="영화" data-bs-toggle="dropdown" aria-expanded="false" v-model.trim="reviewDetail.movie.title" @input="seachMovie(reviewDetail.movie.title)">
             <label for="titleInput">Movie</label>
             <ul class="dropdown-menu dropdown-menu-dark w-100" aria-labelledby="dropdownMenuButton2">
             <li 
@@ -92,7 +92,7 @@
             <textarea class="form-control" placeholder="내용을 작성하세요" id="contentInput" style="height: 400px" v-model.trim="reviewDetail.content"></textarea>
             <label for="contentInput">Content</label>
         </div>
-        <input type="submit" class="btn btn-success" value="리뷰 수정!">
+        <input autocomplete="off" type="submit" class="btn btn-success" value="리뷰 수정!">
         </form>
     </div>
   </div>
@@ -326,5 +326,6 @@ export default {
     background-color: black;
     border: 1px solid #FF4301;
     box-shadow: 5px 5px #ff4501a4;
+    color: white;
 }
 </style>
