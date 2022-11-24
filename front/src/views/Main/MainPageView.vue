@@ -31,6 +31,7 @@
           <div id="lletter-10">! </div>
         </div>
       </div>
+      <MainPageLogSign style="position: absolute; top: 15vh; right: 10vw; z-index: 2;" />
       <div class='v-line1'></div>
       <div class='v-line2'></div>
         <br>
@@ -87,12 +88,13 @@
 
 <script>
 import MyCard from '@/components/MyCard'
-
+import MainPageLogSign from '@/components/MainPageLogSign'
 
 export default {
     name: 'MainPageView',
     components: {
       MyCard,
+      MainPageLogSign
     },
     data() {
       return {
@@ -406,6 +408,7 @@ export default {
     /* font-family: 'Swager', 'LINESeedKR-Bd', Avenir, Helvetica, Arial, sans-serif; */
     font-family: 'Anton', sans-serif;
     /* font-family: 'Bebas Neue', cursive; */
+    z-index: 2;
   }
   /* @keyframes blink {
     to {

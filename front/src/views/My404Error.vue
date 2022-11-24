@@ -1,5 +1,6 @@
 <template>
   <div>
+    <MainPageLogSign />
     <div id="rssBlock" >
           <p class="cnnContents">
             <span class="marqueeStyle">404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`) 404 에러입니다.... 페이지가 없어용...(  ´・^・`)</span>
@@ -10,8 +11,13 @@
 </template>
 
 <script>
+import MainPageLogSign from '@/components/MainPageLogSign'
 export default {
     name: 'MyTest',
+    components: {
+      MainPageLogSign
+    }
+    
 }
 </script>
 
@@ -59,4 +65,5 @@ export default {
         100% {transform: translateX(-200%);
             -webkit-transform: translateX(-200%);}
   }
+  
 </style>
