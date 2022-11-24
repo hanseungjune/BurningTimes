@@ -81,7 +81,9 @@
             <div class="row">
               <div class="col review_body">
                 <div class="row justify-content-between">
-                  <div id="reviews_title" @click="goToReview" class="col-3"><h4>Review</h4></div>
+                  <div id="reviews_title" @click="goToReview" class="col-3">
+                    <h4>Review</h4>
+                  </div>
                 </div>
                 <div class="row d-flex justify-content-center mt-3 mb-3">
                   <table class="table">
@@ -93,11 +95,11 @@
                         <th style="width: 15%" scope="col">time</th>
                       </tr>
                     </thead>
-                      <DetailReviews
-                      
-                      :movie="movie"
-                      @closemodal="modal.hide()"
-                      />
+                    <DetailReviews
+                    
+                    :movie="movie"
+                    @closemodal="modal.hide()"
+                    />
                   </table>
                 </div>
               </div>
@@ -386,8 +388,17 @@ export default {
   }
 
   #reviews_title:hover {
-    opacity: 0.7;
+    scale: 1.2;
+    transform: rotateX(720deg) translateX(20px);
+    transition: all 1s;
+    /* animation: reviewbtn normal; */
   }
+
+  /* @keyframes reviewbtn {
+    to {
+      transform: rotateX(3600deg) translateX(30px);
+    }
+  } */
 
   .selected {
     border: 1px solid #2F2519;

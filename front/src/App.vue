@@ -27,6 +27,7 @@ export default {
         if (this.$cookies.get('token')) {
           this.$store.dispatch('getUserPk')
         }
+        this.$store.dispatch('getLikeMovieList', this.userPk)
     },
 }
 </script>

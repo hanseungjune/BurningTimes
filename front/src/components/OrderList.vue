@@ -5,30 +5,30 @@
         <h4>개봉 날짜 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="new" autocomplete="off" value="new" v-model="order" >
-            <label class="btn btn-light  col-3" for="new"><i class="bi bi-caret-up"></i></label>
+            <label id="orderbtn" class="btn btn-light col-3" for="new"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="old" autocomplete="off" value="old" v-model="order">
-            <label class="btn btn-light  col-3" for="old"><i class="bi bi-caret-down"></i></label>
+            <label id="orderbtn" class="btn btn-light  col-3" for="old"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
 
         <h4>평점 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="high" autocomplete="off" value="high" v-model="order">
-            <label class="btn btn-light  col-3" for="high"><i class="bi bi-caret-up"></i></label>
+            <label id="orderbtn" class="btn btn-light  col-3" for="high"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="low" autocomplete="off" value="low" v-model="order">
-            <label class="btn btn-light  col-3" for="low"><i class="bi bi-caret-down"></i></label>
+            <label id="orderbtn" class="btn btn-light  col-3" for="low"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
 
         <h4>좋아요 순</h4>
         <div class="d-flex justify-content-evenly">
             <input type="radio" class="btn-check" name="btnradio" id="many" autocomplete="off" value="many" v-model="order">
-            <label class="btn btn-light  col-3" for="many"><i class="bi bi-caret-up"></i></label>
+            <label id="orderbtn" class="btn btn-light  col-3" for="many"><i class="bi bi-caret-up"></i></label>
 
             <input type="radio" class="btn-check" name="btnradio" id="few" autocomplete="off" value="few" v-model="order">
-            <label class="btn btn-light  col-3" for="few"><i class="bi bi-caret-down"></i></label>
+            <label id="orderbtn" class="btn btn-light  col-3" for="few"><i class="bi bi-caret-down"></i></label>
         </div>
         <br>
         <button class="btn btn-danger col-12 rounded" @click="clearOrder">초기화</button>
@@ -154,5 +154,17 @@ export default {
 #order-box{
     background-color: #4A3F35;
     color: white;
+}
+#orderbtn:active {
+    background-color: #FF4301;
+}
+.btn-light{
+    --bs-btn-active-bg : #FF4301 !important;
+    --bs-btn-active-border-color: white !important;
+    --bs-btn-active-color: white !important;
+}
+.form-check-input:checked {
+    background-color: #FF4301 !important;
+    border-color: #FF4301 !important;
 }
 </style>
